@@ -1,25 +1,69 @@
-/* SHAPP aggressive performance layer: full-impact hero + fixed CTA motion */
+/* SHAPP light performance layer: white background + energetic colors + fixed CTA motion */
 :root {
-  --shapp-black: #030303;
-  --shapp-ink: #0b0b07;
-  --shapp-acid: #b7ff2a;
-  --shapp-paper: #f4efe2;
+  --shapp-white: #ffffff;
+  --shapp-paper: #f7f4ed;
+  --shapp-black: #050505;
+  --shapp-ink: #111111;
+  --shapp-muted: #5e6470;
+  --shapp-blue: #155cff;
+  --shapp-orange: #ff4d00;
+  --shapp-yellow: #ffd84d;
+  --shapp-line: rgba(5, 5, 5, .13);
 }
 
 body {
+  color: var(--shapp-ink) !important;
   background:
-    radial-gradient(circle at 88% 18%, rgba(183, 255, 42, .12), transparent 28%),
-    linear-gradient(180deg, #020202 0%, #0a0a07 46%, #050505 100%) !important;
+    radial-gradient(circle at 82% 14%, rgba(21, 92, 255, .12), transparent 30%),
+    radial-gradient(circle at 12% 74%, rgba(255, 77, 0, .10), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f7f4ed 52%, #ffffff 100%) !important;
+}
+
+body::before {
+  background-image:
+    linear-gradient(rgba(5,5,5,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(5,5,5,.045) 1px, transparent 1px) !important;
+  opacity: .9 !important;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.6), transparent 78%) !important;
+}
+
+body::after {
+  background: repeating-linear-gradient(0deg, rgba(5,5,5,.018) 0, rgba(5,5,5,.018) 1px, transparent 1px, transparent 5px) !important;
+  opacity: .55 !important;
+}
+
+::selection {
+  color: #fff !important;
+  background: var(--shapp-blue) !important;
 }
 
 .siteHeader {
   min-height: 72px !important;
-  background: rgba(3, 3, 3, .82) !important;
-  border-bottom: 1px solid rgba(244, 239, 226, .18) !important;
+  color: var(--shapp-ink) !important;
+  background: rgba(255, 255, 255, .84) !important;
+  border-bottom: 1px solid var(--shapp-line) !important;
+  box-shadow: 0 12px 40px rgba(5,5,5,.06) !important;
+}
+
+.scrollBeam {
+  background: linear-gradient(90deg, var(--shapp-blue), var(--shapp-orange), var(--shapp-yellow)) !important;
 }
 
 .brandText {
+  color: var(--shapp-ink) !important;
   letter-spacing: -.075em !important;
+}
+
+.brandText span {
+  color: var(--shapp-blue) !important;
+  text-shadow: 0 0 28px rgba(21, 92, 255, .28) !important;
+}
+
+.brandMark small,
+.mainNav > a:not(.navCta),
+.footerLinks,
+.footerLinks a {
+  color: var(--shapp-muted) !important;
 }
 
 .mainNav > a:not(.navCta) {
@@ -27,6 +71,11 @@ body {
   text-transform: uppercase !important;
   letter-spacing: .1em !important;
   font-size: .72rem !important;
+}
+
+.mainNav > a:not(.navCta):hover {
+  color: var(--shapp-ink) !important;
+  background: rgba(21,92,255,.08) !important;
 }
 
 .hero {
@@ -40,7 +89,8 @@ body {
   margin: 0 !important;
   overflow: hidden !important;
   isolation: isolate !important;
-  border-bottom: 1px solid rgba(244, 239, 226, .14) !important;
+  border-bottom: 1px solid var(--shapp-line) !important;
+  background: #fff !important;
 }
 
 .hero::before {
@@ -49,7 +99,7 @@ body {
   left: clamp(18px, 5vw, 72px);
   top: 92px;
   z-index: 3;
-  color: rgba(244, 239, 226, .45);
+  color: rgba(5,5,5,.46);
   font-size: clamp(.62rem, 1vw, .78rem);
   font-weight: 950;
   letter-spacing: .38em;
@@ -63,9 +113,9 @@ body {
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(3,3,3,.95) 0%, rgba(3,3,3,.82) 25%, rgba(3,3,3,.32) 58%, rgba(3,3,3,.18) 100%),
-    linear-gradient(180deg, rgba(3,3,3,.28) 0%, transparent 38%, rgba(3,3,3,.92) 100%),
-    repeating-linear-gradient(90deg, transparent 0 96px, rgba(255,255,255,.035) 97px 98px);
+    linear-gradient(90deg, rgba(255,255,255,.98) 0%, rgba(255,255,255,.93) 31%, rgba(255,255,255,.68) 55%, rgba(255,255,255,.18) 100%),
+    linear-gradient(180deg, rgba(255,255,255,.55) 0%, transparent 38%, rgba(255,255,255,.96) 100%),
+    repeating-linear-gradient(90deg, transparent 0 96px, rgba(5,5,5,.04) 97px 98px);
 }
 
 .heroStage {
@@ -78,11 +128,11 @@ body {
   border-radius: 0 !important;
   box-shadow: none !important;
   z-index: 0 !important;
-  opacity: .96 !important;
+  opacity: .58 !important;
   background-size: cover !important;
   background-position: center right !important;
-  transform: scale(1.03) !important;
-  filter: saturate(1.08) contrast(1.06) !important;
+  transform: scale(1.04) !important;
+  filter: saturate(.85) contrast(1.04) brightness(1.12) !important;
 }
 
 .heroStage::after {
@@ -90,52 +140,71 @@ body {
   display: block !important;
   position: absolute !important;
   inset: 0 !important;
-  opacity: .65 !important;
+  opacity: .7 !important;
   background:
-    linear-gradient(115deg, transparent 0%, rgba(183, 255, 42, .12) 42%, transparent 49%),
-    radial-gradient(circle at 74% 28%, rgba(183, 255, 42, .10), transparent 27%) !important;
+    linear-gradient(115deg, transparent 0%, rgba(21, 92, 255, .15) 42%, transparent 49%),
+    radial-gradient(circle at 74% 28%, rgba(255,77,0,.10), transparent 27%) !important;
 }
 
 .heroBackdrop {
   z-index: 2 !important;
-  opacity: .75 !important;
+  opacity: .42 !important;
+}
+
+.orbit {
+  border-color: rgba(21,92,255,.22) !important;
+}
+
+.speedLine {
+  background: linear-gradient(90deg, transparent, rgba(21, 92, 255, .72), rgba(255,77,0,.55), transparent) !important;
 }
 
 .heroCopy {
   z-index: 4 !important;
-  max-width: min(920px, 92vw) !important;
+  max-width: min(980px, 92vw) !important;
   padding-top: 14svh !important;
+}
+
+.kicker,
+.heroCopy .kicker {
+  color: var(--shapp-blue) !important;
 }
 
 .heroCopy .kicker {
   padding: 11px 14px !important;
-  border: 1px solid rgba(183,255,42,.45) !important;
-  background: rgba(3,3,3,.54) !important;
+  border: 1px solid rgba(21,92,255,.24) !important;
+  background: rgba(255,255,255,.72) !important;
   backdrop-filter: blur(16px) !important;
-  color: var(--shapp-acid) !important;
+  box-shadow: 0 14px 40px rgba(5,5,5,.08) !important;
 }
 
 .hero h1 {
-  max-width: 1000px !important;
+  max-width: 1040px !important;
+  color: var(--shapp-ink) !important;
   font-size: clamp(4.8rem, 15.2vw, 15rem) !important;
   letter-spacing: -.105em !important;
   line-height: .72 !important;
   text-transform: uppercase !important;
-  text-shadow: 0 16px 50px rgba(0,0,0,.78) !important;
-}
-
-.hero h1::first-line {
-  color: var(--shapp-paper);
+  text-shadow: 0 16px 50px rgba(255,255,255,.65) !important;
 }
 
 .heroText {
   max-width: 720px !important;
   margin-top: 26px !important;
   padding: 18px 20px !important;
-  color: rgba(244,239,226,.86) !important;
-  background: linear-gradient(90deg, rgba(3,3,3,.68), rgba(3,3,3,.18)) !important;
-  border-left: 4px solid var(--shapp-acid) !important;
+  color: #30343b !important;
+  background: linear-gradient(90deg, rgba(255,255,255,.86), rgba(255,255,255,.52)) !important;
+  border-left: 5px solid var(--shapp-orange) !important;
   backdrop-filter: blur(12px) !important;
+  box-shadow: 0 18px 54px rgba(5,5,5,.08) !important;
+}
+
+.heroText strong,
+.footerLinks a:hover,
+.bulletList svg,
+.featureCard svg,
+.cardMedia svg {
+  color: var(--shapp-blue) !important;
 }
 
 .heroActions {
@@ -182,8 +251,8 @@ body {
   align-items: center !important;
   justify-content: center !important;
   padding: 0 48px 0 28px !important;
-  color: #030303 !important;
-  background: var(--shapp-paper) !important;
+  color: #fff !important;
+  background: var(--shapp-orange) !important;
   transform: translateY(112%) !important;
   transition: transform .42s cubic-bezier(.16, 1, .3, 1) !important;
   will-change: transform !important;
@@ -197,7 +266,7 @@ body {
   position: absolute !important;
   inset: 0 !important;
   z-index: 0 !important;
-  background: linear-gradient(90deg, rgba(255,255,255,.16), transparent 32%, rgba(255,255,255,.14)) !important;
+  background: linear-gradient(90deg, rgba(255,255,255,.18), transparent 32%, rgba(255,255,255,.16)) !important;
   transform: translateX(-130%) skewX(-18deg) !important;
   transition: transform .66s cubic-bezier(.16, 1, .3, 1) !important;
 }
@@ -241,27 +310,27 @@ body {
 .motionButton:hover svg,
 .motionLink:focus-visible svg,
 .motionButton:focus-visible svg {
-  color: #030303 !important;
+  color: #fff !important;
   transform: translate(6px, -6px) !important;
 }
 
 .motionLink.dark,
 .motionButton,
 .navCta {
-  background: var(--shapp-acid) !important;
-  color: #030303 !important;
-  box-shadow: 0 22px 70px rgba(183,255,42,.28) !important;
+  background: var(--shapp-blue) !important;
+  color: #fff !important;
+  box-shadow: 0 22px 70px rgba(21,92,255,.24) !important;
 }
 
 .motionLink.light {
-  background: rgba(244,239,226,.08) !important;
-  color: var(--shapp-paper) !important;
-  border: 1px solid rgba(244,239,226,.34) !important;
-  box-shadow: none !important;
+  background: rgba(255,255,255,.62) !important;
+  color: var(--shapp-ink) !important;
+  border: 1px solid var(--shapp-line) !important;
+  box-shadow: 0 18px 50px rgba(5,5,5,.08) !important;
 }
 
 .motionLink.light::before {
-  background: var(--shapp-acid) !important;
+  background: var(--shapp-orange) !important;
 }
 
 .statsBar {
@@ -272,20 +341,46 @@ body {
   margin: 0 !important;
   border-radius: 0 !important;
   border-width: 1px 0 !important;
-  background: #050505 !important;
+  border-color: var(--shapp-line) !important;
+  background: #fff !important;
+  box-shadow: 0 18px 50px rgba(5,5,5,.06) !important;
 }
 
 .statItem {
+  color: var(--shapp-ink) !important;
   padding: clamp(20px, 3vw, 38px) clamp(18px, 4vw, 64px) !important;
-  background: linear-gradient(135deg, rgba(244,239,226,.045), transparent) !important;
+  background: linear-gradient(135deg, rgba(21,92,255,.06), transparent) !important;
+  border-color: var(--shapp-line) !important;
 }
 
 .statItem strong {
+  color: var(--shapp-orange) !important;
   font-size: clamp(3.5rem, 7vw, 7.5rem) !important;
+}
+
+.statItem span,
+.sectionHeader p:not(.kicker),
+.enginePanel p,
+.leadCopy p,
+.featureCard p,
+.productCard p,
+.bulletList li,
+.cardCopy h3,
+.leadForm label {
+  color: var(--shapp-muted) !important;
 }
 
 .section {
   width: min(1340px, calc(100% - 32px)) !important;
+}
+
+.sectionHeader h2,
+.enginePanel h2,
+.leadCopy h2,
+.cardCopy h4,
+.featureCard h3,
+.cardCopy h3 {
+  color: var(--shapp-ink) !important;
 }
 
 .sectionHeader h2,
@@ -297,16 +392,17 @@ body {
 
 .productGrid {
   gap: 0 !important;
-  border: 1px solid rgba(244,239,226,.18) !important;
-  background: #050505 !important;
+  border: 1px solid var(--shapp-line) !important;
+  background: #fff !important;
+  box-shadow: 0 26px 70px rgba(5,5,5,.07) !important;
 }
 
 .productCard {
   min-height: 640px !important;
   border-radius: 0 !important;
   border: 0 !important;
-  border-right: 1px solid rgba(244,239,226,.18) !important;
-  background: linear-gradient(180deg, rgba(244,239,226,.07), rgba(244,239,226,.025)) !important;
+  border-right: 1px solid var(--shapp-line) !important;
+  background: linear-gradient(180deg, rgba(255,255,255,.96), rgba(247,244,237,.88)) !important;
   box-shadow: none !important;
 }
 
@@ -314,17 +410,27 @@ body {
   border-right: 0 !important;
 }
 
+.productCard::before {
+  background: radial-gradient(circle at 24% 0%, rgba(21,92,255,.18), transparent 38%) !important;
+}
+
 .productCard:hover {
-  background: linear-gradient(180deg, rgba(183,255,42,.16), rgba(244,239,226,.03)) !important;
+  background: linear-gradient(180deg, rgba(21,92,255,.09), rgba(255,255,255,.95)) !important;
 }
 
 .cardMedia {
   border-radius: 0 !important;
   min-height: 220px !important;
+  border-color: var(--shapp-line) !important;
   background:
-    linear-gradient(135deg, rgba(183,255,42,.28), transparent 48%),
-    repeating-linear-gradient(135deg, rgba(244,239,226,.08) 0 8px, transparent 8px 18px),
-    #0b0b07 !important;
+    linear-gradient(135deg, rgba(21,92,255,.18), transparent 48%),
+    repeating-linear-gradient(135deg, rgba(5,5,5,.055) 0 8px, transparent 8px 18px),
+    #f7f4ed !important;
+}
+
+.cardMedia span {
+  color: #fff !important;
+  background: var(--shapp-orange) !important;
 }
 
 .cardCopy h4 {
@@ -335,27 +441,56 @@ body {
 .enginePanel,
 .leadForm {
   border-radius: 0 !important;
-  border-color: rgba(244,239,226,.2) !important;
-  background: linear-gradient(135deg, rgba(183,255,42,.18), rgba(3,3,3,.75) 38%, rgba(244,239,226,.05)) !important;
+  border-color: var(--shapp-line) !important;
+  background: linear-gradient(135deg, rgba(21,92,255,.10), #fff 42%, rgba(255,77,0,.08)) !important;
+  box-shadow: 0 22px 68px rgba(5,5,5,.07) !important;
+}
+
+.engineFlow span {
+  color: var(--shapp-ink) !important;
+  border-color: var(--shapp-line) !important;
+  background: rgba(255,255,255,.72) !important;
+}
+
+.engineFlow svg {
+  color: var(--shapp-orange) !important;
 }
 
 .featureCard {
   border-radius: 0 !important;
-  background: #080806 !important;
+  border-color: var(--shapp-line) !important;
+  background: #fff !important;
+  box-shadow: 0 18px 50px rgba(5,5,5,.05) !important;
 }
 
 .leadForm input,
 .leadForm select {
   border-radius: 0 !important;
-  background: rgba(0,0,0,.52) !important;
+  color: var(--shapp-ink) !important;
+  border-color: var(--shapp-line) !important;
+  background: rgba(255,255,255,.86) !important;
+}
+
+.leadForm input::placeholder {
+  color: rgba(5,5,5,.38) !important;
+}
+
+.formMessage {
+  color: var(--shapp-orange) !important;
+}
+
+.formMessage.success {
+  color: var(--shapp-blue) !important;
 }
 
 .footer {
   width: 100% !important;
   max-width: none !important;
+  color: var(--shapp-ink) !important;
   padding-left: clamp(18px, 5vw, 72px) !important;
   padding-right: clamp(18px, 5vw, 72px) !important;
-  background: #030303 !important;
+  background: #fff !important;
+  border-top-color: var(--shapp-line) !important;
 }
 
 @media (max-width: 1020px) {
@@ -365,7 +500,8 @@ body {
   }
 
   .heroStage {
-    background-position: 64% center !important;
+    background-position: 66% center !important;
+    opacity: .42 !important;
   }
 
   .productGrid {
@@ -376,7 +512,21 @@ body {
   .productCard {
     min-height: auto !important;
     border-right: 0 !important;
-    border-bottom: 1px solid rgba(244,239,226,.18) !important;
+    border-bottom: 1px solid var(--shapp-line) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .mainNav {
+    background: rgba(255,255,255,.95) !important;
+    border-color: var(--shapp-line) !important;
+    box-shadow: 0 24px 60px rgba(5,5,5,.1) !important;
+  }
+
+  .menuButton {
+    color: var(--shapp-ink) !important;
+    border-color: var(--shapp-line) !important;
+    background: rgba(255,255,255,.8) !important;
   }
 }
 
@@ -393,12 +543,13 @@ body {
   .heroStage {
     background-position: 66% center !important;
     transform: scale(1.08) !important;
+    opacity: .34 !important;
   }
 
   .hero::after {
     background:
-      linear-gradient(90deg, rgba(3,3,3,.94) 0%, rgba(3,3,3,.78) 45%, rgba(3,3,3,.34) 100%),
-      linear-gradient(180deg, rgba(3,3,3,.18) 0%, transparent 32%, rgba(3,3,3,.95) 100%) !important;
+      linear-gradient(90deg, rgba(255,255,255,.97) 0%, rgba(255,255,255,.91) 55%, rgba(255,255,255,.62) 100%),
+      linear-gradient(180deg, rgba(255,255,255,.42) 0%, transparent 32%, rgba(255,255,255,.96) 100%) !important;
   }
 
   .hero h1 {
