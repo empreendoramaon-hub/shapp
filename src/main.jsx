@@ -18,12 +18,13 @@ import {
   Zap
 } from 'lucide-react'
 import { saveLead } from './services.js'
+import ShappFitMvp from './shappFitMvp.jsx'
 import './styles.css'
 
 const productLinks = {
-  fit: import.meta.env.VITE_SHAPP_FIT_URL || 'https://shappfit.vercel.app',
-  coach: import.meta.env.VITE_SHAPP_COACH_URL || 'https://shapp-coach.vercel.app',
-  gym: import.meta.env.VITE_SHAPP_GYM_URL || 'https://shapp-gym.vercel.app'
+  fit: import.meta.env.VITE_SHAPP_FIT_URL || '/aluno/demo-ana-cassoni',
+  coach: import.meta.env.VITE_SHAPP_COACH_URL || '/painel',
+  gym: import.meta.env.VITE_SHAPP_GYM_URL || '/painel'
 }
 
 const products = [
@@ -67,18 +68,18 @@ const products = [
 
 const featureMap = [
   {
-    title: 'Do Senior Helper para o treino',
-    text: 'A mesma lógica de cuidado, rotina e alerta vira acompanhamento fitness: aluno, coach e academia conectados.',
+    title: 'Do cuidado ao treino',
+    text: 'A mesma lógica de rotina, alerta e acompanhamento vira gestão fitness: aluno, personal e academia conectados.',
     icon: ShieldCheck
   },
   {
     title: 'Radar de desistência',
-    text: 'Sinais de ausência, dor, queda de engajamento e check-ins perdidos aparecem no painel antes do aluno evaporar.',
+    text: 'Sinais de ausência, queda de frequência e check-ins perdidos aparecem no painel antes do aluno evaporar.',
     icon: BarChart3
   },
   {
     title: 'MVP modular',
-    text: 'Uma landing principal aponta para Fit, Coach e Gym, mantendo a marca única e permitindo projetos separados na Vercel.',
+    text: 'Vídeos, chat, rankings, fotos e gamificação podem ser ativados por academia, sem engessar o produto.',
     icon: Rocket
   }
 ]
@@ -86,8 +87,8 @@ const featureMap = [
 const stats = [
   ['03', 'produtos conectados'],
   ['01', 'marca principal'],
-  ['24/7', 'rotina acompanhada'],
-  ['SOS', 'alertas de dor e risco']
+  ['QR', 'acesso por convite'],
+  ['LGPD', 'consentimento registrado']
 ]
 
 function useScrollProgress() {
@@ -122,8 +123,8 @@ function Header() {
         <a href="#produtos" onClick={() => setOpen(false)}>Produtos</a>
         <a href="#engine" onClick={() => setOpen(false)}>Motor</a>
         <a href="#lead" onClick={() => setOpen(false)}>Lista beta</a>
-        <a href={productLinks.coach} className="navCta" data-text="Acessar Coach">
-          <span>Acessar Coach</span>
+        <a href="/painel" className="navCta" data-text="Abrir painel">
+          <span>Abrir painel</span>
         </a>
       </nav>
 
@@ -155,23 +156,23 @@ function Hero() {
       </div>
 
       <div className="heroCopy reveal">
-        <p className="kicker"><Zap size={17} /> Do cuidado ao resultado</p>
+        <p className="kicker"><Zap size={17} /> White label para academias</p>
         <h1>
-          Seu shape não precisa de promessa. Precisa de sistema.
+          Sua academia vira app, o treino vira sistema.
         </h1>
         <p className="heroText">
-          A landing principal do ecossistema <strong>SH▲PP</strong>: uma porta de entrada para aluno, personal e academia, com a energia de marca esportiva e a inteligência de acompanhamento herdada do Senior Helper.
+          O <strong>SH▲PP Fit</strong> conecta recepção, professores e alunos com cadastro centralizado, convite por QR Code ou WhatsApp, aceite LGPD, treinos personalizados e evolução gamificada.
         </p>
         <div className="heroActions">
-          <MotionLink href="#produtos">Escolher produto</MotionLink>
-          <MotionLink href="#lead" variant="light">Entrar na lista beta</MotionLink>
+          <MotionLink href="/painel">Abrir MVP</MotionLink>
+          <MotionLink href="/aluno/demo-ana-cassoni" variant="light">Ver app do aluno</MotionLink>
         </div>
       </div>
 
       <div className="heroStage reveal delayOne" aria-label="Prévia visual do painel SHAPP">
         <div className="heroCard mainDevice">
           <div className="deviceTop">
-            <span>SH▲PP TODAY</span>
+            <span>SH▲PP GYM</span>
             <span className="livePill">LIVE</span>
           </div>
           <div className="pulseBadge">
@@ -191,20 +192,20 @@ function Hero() {
           </div>
           <div className="alertStrip">
             <Activity size={18} />
-            <span>2 alunos em risco de abandono</span>
+            <span>Convite por QR Code pronto</span>
           </div>
         </div>
 
         <div className="floatingTile tileCoach">
           <Users size={21} />
-          <span>Coach alert</span>
-          <strong>Lucas faltou 5 dias</strong>
+          <span>Recepção</span>
+          <strong>Link enviado no WhatsApp</strong>
         </div>
 
         <div className="floatingTile tileFit">
           <CheckCircle2 size={21} />
-          <span>Treino concluído</span>
-          <strong>Pernas + cardio</strong>
+          <span>LGPD aceita</span>
+          <strong>App liberado</strong>
         </div>
 
         <div className="athleteCut" aria-hidden="true">
@@ -238,9 +239,9 @@ function Products() {
     <section className="section products" id="produtos">
       <div className="sectionHeader reveal">
         <p className="kicker"><Sparkles size={17} /> Três portas, uma marca</p>
-        <h2>shappfit.vercel.app aponta para o ecossistema completo.</h2>
+        <h2>Aluno, personal e academia dentro do mesmo ecossistema.</h2>
         <p>
-          A landing funciona como vitrine principal. Cada produto pode ser publicado como projeto separado na Vercel e conectado por variáveis de ambiente.
+          A landing funciona como vitrine principal. O MVP já inclui painel da academia e app do aluno com fluxo de convite seguro.
         </p>
       </div>
 
@@ -277,20 +278,20 @@ function Engine() {
     <section className="section engine" id="engine">
       <div className="enginePanel reveal">
         <div>
-          <p className="kicker"><Flame size={17} /> Helper Engine</p>
-          <h2>O mesmo motor do Senior Helper, agora com roupa de treino.</h2>
+          <p className="kicker"><Flame size={17} /> Shapp Fit Engine</p>
+          <h2>Cadastro pela academia, acesso pelo aluno, controle sempre no painel.</h2>
           <p>
-            O app original já tinha o coração certo: perfil acompanhado, monitor responsável, lembretes, alerta e histórico. No SH▲PP isso vira uma estrutura para evolução física, presença e retenção.
+            O aluno recebe um link único ou QR Code. No primeiro acesso, aceita os termos e a política de privacidade. Se a matrícula for inativada, o app deixa de exibir dados atualizados.
           </p>
         </div>
         <div className="engineFlow">
-          <span>Aluno</span>
+          <span>Recepção</span>
           <ChevronRight />
-          <span>Rotina</span>
+          <span>QR/WhatsApp</span>
           <ChevronRight />
-          <span>Coach</span>
+          <span>LGPD</span>
           <ChevronRight />
-          <span>Resultado</span>
+          <span>Treino</span>
         </div>
       </div>
 
@@ -338,9 +339,9 @@ function LeadForm() {
     <section className="section leadSection" id="lead">
       <div className="leadCopy reveal">
         <p className="kicker"><Rocket size={17} /> Lista beta</p>
-        <h2>Capture interessados antes dos três produtos estarem no ar.</h2>
+        <h2>Capture interessados enquanto o produto ganha músculo.</h2>
         <p>
-          O formulário está preparado para captura de leads. A versão atual salva em modo local e pode ser conectada ao Firebase depois com as variáveis do projeto.
+          O formulário está preparado para captura de leads. A versão atual salva em modo local e pode ser conectada ao Firebase com variáveis do projeto.
         </p>
       </div>
 
@@ -402,15 +403,15 @@ function Footer() {
         <small>Seu shape no app</small>
       </a>
       <div className="footerLinks">
-        <a href={productLinks.fit}>Fit</a>
-        <a href={productLinks.coach}>Coach</a>
-        <a href={productLinks.gym}>Gym</a>
+        <a href="/aluno/demo-ana-cassoni">Fit</a>
+        <a href="/painel">Coach</a>
+        <a href="/painel">Gym</a>
       </div>
     </footer>
   )
 }
 
-function App() {
+function LandingApp() {
   useEffect(() => {
     if ('serviceWorker' in navigator && import.meta.env.PROD) {
       navigator.serviceWorker.register('/sw.js').catch(() => {})
@@ -430,6 +431,14 @@ function App() {
       <Footer />
     </>
   )
+}
+
+function App() {
+  const path = window.location.pathname
+  if (path.startsWith('/painel') || path.startsWith('/aluno/')) {
+    return <ShappFitMvp />
+  }
+  return <LandingApp />
 }
 
 createRoot(document.getElementById('root')).render(<App />)
