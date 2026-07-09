@@ -1,0 +1,586 @@
+.fitShell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  background: #050505;
+  color: #f7f7f2;
+}
+
+.fitSidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 28px;
+  border-right: 1px solid rgba(255,255,255,.12);
+  background: rgba(10,10,10,.86);
+  backdrop-filter: blur(18px);
+}
+
+.fitBrand {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 36px;
+}
+
+.fitBrand > span,
+.studentLogo {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  color: #050505;
+  font-weight: 950;
+  letter-spacing: -.06em;
+  box-shadow: 0 18px 50px rgba(183,255,42,.22);
+}
+
+.fitBrand strong,
+.fitBrand small {
+  display: block;
+}
+
+.fitBrand small {
+  color: rgba(247,247,242,.62);
+  margin-top: 4px;
+}
+
+.fitSidebar nav {
+  display: grid;
+  gap: 10px;
+}
+
+.fitSidebar a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  color: rgba(247,247,242,.78);
+  background: rgba(255,255,255,.035);
+}
+
+.fitSidebar a:hover {
+  color: #050505;
+  background: #b7ff2a;
+}
+
+.fitPanel {
+  width: min(1180px, calc(100vw - 320px));
+  margin: 0 auto;
+  padding: 34px 22px 80px;
+}
+
+.fitHeroPanel,
+.fitCard,
+.studentCard,
+.consentCard,
+.blockedCard {
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 34px;
+  background: linear-gradient(135deg, rgba(255,255,255,.09), rgba(255,255,255,.035));
+  box-shadow: 0 28px 90px rgba(0,0,0,.42);
+}
+
+.fitHeroPanel {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  padding: 38px;
+  margin-bottom: 22px;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(183,255,42,.18), transparent 32%),
+    linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.035));
+}
+
+.fitHeroPanel h1,
+.consentCard h1,
+.studentHeader h1,
+.blockedCard h1 {
+  margin: 0;
+  font-size: clamp(2.1rem, 5vw, 4.6rem);
+  line-height: .9;
+  letter-spacing: -.075em;
+  max-width: 800px;
+}
+
+.fitHeroPanel p,
+.consentCard p,
+.studentHeader p,
+.blockedCard p {
+  color: rgba(247,247,242,.72);
+  line-height: 1.7;
+  max-width: 680px;
+}
+
+.fitKicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  color: #b7ff2a;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: .78rem;
+  letter-spacing: .12em;
+}
+
+.fitStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.fitStatCard {
+  display: flex;
+  gap: 14px;
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.fitStatCard svg {
+  color: #b7ff2a;
+}
+
+.fitStatCard strong,
+.fitStatCard span,
+.fitStatCard small {
+  display: block;
+}
+
+.fitStatCard strong {
+  font-size: 1.9rem;
+  line-height: 1;
+}
+
+.fitStatCard span,
+.fitStatCard small {
+  color: rgba(247,247,242,.62);
+  margin-top: 6px;
+}
+
+.fitGridTwo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.fitCard {
+  padding: 28px;
+}
+
+.fitCard h2,
+.studentCard h2 {
+  margin: 0 0 18px;
+  font-size: 1.8rem;
+  letter-spacing: -.045em;
+}
+
+.fitFormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.fitCard label,
+.consentLine {
+  display: grid;
+  gap: 8px;
+  color: rgba(247,247,242,.76);
+  font-weight: 750;
+}
+
+.fitCard input,
+.fitCard select {
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 16px;
+  background: rgba(0,0,0,.35);
+  color: #fff;
+  padding: 13px 14px;
+  outline: none;
+}
+
+.fitPrimaryButton,
+.fitGhostButton,
+.fitDangerButton,
+.fitWhatsapp,
+.fitSwitch {
+  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  font-weight: 950;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.fitPrimaryButton {
+  margin-top: 18px;
+  background: #b7ff2a;
+  color: #050505;
+}
+
+.fitPrimaryButton:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.fitGhostButton {
+  background: rgba(255,255,255,.08);
+  color: #f7f7f2;
+  border: 1px solid rgba(255,255,255,.14);
+}
+
+.fitDangerButton {
+  background: rgba(255,51,95,.12);
+  color: #ff8ca5;
+  border: 1px solid rgba(255,51,95,.24);
+}
+
+.fitWhatsapp {
+  background: #25d366;
+  color: #05110a;
+}
+
+.qrMock {
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  min-height: 170px;
+  margin: 16px 0;
+  border-radius: 26px;
+  color: #050505;
+  background:
+    linear-gradient(45deg, #fff 25%, transparent 25%),
+    linear-gradient(-45deg, #fff 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #fff 75%),
+    linear-gradient(-45deg, transparent 75%, #fff 75%),
+    #b7ff2a;
+  background-size: 28px 28px;
+  background-position: 0 0, 0 14px, 14px -14px, -14px 0px;
+}
+
+.qrMock span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #050505;
+  color: #b7ff2a;
+  font-weight: 900;
+}
+
+.inviteBox {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px;
+  border-radius: 18px;
+  background: rgba(0,0,0,.36);
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.inviteBox code {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(247,247,242,.8);
+}
+
+.inviteBox button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 0;
+  border-radius: 12px;
+  padding: 9px 11px;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.fitActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.fitSwitch {
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 10px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  color: #f7f7f2;
+  text-align: left;
+}
+
+.fitSwitch span,
+.fitSwitch small {
+  display: block;
+}
+
+.fitSwitch small {
+  margin-top: 4px;
+  color: rgba(247,247,242,.58);
+}
+
+.fitSwitch i {
+  font-style: normal;
+  color: rgba(247,247,242,.56);
+}
+
+.fitSwitch.isOn {
+  background: rgba(183,255,42,.12);
+  border-color: rgba(183,255,42,.28);
+}
+
+.fitSwitch.isOn i {
+  color: #b7ff2a;
+}
+
+.fitChecklist {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fitChecklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: rgba(247,247,242,.72);
+}
+
+.fitChecklist svg {
+  color: #b7ff2a;
+  flex: 0 0 auto;
+}
+
+.auditList {
+  display: grid;
+  gap: 10px;
+}
+
+.auditList div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.055);
+}
+
+.auditList span {
+  color: rgba(247,247,242,.58);
+}
+
+.studentShell {
+  min-height: 100vh;
+  padding: 28px;
+  color: #f7f7f2;
+  background:
+    radial-gradient(circle at 10% 10%, color-mix(in srgb, var(--brand, #b7ff2a) 28%, transparent), transparent 30%),
+    radial-gradient(circle at 90% 0%, rgba(255,122,26,.18), transparent 30%),
+    #050505;
+}
+
+.studentHeader {
+  width: min(1040px, 100%);
+  margin: 0 auto 22px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 28px;
+  border: 1px solid rgba(255,255,255,.13);
+  border-radius: 34px;
+  background: rgba(255,255,255,.07);
+}
+
+.studentLogo {
+  background: var(--brand, #b7ff2a);
+}
+
+.studentHeader small {
+  color: var(--brand, #b7ff2a);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.studentGrid {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 18px;
+}
+
+.studentCard,
+.consentCard,
+.blockedCard {
+  padding: 28px;
+}
+
+.workoutToday {
+  grid-row: span 2;
+}
+
+.exerciseList {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.exerciseList div {
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.exerciseList strong,
+.exerciseList small,
+.exerciseList em {
+  display: block;
+}
+
+.exerciseList small,
+.studentCard p,
+.studentCard span,
+.studentCard small {
+  color: rgba(247,247,242,.66);
+  line-height: 1.6;
+}
+
+.exerciseList em {
+  margin-top: 8px;
+  color: var(--brand, #b7ff2a);
+  font-style: normal;
+  font-weight: 800;
+}
+
+.progressTrack {
+  height: 16px;
+  margin: 16px 0;
+  border-radius: 99px;
+  background: rgba(255,255,255,.09);
+  overflow: hidden;
+}
+
+.progressTrack span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--brand, #b7ff2a);
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badgeRow span {
+  padding: 9px 11px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  color: rgba(247,247,242,.78);
+}
+
+.consentCard,
+.blockedCard {
+  width: min(680px, 100%);
+  margin: 8vh auto 0;
+}
+
+.consentLine {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 14px 0;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255,255,255,.06);
+}
+
+.blockedCard {
+  text-align: center;
+}
+
+.blockedCard svg {
+  color: var(--brand, #b7ff2a);
+  margin-bottom: 16px;
+}
+
+@media (max-width: 980px) {
+  .fitShell {
+    grid-template-columns: 1fr;
+  }
+
+  .fitSidebar {
+    position: relative;
+    height: auto;
+  }
+
+  .fitPanel {
+    width: 100%;
+  }
+
+  .fitHeroPanel,
+  .fitGridTwo,
+  .studentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fitHeroPanel {
+    display: grid;
+  }
+
+  .fitStatsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .workoutToday {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 620px) {
+  .fitStatsGrid,
+  .fitFormGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fitHeroPanel h1,
+  .studentHeader h1,
+  .consentCard h1,
+  .blockedCard h1 {
+    font-size: 2.35rem;
+  }
+
+  .studentHeader,
+  .fitHeroPanel,
+  .fitCard,
+  .studentCard,
+  .consentCard,
+  .blockedCard {
+    border-radius: 24px;
+    padding: 22px;
+  }
+
+  .studentShell {
+    padding: 14px;
+  }
+}
