@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ArrowLeft, Copy, Filter, MessageCircle, MoreHorizontal, QrCode, Search, UserPlus } from 'lucide-react'
+import { formatPhone, sentenceCase, titleCase } from './dataFormat.js'
 import './panelStudents.css'
 
 const STORAGE_KEY = 'shappFitMvpState'
@@ -18,7 +19,7 @@ function StudentsPage() {
   const students = useMemo(() => {
     const list = state?.students || []
     return list.filter((student) => {
-      const matchesQuery = `${student.name} ${student.email} ${student.goal}`.toLowerCase().includes(query.toLowerCase())
+      const matchesQuery = `${student.name} ${student.email} ${student.goal}`.toLocaleLowerCase('pt-BR').includes(query.toLocaleLowerCase('pt-BR'))
       const matchesStatus = status === 'all' || student.status === status
       return matchesQuery && matchesStatus
     })
@@ -27,7 +28,7 @@ function StudentsPage() {
   if (!state) return <main className="studentsEmpty">Nenhum dado do painel encontrado.</main>
 
   function trainerName(id) {
-    return state.trainers.find((trainer) => trainer.id === id)?.name || 'Não definido'
+    return titleCase(state.trainers.find((trainer) => trainer.id === id)?.name || 'Não definido')
   }
 
   function inviteLink(student) {
@@ -69,11 +70,12 @@ function StudentsPage() {
       <section className="studentCards">
         {students.map((student) => {
           const progress = Math.min(100, Math.round((student.completedThisMonth / Math.max(student.monthlyGoal, 1)) * 100))
-          const whatsapp = `https://wa.me/55${student.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Olá, ${student.name}! Seu acesso ao app da ${state.academy.name}: ${inviteLink(student)}`)}`
+          const displayName = titleCase(student.name)
+          const whatsapp = `https://wa.me/55${student.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Olá, ${displayName}! Seu acesso ao app da ${state.academy.name}: ${inviteLink(student)}`)}`
           return (
             <article className="studentRow" key={student.id}>
-              <div className="studentIdentity"><div className="studentAvatar">{student.name.split(' ').map((part) => part[0]).slice(0, 2).join('')}</div><div><h2>{student.name}</h2><p>{student.email || 'Sem e-mail'}</p><span className={`statusTag ${student.status}`}>{student.status === 'active' ? 'Ativo' : 'Inativo'}</span></div></div>
-              <div className="studentMeta"><div><small>Professor</small><strong>{trainerName(student.trainerId)}</strong></div><div><small>Objetivo</small><strong>{student.goal}</strong></div><div><small>Frequência</small><strong>{student.completedThisMonth}/{student.monthlyGoal} treinos</strong><div className="tinyProgress"><span style={{ width: `${progress}%` }} /></div></div></div>
+              <div className="studentIdentity"><div className="studentAvatar">{displayName.split(' ').map((part) => part[0]).slice(0, 2).join('')}</div><div><h2>{displayName}</h2><p>{student.email || 'Sem e-mail'} · {formatPhone(student.phone) || 'Sem telefone'}</p><span className={`statusTag ${student.status}`}>{student.status === 'active' ? 'Ativo' : 'Inativo'}</span></div></div>
+              <div className="studentMeta"><div><small>Professor</small><strong>{trainerName(student.trainerId)}</strong></div><div><small>Objetivo</small><strong>{sentenceCase(student.goal || 'Não informado')}</strong></div><div><small>Frequência</small><strong>{student.completedThisMonth}/{student.monthlyGoal} treinos</strong><div className="tinyProgress"><span style={{ width: `${progress}%` }} /></div></div></div>
               <div className="studentActions">
                 <a href={`/aluno/${student.token}`} target="_blank" rel="noreferrer"><QrCode size={18} /> Abrir app</a>
                 <a href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={18} /> WhatsApp</a>
