@@ -10,20 +10,10 @@
     <meta property="og:type" content="website" />
     <link rel="icon" href="/icon.svg" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="stylesheet" href="/heroImage.css" />
-    <link rel="stylesheet" href="/ytAggressive.css" />
     <title>SH▲PP | Seu shape no app</title>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module">
-      if (window.location.pathname.startsWith('/aluno/')) {
-        import('/src/studentMobile.jsx')
-      } else if (window.location.pathname.startsWith('/painel/alunos')) {
-        import('/src/panelStudents.jsx')
-      } else {
-        import('/src/main.jsx')
-      }
-    </script>
+    <script type="module" src="/src/router.js"></script>
   </body>
 </html>
