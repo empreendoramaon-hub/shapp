@@ -56,6 +56,7 @@ function Dashboard() {
 
   const selectedStudent = state.students.find((student) => student.token === selectedToken) || state.students[0]
   const activeStudents = state.students.filter((student) => student.status === 'active')
+  const recentStudents = state.students.slice(0, 6)
   const inviteLink = selectedStudent ? `${window.location.origin}/aluno/${selectedStudent.token}` : ''
   const whatsappLink = selectedStudent ? `https://wa.me/55${selectedStudent.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Olá, ${selectedStudent.name}! Seu acesso ao app da ${state.academy.name} está pronto: ${inviteLink}`)}` : '#'
 
@@ -65,6 +66,10 @@ function Dashboard() {
     { label: 'XP médio', value: Math.round(state.students.reduce((sum, student) => sum + (student.xp || 0), 0) / Math.max(state.students.length, 1)), icon: Flame },
     { label: 'LGPD vigente', value: state.academy.privacyVersion, icon: ShieldCheck }
   ], [state, activeStudents.length])
+
+  function trainerName(id) {
+    return titleCase(state.trainers.find((trainer) => trainer.id === id)?.name || 'Não definido')
+  }
 
   function updateForm(field, value) {
     const formatters = { name: titleCase, phone: formatPhone, birthDate: formatDateInput, goal: sentenceCase, notes: sentenceCase }
@@ -120,7 +125,7 @@ function Dashboard() {
         <nav>
           <a className="active" href="/painel"><BarChart3 /> Visão geral</a>
           <a href="#cadastro"><UserPlus /> Cadastrar aluno</a>
-          <a href="/painel/alunos"><Users /> Lista de alunos</a>
+          <a href="#lista-alunos"><Users /> Lista de alunos</a>
           <a href="#acesso"><QrCode /> QR Code e WhatsApp</a>
           <a href="#lgpd"><ShieldCheck /> LGPD</a>
         </nav>
@@ -128,7 +133,7 @@ function Dashboard() {
 
       <section className="academyMain">
         <header className="academyHero">
-          <div><span className="academyTag">Painel da academia</span><h1>Gestão clara. Acesso simples. Treino em movimento.</h1><p>Cadastre alunos, gere o QR Code real e acompanhe o ecossistema com a mesma linguagem visual da landing page.</p></div>
+          <div><span className="academyTag">Painel da academia</span><h1>Gestão clara. Acesso simples. Treino em movimento.</h1><p>Cadastre alunos, acompanhe a lista, gere o QR Code real e envie o acesso por WhatsApp em uma única central.</p></div>
           <img src="/fitness-athlete.svg" alt="Atleta treinando" />
         </header>
 
@@ -167,6 +172,27 @@ function Dashboard() {
               </div>
             </> : <p>Nenhum aluno cadastrado.</p>}
           </article>
+        </section>
+
+        <section className="academyCard dashboardStudents" id="lista-alunos">
+          <div className="dashboardStudentsHeader">
+            <div><span>Alunos cadastrados</span><h2>Lista de alunos</h2><p>Visualização rápida dos cadastros mais recentes.</p></div>
+            <a href="/painel/alunos">Abrir lista completa <ArrowRight /></a>
+          </div>
+          <div className="dashboardStudentsList">
+            {recentStudents.map((student) => {
+              const progress = Math.min(100, Math.round(((student.completedThisMonth || 0) / Math.max(student.monthlyGoal || 1, 1)) * 100))
+              return (
+                <article key={student.id}>
+                  <div className="dashboardStudentIdentity"><span>{student.name.split(' ').map((part) => part[0]).slice(0, 2).join('')}</span><div><strong>{titleCase(student.name)}</strong><small>{formatPhone(student.phone)} · {student.birthDate || 'Data não informada'}</small></div></div>
+                  <div><small>Professor</small><strong>{trainerName(student.trainerId)}</strong></div>
+                  <div><small>Objetivo</small><strong>{sentenceCase(student.goal)}</strong></div>
+                  <div><small>Meta mensal</small><strong>{student.completedThisMonth || 0}/{student.monthlyGoal || 0} treinos</strong><div className="dashboardProgress"><span style={{ width: `${progress}%` }} /></div></div>
+                  <a href={`/aluno/${student.token}`} target="_blank" rel="noreferrer">Abrir app <ExternalLink /></a>
+                </article>
+              )
+            })}
+          </div>
         </section>
 
         <section className="academyCard lgpdCard" id="lgpd"><ShieldCheck /><div><span>Privacidade integrada</span><h2>Consentimento antes do primeiro treino.</h2><p>Termos, Política de Privacidade e tratamento de dados são apresentados antes do acesso ao app do aluno.</p></div></section>
