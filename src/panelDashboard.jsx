@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import { formatDateInput, formatPhone, isValidBrazilianDate, normalizeStudent, sentenceCase, titleCase } from './dataFormat.js'
 import './panelDashboard.css'
+import './panelDashboardStudents.css'
 
 const STORAGE_KEY = 'shappFitMvpState'
 
