@@ -4,6 +4,8 @@ if (path.startsWith('/aluno/')) {
   import('./studentMobile.jsx')
 } else if (path.startsWith('/painel/alunos')) {
   import('./panelStudents.jsx')
+} else if (path.startsWith('/painel')) {
+  import('./panelDashboard.jsx')
 } else {
   import('./main.jsx')
 }
