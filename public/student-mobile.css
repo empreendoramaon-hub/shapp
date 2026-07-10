@@ -1,0 +1,282 @@
+/* SHAPP Fit student app, mobile-first direction inspired by Sotalia's bold sports language */
+@media (max-width: 760px) {
+  body:has(.studentShell) {
+    background: #f3f2ed;
+    color: #101010;
+    overflow-x: hidden;
+  }
+
+  body:has(.studentShell)::before,
+  body:has(.studentShell)::after {
+    display: none;
+  }
+
+  .studentShell {
+    min-height: 100dvh !important;
+    padding: 0 0 104px !important;
+    color: #111 !important;
+    background:
+      radial-gradient(circle at 86% 4%, color-mix(in srgb, var(--brand, #b7ff2a) 30%, transparent), transparent 24%),
+      #f3f2ed !important;
+  }
+
+  .studentShell::after {
+    content: "INÍCIO     TREINO     EVOLUÇÃO     PERFIL";
+    position: fixed;
+    z-index: 100;
+    left: 12px;
+    right: 12px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    color: rgba(255,255,255,.74);
+    background: #090909;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 24px;
+    box-shadow: 0 24px 54px rgba(0,0,0,.28);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: .13em;
+    word-spacing: 10px;
+    white-space: pre;
+  }
+
+  .studentHeader {
+    width: 100% !important;
+    min-height: 260px;
+    margin: 0 0 -28px !important;
+    padding: 22px 20px 72px !important;
+    display: grid !important;
+    grid-template-columns: auto 1fr;
+    align-content: start;
+    align-items: center;
+    gap: 14px !important;
+    color: white;
+    border: 0 !important;
+    border-radius: 0 0 38px 38px !important;
+    background:
+      linear-gradient(135deg, rgba(0,0,0,.3), rgba(0,0,0,.92)),
+      linear-gradient(120deg, var(--brand, #b7ff2a), #111 46%, #000) !important;
+    box-shadow: none !important;
+    overflow: hidden;
+  }
+
+  .studentHeader::after {
+    content: "SEU TREINO DE HOJE";
+    position: absolute;
+    top: 168px;
+    left: 20px;
+    color: var(--brand, #b7ff2a);
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: .18em;
+  }
+
+  .studentHeader .studentLogo {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    box-shadow: none;
+  }
+
+  .studentHeader h1 {
+    font-size: clamp(2.45rem, 13vw, 4rem) !important;
+    line-height: .86 !important;
+    letter-spacing: -.08em !important;
+    margin-top: 8px !important;
+    color: white;
+  }
+
+  .studentHeader p {
+    grid-column: 1 / -1;
+    margin: 6px 0 0 !important;
+    max-width: 310px;
+    color: rgba(255,255,255,.66) !important;
+    font-size: 13px;
+    line-height: 1.45 !important;
+  }
+
+  .studentHeader small {
+    color: var(--brand, #b7ff2a) !important;
+  }
+
+  .studentGrid {
+    position: relative;
+    z-index: 2;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 14px;
+    display: flex !important;
+    flex-direction: column;
+    gap: 12px !important;
+  }
+
+  .studentCard {
+    padding: 20px !important;
+    color: #111;
+    border: 1px solid rgba(0,0,0,.08) !important;
+    border-radius: 26px !important;
+    background: #fff !important;
+    box-shadow: 0 14px 36px rgba(0,0,0,.08) !important;
+  }
+
+  .studentCard.workoutToday {
+    order: -2;
+    padding: 22px 18px 18px !important;
+    background: #fff !important;
+  }
+
+  .studentCard.progressCard {
+    order: -1;
+    color: white;
+    background: #0a0a0a !important;
+    border-color: #0a0a0a !important;
+  }
+
+  .studentCard.progressCard h2,
+  .studentCard.progressCard p,
+  .studentCard.progressCard .fitKicker {
+    color: white !important;
+  }
+
+  .studentCard.progressCard .fitKicker,
+  .studentCard.workoutToday .fitKicker {
+    color: var(--brand, #b7ff2a) !important;
+  }
+
+  .studentCard h2 {
+    margin-bottom: 8px !important;
+    font-size: 1.65rem !important;
+    line-height: 1.02;
+    color: #111;
+  }
+
+  .studentCard p,
+  .studentCard span,
+  .studentCard small {
+    color: rgba(17,17,17,.62) !important;
+    font-size: 13px;
+  }
+
+  .exerciseList {
+    gap: 8px !important;
+    margin: 16px 0 !important;
+  }
+
+  .exerciseList div {
+    position: relative;
+    min-height: 76px;
+    padding: 15px 52px 15px 16px !important;
+    color: #111;
+    border: 0 !important;
+    border-radius: 18px !important;
+    background: #f1f1ed !important;
+  }
+
+  .exerciseList div::after {
+    content: "›";
+    position: absolute;
+    right: 17px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    font-weight: 300;
+    color: #aaa;
+  }
+
+  .exerciseList strong {
+    font-size: 15px;
+    color: #111;
+  }
+
+  .exerciseList small {
+    margin-top: 5px;
+    color: #777 !important;
+    line-height: 1.35 !important;
+  }
+
+  .exerciseList em {
+    display: inline-flex !important;
+    margin-top: 8px !important;
+    padding: 6px 8px;
+    color: #111 !important;
+    background: var(--brand, #b7ff2a);
+    border-radius: 999px;
+    font-size: 10px;
+  }
+
+  .studentCard .fitPrimaryButton {
+    position: sticky;
+    bottom: 94px;
+    z-index: 5;
+    width: 100%;
+    min-height: 56px;
+    margin-top: 12px !important;
+    color: #080808;
+    background: var(--brand, #b7ff2a) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 14px 32px color-mix(in srgb, var(--brand, #b7ff2a) 35%, transparent);
+  }
+
+  .progressTrack {
+    height: 11px !important;
+    background: rgba(255,255,255,.14) !important;
+  }
+
+  .progressTrack span {
+    background: var(--brand, #b7ff2a) !important;
+  }
+
+  .badgeRow {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .badgeRow span {
+    padding: 12px 7px !important;
+    color: #111 !important;
+    background: #f1f1ed !important;
+    border-radius: 16px !important;
+    text-align: center;
+    font-size: 10px !important;
+  }
+
+  .consentCard,
+  .blockedCard {
+    width: auto !important;
+    margin: 18px 14px 0 !important;
+    padding: 24px 20px !important;
+    color: #111 !important;
+    border: 1px solid rgba(0,0,0,.08) !important;
+    border-radius: 28px !important;
+    background: #fff !important;
+    box-shadow: 0 18px 48px rgba(0,0,0,.1) !important;
+  }
+
+  .consentCard h1,
+  .blockedCard h1 {
+    color: #111;
+    font-size: 2.5rem !important;
+  }
+
+  .consentCard p,
+  .blockedCard p {
+    color: #666 !important;
+  }
+
+  .consentLine {
+    color: #222 !important;
+    background: #f1f1ed !important;
+  }
+}
+
+@media (min-width: 761px) {
+  body:has(.studentShell) .studentShell {
+    max-width: 520px;
+    margin: 0 auto;
+    box-shadow: 0 0 90px rgba(0,0,0,.55);
+  }
+}
