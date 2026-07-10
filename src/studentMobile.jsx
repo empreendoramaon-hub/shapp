@@ -9,6 +9,7 @@ import {
   Home,
   Lock,
   PlayCircle,
+  Salad,
   ShieldCheck,
   Sparkles,
   Trophy,
@@ -19,11 +20,82 @@ import './studentMobile.css'
 const STORAGE_KEY = 'shappFitMvpState'
 const CONSENT_KEY = 'shappFitConsent'
 
+const fallbackWorkouts = [
+  {
+    id: 'workout-demo',
+    day: 'Segunda',
+    name: 'Treino A',
+    focus: 'Pernas e glúteos',
+    exercises: [
+      { name: 'Agachamento livre', sets: '4', reps: '10', load: 'Progressiva', rest: '90s', videoOptional: true },
+      { name: 'Leg press', sets: '4', reps: '12', load: 'Moderada', rest: '75s', videoOptional: true },
+      { name: 'Cadeira extensora', sets: '3', reps: '15', load: 'Controle total', rest: '60s', videoOptional: false }
+    ]
+  }
+]
+
+const fallbackState = {
+  academy: {
+    id: 'ironfit-demo',
+    name: 'Iron Fitness Club',
+    logo: 'IF',
+    primaryColor: '#b7ff2a',
+    secondaryColor: '#d40019',
+    termsVersion: '2026.07.09',
+    privacyVersion: '2026.07.09',
+    modules: { exerciseVideos: true, exercisePhotos: true, gamification: true, chat: true, nutrition: true }
+  },
+  trainers: [
+    { id: 'trainer-ana', name: 'Ana Paula', role: 'Personal Trainer' }
+  ],
+  students: [
+    {
+      id: 'student-demo-001',
+      token: 'demo-ana-cassoni',
+      name: 'Ana Cassoni',
+      phone: '(48) 98888-7777',
+      email: 'ana@email.com',
+      status: 'active',
+      goal: 'Hipertrofia e constância',
+      trainerId: 'trainer-ana',
+      monthlyGoal: 20,
+      completedThisMonth: 8,
+      xp: 1280,
+      level: 7,
+      streak: 4,
+      workouts: fallbackWorkouts,
+      assessments: [],
+      nutrition: {
+        enabled: true,
+        diet: 'Café da manhã com proteína, almoço equilibrado e jantar leve nos dias de treino.',
+        supplements: 'Creatina 3g ao dia e whey protein quando necessário.',
+        professional: 'Nutricionista da academia'
+      }
+    }
+  ],
+  auditLog: []
+}
+
 function loadState() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')
+    const state = stored?.academy && Array.isArray(stored?.students) ? stored : fallbackState
+    return {
+      ...state,
+      academy: {
+        ...fallbackState.academy,
+        ...state.academy,
+        modules: { ...fallbackState.academy.modules, ...(state.academy?.modules || {}) }
+      },
+      students: state.students.map((student) => ({
+        ...student,
+        level: student.level || Math.max(1, Math.floor((student.xp || 0) / 220) + 1),
+        workouts: student.workouts?.length ? student.workouts : fallbackWorkouts,
+        nutrition: student.nutrition || { enabled: false, diet: '', supplements: '', professional: '' }
+      }))
+    }
   } catch {
-    return null
+    return fallbackState
   }
 }
 
@@ -33,6 +105,10 @@ function getToken() {
 
 function dayLabel() {
   return ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'][new Date().getDay()]
+}
+
+function comparableDay(value = '') {
+  return value.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }
 
 function Consent({ academy, student, onAccept }) {
@@ -119,6 +195,13 @@ function HomeTab({ student, academy, trainer, workout, goalProgress, remaining, 
           <div className="coachAvatar">{trainer?.name?.slice(0, 1) || 'P'}</div>
           <div><small>Seu professor</small><strong>{trainer?.name || 'Professor responsável'}</strong><span>{trainer?.role || 'Personal Trainer'}</span></div>
         </article>
+
+        {student.nutrition?.enabled && (
+          <article className="nutritionTeaser" onClick={() => setTab('nutrition')}>
+            <Salad size={24} />
+            <div><small>Nutricionista</small><strong>Dieta e suplementos liberados.</strong><span>Abrir plano alimentar</span></div>
+          </article>
+        )}
       </section>
     </>
   )
@@ -173,6 +256,31 @@ function ProgressTab({ student }) {
   )
 }
 
+function NutritionTab({ student }) {
+  const nutrition = student.nutrition || {}
+  return (
+    <section className="mobilePage nutritionPage">
+      <div className="nutritionVisual">
+        <img src="/fitness-athlete.svg" alt="Plano alimentar integrado ao treino" />
+        <div className="nutritionVisualShade" />
+        <div className="pageTitle">
+          <p className="mobileEyebrow"><Salad size={15} /> Nutricionista</p>
+          <h1>Plano alimentar.</h1>
+          <span>{nutrition.professional || 'Equipe da academia'}</span>
+        </div>
+      </div>
+      <article className="nutritionPlan">
+        <small>Dieta</small>
+        <h2>{nutrition.diet || 'A academia ainda não inseriu uma dieta para este aluno.'}</h2>
+      </article>
+      <article className="supplementPlan">
+        <small>Suplementos</small>
+        <p>{nutrition.supplements || 'Nenhuma suplementação cadastrada.'}</p>
+      </article>
+    </section>
+  )
+}
+
 function ProfileTab({ student, academy, trainer, consent }) {
   return (
     <section className="mobilePage profilePage">
@@ -197,7 +305,10 @@ function StudentMobileApp() {
   const student = state?.students?.find((item) => item.token === token)
   const academy = state?.academy
   const trainer = state?.trainers?.find((item) => item.id === student?.trainerId)
-  const workout = useMemo(() => student?.workouts?.find((item) => item.day === dayLabel()) || student?.workouts?.[0], [student])
+  const workout = useMemo(() => {
+    const workouts = student?.workouts?.length ? student.workouts : fallbackWorkouts
+    return workouts.find((item) => comparableDay(item.day) === comparableDay(dayLabel())) || workouts[0]
+  }, [student])
   const [consent, setConsent] = useState(() => {
     try { return JSON.parse(localStorage.getItem(`${CONSENT_KEY}:${token}`) || 'null') } catch { return null }
   })
@@ -226,12 +337,14 @@ function StudentMobileApp() {
         {tab === 'home' && <HomeTab student={student} academy={academy} trainer={trainer} workout={workout} goalProgress={goalProgress} remaining={remaining} setTab={setTab} />}
         {tab === 'workout' && <WorkoutTab student={student} academy={academy} workout={workout} onFinish={finishWorkout} />}
         {tab === 'progress' && <ProgressTab student={student} />}
+        {tab === 'nutrition' && <NutritionTab student={student} />}
         {tab === 'profile' && <ProfileTab student={student} academy={academy} trainer={trainer} consent={consent} />}
       </div>
       <nav className="mobileNav">
         <button className={tab === 'home' ? 'active' : ''} onClick={() => setTab('home')}><Home /><span>Início</span></button>
         <button className={tab === 'workout' ? 'active' : ''} onClick={() => setTab('workout')}><Dumbbell /><span>Treino</span></button>
         <button className={tab === 'progress' ? 'active' : ''} onClick={() => setTab('progress')}><BarChart3 /><span>Evolução</span></button>
+        {student.nutrition?.enabled && <button className={tab === 'nutrition' ? 'active' : ''} onClick={() => setTab('nutrition')}><Salad /><span>Nutri</span></button>}
         <button className={tab === 'profile' ? 'active' : ''} onClick={() => setTab('profile')}><UserRound /><span>Perfil</span></button>
       </nav>
     </main>

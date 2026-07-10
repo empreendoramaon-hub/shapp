@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { ArrowLeft, Copy, Filter, MessageCircle, MoreHorizontal, QrCode, Search, UserPlus } from 'lucide-react'
+import { ArrowLeft, Copy, Dumbbell, Filter, MessageCircle, MoreHorizontal, QrCode, Salad, Search, UserPlus } from 'lucide-react'
 import { formatPhone, sentenceCase, titleCase } from './dataFormat.js'
 import './panelStudents.css'
 
@@ -69,13 +69,27 @@ function StudentsPage() {
 
       <section className="studentCards">
         {students.map((student) => {
-          const progress = Math.min(100, Math.round((student.completedThisMonth / Math.max(student.monthlyGoal, 1)) * 100))
+          const progress = Math.min(100, Math.round(((student.completedThisMonth || 0) / Math.max(student.monthlyGoal || 1, 1)) * 100))
           const displayName = titleCase(student.name)
-          const whatsapp = `https://wa.me/55${student.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Olá, ${displayName}! Seu acesso ao app da ${state.academy.name}: ${inviteLink(student)}`)}`
+          const whatsapp = `https://wa.me/55${student.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Ola, ${displayName}! Seu acesso ao app da ${state.academy.name}: ${inviteLink(student)}`)}`
           return (
             <article className="studentRow" key={student.id}>
-              <div className="studentIdentity"><div className="studentAvatar">{displayName.split(' ').map((part) => part[0]).slice(0, 2).join('')}</div><div><h2>{displayName}</h2><p>{student.email || 'Sem e-mail'} · {formatPhone(student.phone) || 'Sem telefone'}</p><span className={`statusTag ${student.status}`}>{student.status === 'active' ? 'Ativo' : 'Inativo'}</span></div></div>
-              <div className="studentMeta"><div><small>Professor</small><strong>{trainerName(student.trainerId)}</strong></div><div><small>Objetivo</small><strong>{sentenceCase(student.goal || 'Não informado')}</strong></div><div><small>Frequência</small><strong>{student.completedThisMonth}/{student.monthlyGoal} treinos</strong><div className="tinyProgress"><span style={{ width: `${progress}%` }} /></div></div></div>
+              <div className="studentIdentity">
+                <div className="studentAvatar">{displayName.split(' ').map((part) => part[0]).slice(0, 2).join('')}</div>
+                <div>
+                  <h2>{displayName}</h2>
+                  <p>{formatPhone(student.phone) || 'Sem telefone'} · {student.birthDate || 'Data não informada'}</p>
+                  <small>{student.email || 'Sem e-mail'}</small>
+                  <span className={`statusTag ${student.status}`}>{student.status === 'active' ? 'Ativo' : 'Inativo'}</span>
+                </div>
+              </div>
+              <div className="studentMeta">
+                <div><small>Professor</small><strong>{trainerName(student.trainerId)}</strong></div>
+                <div><small>Objetivo</small><strong>{sentenceCase(student.goal || 'Não informado')}</strong></div>
+                <div><small>Rotinas</small><strong><Dumbbell size={15} /> {student.workouts?.length || 0} dias</strong></div>
+                <div><small>Nutricionista</small><strong><Salad size={15} /> {student.nutrition?.enabled ? 'Ativa' : 'Off'}</strong></div>
+                <div><small>Frequência</small><strong>{student.completedThisMonth || 0}/{student.monthlyGoal || 0} treinos</strong><div className="tinyProgress"><span style={{ width: `${progress}%` }} /></div></div>
+              </div>
               <div className="studentActions">
                 <a href={`/aluno/${student.token}`} target="_blank" rel="noreferrer"><QrCode size={18} /> Abrir app</a>
                 <a href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={18} /> WhatsApp</a>

@@ -3,7 +3,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 function StudentsIcon() {
-  return <UsersRound size={18} />
+  return React.createElement(UsersRound, { size: 18 })
 }
 
 function addStudentsLink() {
@@ -26,7 +26,7 @@ function addStudentsLink() {
   if (registerLink?.nextSibling) nav.insertBefore(link, registerLink.nextSibling)
   else nav.appendChild(link)
 
-  createRoot(iconHost).render(<StudentsIcon />)
+  createRoot(iconHost).render(React.createElement(StudentsIcon))
 }
 
 const observer = new MutationObserver(addStudentsLink)
