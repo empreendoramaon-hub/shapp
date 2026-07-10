@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" role="img" aria-label="Atleta em movimento">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ff2438"/>
+      <stop offset="1" stop-color="#7a0010"/>
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="28"/></filter>
+  </defs>
+  <rect width="900" height="1100" fill="#0b0b0b"/>
+  <circle cx="620" cy="240" r="260" fill="url(#g)" opacity=".72" filter="url(#blur)"/>
+  <path d="M527 179c60-12 114 32 121 88 7 54-35 101-91 108-59 8-111-33-119-90-8-53 32-94 89-106Z" fill="#f3f3ef"/>
+  <path d="M449 352c106-32 205 22 247 120l79 183-123 59-90-165-52 265-164-17 38-277-121 137-101-83 172-183c33-35 70-60 115-39Z" fill="#f3f3ef"/>
+  <path d="M379 793l148 13-33 260H321l58-273Z" fill="#f3f3ef"/>
+  <path d="M544 820l126-53 132 247-160 63-98-257Z" fill="#f3f3ef"/>
+  <path d="M200 582l104 83-136 179-109-87 141-175Z" fill="#f3f3ef"/>
+  <path d="M754 650l123-54 55 157-127 42-51-145Z" fill="#f3f3ef"/>
+  <g fill="#ff2438">
+    <circle cx="164" cy="185" r="12"/><circle cx="199" cy="219" r="8"/><circle cx="769" cy="183" r="10"/>
+    <path d="M77 392h183v18H77zM678 120h152v18H678zM658 987h157v18H658z"/>
+  </g>
+</svg>
