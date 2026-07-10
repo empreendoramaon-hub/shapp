@@ -14,7 +14,8 @@
     "react": "latest",
     "react-dom": "latest",
     "firebase": "latest",
-    "lucide-react": "latest"
+    "lucide-react": "latest",
+    "qrcode.react": "latest"
   },
   "devDependencies": {}
 }
