@@ -10,6 +10,7 @@ import {
   Lock,
   PlayCircle,
   ShieldCheck,
+  Sparkles,
   Trophy,
   UserRound
 } from 'lucide-react'
@@ -53,7 +54,10 @@ function Consent({ academy, student, onAccept }) {
 
   return (
     <main className="mobileLegal" style={{ '--brand': academy.primaryColor }}>
-      <div className="legalLogo">{academy.logo}</div>
+      <div className="legalVisual">
+        <img src="/fitness-athlete.svg" alt="Atleta em movimento" />
+        <div className="legalLogo">{academy.logo}</div>
+      </div>
       <p className="mobileEyebrow"><ShieldCheck size={15} /> Primeiro acesso</p>
       <h1>Seu treino está pronto.</h1>
       <p>Antes de entrar, confirme os documentos obrigatórios da {academy.name}.</p>
@@ -69,20 +73,30 @@ function HomeTab({ student, academy, trainer, workout, goalProgress, remaining, 
   return (
     <>
       <header className="mobileHero">
+        <div className="heroImageWrap">
+          <img src="/fitness-athlete.svg" alt="Atleta treinando" />
+        </div>
         <div className="mobileTopline">
           <div className="mobileAcademy"><span>{academy.logo}</span><small>{academy.name}</small></div>
           <div className="levelPill">Nível {student.level}</div>
         </div>
-        <p>Olá, {student.name.split(' ')[0]}.</p>
-        <h1>Hoje é dia de virar a chave.</h1>
-        <button onClick={() => setTab('workout')}>Abrir treino <ChevronRight size={20} /></button>
+        <div className="heroCopyMobile">
+          <p>Olá, {student.name.split(' ')[0]}.</p>
+          <h1>Hoje é dia de virar a chave.</h1>
+          <button onClick={() => setTab('workout')}>Abrir treino <ChevronRight size={20} /></button>
+        </div>
       </header>
 
       <section className="mobileContent">
-        <article className="todayCard" onClick={() => setTab('workout')}>
-          <div className="cardIcon"><Dumbbell size={23} /></div>
-          <div><small>Treino de hoje</small><h2>{workout.name}</h2><p>{workout.focus} · {workout.exercises.length} exercícios</p></div>
-          <ChevronRight />
+        <article className="visualWorkoutCard" onClick={() => setTab('workout')}>
+          <img src="/workout-legs.svg" alt="Ilustração do treino de pernas" />
+          <div className="visualWorkoutShade" />
+          <div className="visualWorkoutCopy">
+            <small>Treino de hoje</small>
+            <h2>{workout.name}</h2>
+            <p>{workout.focus} · {workout.exercises.length} exercícios</p>
+            <span>Começar agora <ChevronRight size={18} /></span>
+          </div>
         </article>
 
         <div className="quickStats">
@@ -94,6 +108,11 @@ function HomeTab({ student, academy, trainer, workout, goalProgress, remaining, 
           <div><small>Meta mensal</small><strong>{student.completedThisMonth}/{student.monthlyGoal}</strong></div>
           <div className="mobileProgress"><span style={{ width: `${goalProgress}%` }} /></div>
           <p>Faltam {remaining} treinos para completar a meta.</p>
+        </article>
+
+        <article className="motivationCard">
+          <Sparkles size={22} />
+          <div><small>Impulso do dia</small><strong>Constância vence intensidade solta.</strong></div>
         </article>
 
         <article className="coachCard">
@@ -113,8 +132,16 @@ function WorkoutTab({ student, academy, workout, onFinish }) {
   }
 
   return (
-    <section className="mobilePage">
-      <div className="pageTitle"><p className="mobileEyebrow"><Dumbbell size={15} /> {dayLabel()}</p><h1>{workout.name}</h1><span>{workout.focus}</span></div>
+    <section className="mobilePage workoutPage">
+      <div className="workoutVisualHeader">
+        <img src="/workout-legs.svg" alt="Treino de pernas" />
+        <div className="workoutVisualShade" />
+        <div className="pageTitle">
+          <p className="mobileEyebrow"><Dumbbell size={15} /> {dayLabel()}</p>
+          <h1>{workout.name}</h1>
+          <span>{workout.focus}</span>
+        </div>
+      </div>
       <div className="workoutSummary"><div><strong>{workout.exercises.length}</strong><span>exercícios</span></div><div><strong>{done.length}</strong><span>concluídos</span></div><div><strong>~45</strong><span>minutos</span></div></div>
       <div className="mobileExerciseList">
         {workout.exercises.map((exercise, index) => (
@@ -133,18 +160,23 @@ function WorkoutTab({ student, academy, workout, onFinish }) {
 function ProgressTab({ student }) {
   const last = student.assessments?.[0]
   return (
-    <section className="mobilePage">
-      <div className="pageTitle"><p className="mobileEyebrow"><BarChart3 size={15} /> Evolução</p><h1>Seu progresso.</h1><span>Pequenas vitórias, empilhadas.</span></div>
+    <section className="mobilePage progressPage">
+      <div className="progressVisual">
+        <img src="/fitness-athlete.svg" alt="Atleta representando evolução" />
+        <div className="progressVisualShade" />
+        <div className="pageTitle"><p className="mobileEyebrow"><BarChart3 size={15} /> Evolução</p><h1>Seu progresso.</h1><span>Pequenas vitórias, empilhadas.</span></div>
+      </div>
       <article className="evolutionHero"><small>Objetivo principal</small><h2>{student.goal}</h2><div className="evolutionNumbers"><div><strong>{student.weight || '--'} kg</strong><span>Peso atual</span></div><div><strong>{last?.bodyFat || '--'}%</strong><span>Gordura</span></div><div><strong>{last?.waist || '--'} cm</strong><span>Cintura</span></div></div></article>
       <article className="historyCard"><h2>Histórico recente</h2>{last ? <div className="historyLine"><span>{new Date(last.date).toLocaleDateString('pt-BR')}</span><strong>{last.note}</strong></div> : <p>Sua primeira avaliação ainda não foi registrada.</p>}</article>
-      <article className="photoPlaceholder"><BarChart3 size={32} /><h2>Fotos de evolução</h2><p>As imagens liberadas pela academia aparecerão aqui, sempre protegidas e vinculadas ao seu perfil.</p></article>
+      <article className="photoExperience"><div className="photoFrame first" /><div className="photoFrame second" /><div className="photoExperienceCopy"><BarChart3 size={28} /><h2>Fotos de evolução</h2><p>Quando a academia liberar imagens, você verá comparativos organizados por data.</p></div></article>
     </section>
   )
 }
 
 function ProfileTab({ student, academy, trainer, consent }) {
   return (
-    <section className="mobilePage">
+    <section className="mobilePage profilePage">
+      <div className="profileVisual"><img src="/fitness-athlete.svg" alt="Perfil fitness" /><div className="profileShade" /></div>
       <div className="profileHeader"><div>{student.name.split(' ').map((name) => name[0]).slice(0, 2).join('')}</div><h1>{student.name}</h1><p>{student.email}</p><span className="activeBadge">Matrícula ativa</span></div>
       <div className="profileList">
         <article><small>Academia</small><strong>{academy.name}</strong></article>
