@@ -78,7 +78,6 @@ http://localhost:5173/aluno/demo-ana-cassoni
 A academia pode decidir quais módulos aparecem no app:
 
 - Vídeos dos exercícios.
-- Fotos/GIFs dos exercícios.
 - Gamificação.
 - Chat professor-aluno.
 - Rankings.

@@ -43,7 +43,7 @@ const fallbackState = {
     secondaryColor: '#d40019',
     termsVersion: '2026.07.09',
     privacyVersion: '2026.07.09',
-    modules: { exerciseVideos: true, exercisePhotos: true, gamification: true, chat: true, nutrition: true }
+    modules: { exerciseVideos: true, gamification: true, chat: true, nutrition: true }
   },
   trainers: [
     { id: 'trainer-ana', name: 'Ana Paula', role: 'Personal Trainer' }
@@ -251,7 +251,6 @@ function ProgressTab({ student }) {
       </div>
       <article className="evolutionHero"><small>Objetivo principal</small><h2>{student.goal}</h2><div className="evolutionNumbers"><div><strong>{student.weight || '--'} kg</strong><span>Peso atual</span></div><div><strong>{last?.bodyFat || '--'}%</strong><span>Gordura</span></div><div><strong>{last?.waist || '--'} cm</strong><span>Cintura</span></div></div></article>
       <article className="historyCard"><h2>Histórico recente</h2>{last ? <div className="historyLine"><span>{new Date(last.date).toLocaleDateString('pt-BR')}</span><strong>{last.note}</strong></div> : <p>Sua primeira avaliação ainda não foi registrada.</p>}</article>
-      <article className="photoExperience"><div className="photoFrame first" /><div className="photoFrame second" /><div className="photoExperienceCopy"><BarChart3 size={28} /><h2>Fotos de evolução</h2><p>Quando a academia liberar imagens, você verá comparativos organizados por data.</p></div></article>
     </section>
   )
 }

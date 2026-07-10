@@ -73,7 +73,6 @@ const fallbackState = {
     privacyVersion: '2026.07.09',
     modules: {
       exerciseVideos: true,
-      exercisePhotos: true,
       gamification: true,
       chat: true,
       nutrition: true

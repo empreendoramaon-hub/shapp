@@ -36,7 +36,6 @@ const defaultState = {
     privacyVersion: '2026.07.09',
     modules: {
       exerciseVideos: false,
-      exercisePhotos: true,
       gamification: true,
       chat: true,
       rankings: true,
@@ -349,7 +348,6 @@ function AcademyPanel({ state, setState }) {
             <p className="fitKicker"><Activity size={16} /> Módulos opcionais</p>
             <h2>Recursos por academia</h2>
             <FeatureSwitch checked={state.academy.modules.exerciseVideos} label="Vídeos dos exercícios" description="Cliente decide se quer usar ou não." onChange={() => toggleModule('exerciseVideos')} />
-            <FeatureSwitch checked={state.academy.modules.exercisePhotos} label="Fotos/GIF dos exercícios" description="Apoio visual sem obrigar vídeo." onChange={() => toggleModule('exercisePhotos')} />
             <FeatureSwitch checked={state.academy.modules.gamification} label="Gamificação" description="XP, níveis, sequência e conquistas." onChange={() => toggleModule('gamification')} />
             <FeatureSwitch checked={state.academy.modules.chat} label="Chat professor-aluno" description="Contato direto dentro do app." onChange={() => toggleModule('chat')} />
           </div>
@@ -509,7 +507,7 @@ function StudentApp({ state, setState, token }) {
           <p className="fitKicker"><BarChart3 size={16} /> Evolução</p>
           <h2>{student.goal}</h2>
           <p>Peso atual: {student.weight || 'não informado'} kg. Última avaliação: {student.assessments[0]?.date || 'pendente'}.</p>
-          <small>Histórico, fotos e medidas ficam sob controle da academia e do professor responsável.</small>
+          <small>Histórico e medidas ficam sob controle da academia e do professor responsável.</small>
         </article>
       </section>
     </main>
