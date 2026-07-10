@@ -2,6 +2,7 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 import ShappFitMvp from './shappFitMvp.jsx'
 import ShappLanding from './ShappLanding.jsx'
+import './panelEnhancements.js'
 import './styles.css'
 
 function App() {
