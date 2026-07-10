@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-label="Treino de pernas">
+  <defs><linearGradient id="r" x1="0" x2="1"><stop stop-color="#ff2438"/><stop offset="1" stop-color="#8b0011"/></linearGradient></defs>
+  <rect width="900" height="700" fill="#0b0b0b"/>
+  <circle cx="700" cy="160" r="260" fill="url(#r)" opacity=".55"/>
+  <path d="M270 80h145l42 214-83 301H208l112-308-50-207Z" fill="#f1f0eb"/>
+  <path d="M466 80h146l-47 213 118 302H514l-89-302 41-213Z" fill="#f1f0eb"/>
+  <path d="M198 591h181v57H183c-21 0-31-23-16-39l31-18Zm317 0h181l33 18c17 10 10 39-10 39H515v-57Z" fill="#ff2438"/>
+  <path d="M54 110h177v16H54zm607 469h184v16H661z" fill="#ff2438"/>
+</svg>
