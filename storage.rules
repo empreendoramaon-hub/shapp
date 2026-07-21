@@ -1,0 +1,10 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Storage ainda nao e usado pelo app. Permanece fechado ate que cada
+    // caminho tenha autenticacao, tamanho e MIME type explicitamente testados.
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

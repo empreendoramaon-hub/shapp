@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ArrowLeft, Copy, Dumbbell, Filter, MessageCircle, MoreHorizontal, QrCode, Salad, Search, UserPlus } from 'lucide-react'
-import { formatPhone, sentenceCase, titleCase } from './dataFormat.js'
+import { buildStudentInviteUrl, formatPhone, sentenceCase, titleCase } from './dataFormat.js'
 import './panelStudents.css'
 
 const STORAGE_KEY = 'shappFitMvpState'
@@ -32,7 +32,7 @@ function StudentsPage() {
   }
 
   function inviteLink(student) {
-    return `${window.location.origin}/aluno/${student.token}`
+    return buildStudentInviteUrl(window.location.origin, student, state)
   }
 
   async function copyLink(student) {
@@ -86,7 +86,7 @@ function StudentsPage() {
               <div className="studentMeta">
                 <div><small>Professor</small><strong>{trainerName(student.trainerId)}</strong></div>
                 <div><small>Objetivo</small><strong>{sentenceCase(student.goal || 'Não informado')}</strong></div>
-                <div><small>Rotinas</small><strong><Dumbbell size={15} /> {student.workouts?.length || 0} dias</strong></div>
+                <div><small>Rotinas</small><strong><Dumbbell size={15} /> {student.workouts?.length || 0} fichas</strong></div>
                 <div><small>Nutricionista</small><strong><Salad size={15} /> {student.nutrition?.enabled ? 'Ativa' : 'Off'}</strong></div>
                 <div><small>Frequência</small><strong>{student.completedThisMonth || 0}/{student.monthlyGoal || 0} treinos</strong><div className="tinyProgress"><span style={{ width: `${progress}%` }} /></div></div>
               </div>

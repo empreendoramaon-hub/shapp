@@ -1,0 +1,1446 @@
+:root {
+  --sa-red: #c90016;
+  --sa-red-dark: #870004;
+  --sa-black: #211b31;
+  --sa-ink: #171322;
+  --sa-paper: #f7f7fb;
+  --sa-white: #ffffff;
+  --sa-muted: #777184;
+  --sa-line: rgba(33, 27, 49, .1);
+  --sa-cream: #fff6bd;
+  --sa-mint: #dff7ef;
+  --sa-lilac: #eee9ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.sotaliaApp {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) minmax(360px, 560px);
+  justify-content: center;
+  gap: 30px;
+  padding: 28px;
+  color: var(--sa-ink);
+  background:
+    radial-gradient(circle at top left, rgba(201, 0, 22, .24), transparent 34%),
+    var(--sa-black);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.sotaliaApp a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.saDesktopRail {
+  position: sticky;
+  top: 28px;
+  height: calc(100vh - 56px);
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 18px;
+  padding: 34px;
+  color: var(--sa-white);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, .16), rgba(0, 0, 0, .82)),
+    url("https://sotalia.vercel.app/assets/classes.jpg") center / cover;
+  border: 1px solid rgba(255, 255, 255, .16);
+}
+
+.saDesktopRail img {
+  width: 164px;
+  margin-bottom: auto;
+}
+
+.saDesktopRail h2 {
+  margin: 0;
+  font-size: clamp(3.2rem, 6vw, 5.6rem);
+  line-height: .86;
+  letter-spacing: -.07em;
+  text-transform: uppercase;
+}
+
+.saDesktopRail p {
+  margin: 0;
+  color: rgba(255, 255, 255, .7);
+  line-height: 1.6;
+}
+
+.saDesktopRail div {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 900;
+}
+
+.saPhoneSurface {
+  min-height: calc(100vh - 56px);
+  max-width: 560px;
+  width: 100%;
+  justify-self: center;
+  overflow: hidden;
+  background: var(--sa-paper);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .34);
+  border-radius: 8px;
+}
+
+.saRemovedAccess {
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 18px;
+  padding: 28px;
+  color: var(--sa-white);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, .34), rgba(0, 0, 0, .88)),
+    url("https://sotalia.vercel.app/assets/hero-gym.jpg") center / cover;
+}
+
+.saRemovedAccess img {
+  width: 160px;
+}
+
+.saRemovedAccess h1 {
+  margin: 0;
+  font-size: clamp(2.4rem, 10vw, 3.25rem);
+  line-height: .86;
+  letter-spacing: -.075em;
+  text-transform: uppercase;
+}
+
+.saRemovedAccess p {
+  max-width: 420px;
+  margin: 0;
+  color: rgba(255, 255, 255, .72);
+  line-height: 1.6;
+}
+
+.saHero {
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px;
+  overflow: hidden;
+  color: var(--sa-white);
+  background: var(--sa-black);
+  border-radius: 0 0 8px 8px;
+}
+
+.saHeroMedia,
+.saHeroMedia img,
+.saHeroMedia::after {
+  position: absolute;
+  inset: 0;
+}
+
+.saHeroMedia img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .72;
+}
+
+.saHeroMedia::after {
+  content: "";
+  background:
+    radial-gradient(circle at 80% 18%, rgba(255, 255, 255, .22), transparent 18%),
+    linear-gradient(180deg, rgba(33, 27, 49, .42), rgba(33, 27, 49, .76) 46%, rgba(33, 27, 49, .98) 90%);
+}
+
+.saHeroTop,
+.saHeroCopy {
+  position: relative;
+  z-index: 2;
+}
+
+.saHeroTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.saHeroTop img {
+  width: 136px;
+}
+
+.saHeroTop span,
+.saPageHeader p,
+.saWaterHero p {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--sa-white);
+  background: rgba(0, 0, 0, .48);
+  border: 1px solid rgba(255, 255, 255, .18);
+  padding: 8px 10px;
+  font-size: .72rem;
+  font-weight: 950;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.saHeroCopy p,
+.saSectionTitle small {
+  margin: 0 0 10px;
+  color: var(--sa-red);
+  font-size: .78rem;
+  font-weight: 950;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.saHeroCopy h1,
+.saPageHeader h1,
+.saWaterHero h1,
+.saProfileHeader h1 {
+  margin: 0;
+  font-size: clamp(3.4rem, 14vw, 5.6rem);
+  line-height: .86;
+  letter-spacing: -.075em;
+  text-transform: uppercase;
+}
+
+.saHeroCopy > span,
+.saWaterHero span {
+  display: block;
+  max-width: 410px;
+  margin: 16px 0 22px;
+  color: rgba(255, 255, 255, .72);
+  line-height: 1.5;
+}
+
+.saHeroChart {
+  height: 118px;
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  margin: 18px 0 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, .1);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 8px;
+}
+
+.saHeroChart span {
+  flex: 1;
+  min-height: 18px;
+  border-radius: 999px 999px 0 0;
+  background: linear-gradient(180deg, var(--sa-cream), rgba(255, 246, 189, .38));
+}
+
+.saHeroMiniStats {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr;
+  gap: 6px 8px;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+
+.saHeroMiniStats strong {
+  color: var(--sa-cream);
+  font-size: 1.35rem;
+}
+
+.saHeroMiniStats span {
+  color: rgba(255, 255, 255, .68);
+  font-size: .78rem;
+  font-weight: 850;
+}
+
+.saButton {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  border: 0;
+  padding: 0 18px;
+  font: inherit;
+  font-weight: 950;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.saButton.dark {
+  color: var(--sa-white);
+  background: var(--sa-red);
+}
+
+.saContent,
+.saPage {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  padding-bottom: 104px;
+}
+
+.saProgressPanel,
+.saNextClass,
+.saQuickGrid > *,
+.saHighlights article,
+.saScheduleList article,
+.saWaterGrid article,
+.saQrPanel,
+.saFamilyList,
+.saPrivacy {
+  border: 1px solid var(--sa-line);
+  background: var(--sa-white);
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgba(33, 27, 49, .07);
+}
+
+.saProgressPanel,
+.saGamePanel {
+  padding: 18px;
+}
+
+.saGamePanel {
+  display: grid;
+  gap: 14px;
+  color: var(--sa-ink);
+  background: var(--sa-white);
+  border-radius: 8px;
+  box-shadow: 0 14px 34px rgba(33, 27, 49, .08);
+}
+
+.saGameHeader {
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.saGameHeader > span {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  background: var(--sa-lilac);
+  font-size: 1.85rem;
+  border-radius: 8px;
+}
+
+.saGameHeader small,
+.saGameHeader strong,
+.saGameHeader p {
+  display: block;
+}
+
+.saGameHeader small {
+  color: var(--sa-muted);
+  font-size: .72rem;
+  font-weight: 950;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.saGameHeader strong {
+  margin-top: 4px;
+  font-size: 1.35rem;
+}
+
+.saGameHeader p,
+.saGameFoot {
+  margin: 5px 0 0;
+  color: var(--sa-muted);
+  line-height: 1.42;
+}
+
+.saGameStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.saGameStats article {
+  min-height: 82px;
+  display: grid;
+  align-content: center;
+  padding: 10px;
+  background: var(--sa-cream);
+  border-radius: 8px;
+}
+
+.saGameStats article:nth-child(2) {
+  background: var(--sa-mint);
+}
+
+.saGameStats article:nth-child(3) {
+  background: var(--sa-lilac);
+}
+
+.saGameStats article:nth-child(4) {
+  background: #ffe8ef;
+}
+
+.saGameStats strong,
+.saGameStats span {
+  display: block;
+}
+
+.saGameStats strong {
+  font-size: 1.25rem;
+}
+
+.saGameStats span {
+  margin-top: 4px;
+  color: var(--sa-muted);
+  font-size: .68rem;
+  font-weight: 850;
+}
+
+.saProgressBlock {
+  display: grid;
+  gap: 8px;
+}
+
+.saProgressBlock > div:first-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.saProgressBlock small,
+.saProgressBlock b {
+  color: var(--sa-muted);
+  font-size: .78rem;
+}
+
+.saProgressBlock b {
+  color: var(--sa-ink);
+}
+
+.saProgressPanel > div:first-child {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.saProgressPanel small,
+.saNextClass small,
+.saHighlights h3,
+.saScheduleList small,
+.saWaterGrid span,
+.saQrPanel span,
+.saFamilyList span,
+.saPrivacy span {
+  color: var(--sa-muted);
+}
+
+.saProgressPanel strong {
+  font-size: 2.3rem;
+  letter-spacing: -.05em;
+}
+
+.saProgress {
+  height: 11px;
+  margin: 16px 0 12px;
+  overflow: hidden;
+  background: #ebe8f0;
+  border-radius: 999px;
+}
+
+.saProgress span {
+  display: block;
+  height: 100%;
+  background: var(--sa-red);
+  border-radius: inherit;
+}
+
+.saLevelProgress {
+  height: 11px;
+  overflow: hidden;
+  background: #ebe8f0;
+  border-radius: 999px;
+}
+
+.saLevelProgress span {
+  display: block;
+  height: 100%;
+  background: var(--sa-black);
+  border-radius: inherit;
+}
+
+.saProgressPanel p {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: var(--sa-muted);
+}
+
+.saGameFoot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+}
+
+.saNextClass {
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 14px;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.saNextClass img {
+  width: 118px;
+  height: 134px;
+  object-fit: cover;
+  border-radius: 8px 0 0 8px;
+}
+
+.saNextClass span {
+  display: grid;
+  align-content: center;
+  padding: 14px 14px 14px 0;
+}
+
+.saNextClass strong {
+  margin: 7px 0;
+  font-size: 1.16rem;
+}
+
+.saNextClass em {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--sa-red);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.saQuickGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.saQuickGrid > * {
+  display: grid;
+  gap: 7px;
+  min-height: 132px;
+  padding: 16px;
+  color: var(--sa-ink);
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.saQuickGrid > *:first-child {
+  background: var(--sa-mint);
+}
+
+.saQuickGrid > *:nth-child(2) {
+  background: var(--sa-lilac);
+}
+
+.saQuickGrid svg {
+  color: var(--sa-red);
+}
+
+.saQuickGrid strong,
+.saQuickGrid span {
+  display: block;
+}
+
+.saQuickGrid span {
+  color: var(--sa-muted);
+  font-size: .86rem;
+}
+
+.saSectionTitle {
+  padding-top: 12px;
+}
+
+.saSectionTitle h2 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: .98;
+  letter-spacing: -.055em;
+}
+
+.saHighlights {
+  display: grid;
+  gap: 12px;
+}
+
+.saHighlights article {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  min-height: 156px;
+  overflow: hidden;
+}
+
+.saHighlights img {
+  width: 132px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.saHighlights div {
+  padding: 16px;
+}
+
+.saHighlights svg {
+  color: var(--sa-red);
+}
+
+.saHighlights h3 {
+  margin: 22px 0 8px;
+  color: var(--sa-ink);
+  font-size: 1.15rem;
+}
+
+.saHighlights p {
+  margin: 0;
+  color: var(--sa-muted);
+  line-height: 1.45;
+}
+
+.saPageHeader {
+  min-height: 230px;
+  display: grid;
+  align-content: end;
+  padding: 22px;
+  color: var(--sa-white);
+  background: var(--sa-black);
+}
+
+.saWorkoutHero {
+  position: relative;
+  min-height: 390px;
+  display: grid;
+  align-content: end;
+  overflow: hidden;
+  color: var(--sa-white);
+  background: var(--sa-black);
+}
+
+.saWorkoutHero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .78;
+}
+
+.saWorkoutHero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .12), rgba(0, 0, 0, .9));
+}
+
+.saWorkoutHero > div {
+  position: relative;
+  z-index: 2;
+  padding: 22px;
+}
+
+.saWorkoutHero p {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 12px;
+  color: var(--sa-red);
+  font-size: .76rem;
+  font-weight: 950;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.saWorkoutHero h1 {
+  margin: 0;
+  font-size: clamp(3.2rem, 13vw, 5.2rem);
+  line-height: .86;
+  letter-spacing: -.075em;
+  text-transform: uppercase;
+}
+
+.saWorkoutHero span {
+  display: block;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, .72);
+}
+
+.saWorkoutSummary,
+.saMetricGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.saMetricGrid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.saWorkoutSummary article,
+.saMetricGrid article,
+.saAssessmentCard,
+.saInstallPanel {
+  background: var(--sa-white);
+  border: 1px solid var(--sa-line);
+}
+
+.saWorkoutSummary article,
+.saMetricGrid article {
+  min-height: 104px;
+  display: grid;
+  align-content: center;
+  padding: 14px;
+}
+
+.saWorkoutSummary strong,
+.saWorkoutSummary span,
+.saMetricGrid strong,
+.saMetricGrid span {
+  display: block;
+}
+
+.saWorkoutSummary strong,
+.saMetricGrid strong {
+  font-size: 1.55rem;
+}
+
+.saWorkoutSummary span,
+.saMetricGrid span {
+  margin-top: 5px;
+  color: var(--sa-muted);
+  font-size: .78rem;
+}
+
+.saExerciseList {
+  display: grid;
+  gap: 10px;
+}
+
+.saExerciseList article {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 14px;
+  background: var(--sa-white);
+  border: 1px solid var(--sa-line);
+}
+
+.saExerciseList article.isDone {
+  background: #eee9e3;
+  opacity: .72;
+}
+
+.saExerciseList button {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  color: var(--sa-white);
+  background: var(--sa-black);
+  font: inherit;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.saExerciseList .isDone button {
+  background: var(--sa-red);
+}
+
+.saExerciseList h2 {
+  margin: 0 0 4px;
+  font-size: 1.08rem;
+}
+
+.saExerciseList p,
+.saExerciseList span {
+  display: block;
+  margin: 0;
+  color: var(--sa-muted);
+  line-height: 1.45;
+  font-size: .86rem;
+}
+
+.saFinishWorkout {
+  position: sticky;
+  bottom: 92px;
+  min-height: 54px;
+  border: 0;
+  color: var(--sa-white);
+  background: var(--sa-red);
+  font: inherit;
+  font-weight: 950;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .22);
+}
+
+.saFinishWorkout:disabled {
+  opacity: .38;
+  cursor: not-allowed;
+}
+
+.saProgressHeader {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, .28), rgba(0, 0, 0, .8)),
+    url("https://sotalia.vercel.app/assets/classes.jpg") center / cover;
+}
+
+.saAssessmentCard {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+}
+
+.saChartCard,
+.saBodyCharts article {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--sa-line);
+  border-radius: 8px;
+  background: var(--sa-white);
+  box-shadow: 0 12px 28px rgba(33, 27, 49, .07);
+}
+
+.saChartCard small,
+.saChartCard strong,
+.saChartCard p,
+.saBodyCharts span {
+  display: block;
+}
+
+.saChartCard small {
+  color: var(--sa-red);
+  font-weight: 950;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.saChartCard strong {
+  font-size: 1.25rem;
+}
+
+.saChartCard p {
+  margin: 0;
+  color: var(--sa-muted);
+  line-height: 1.45;
+}
+
+.saBarChart {
+  height: 154px;
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 8px;
+  background: var(--sa-cream);
+}
+
+.saBarChart span {
+  flex: 1;
+  min-height: 16px;
+  border-radius: 999px 999px 0 0;
+  background: var(--sa-black);
+}
+
+.saBarChart span:nth-child(even) {
+  background: var(--sa-red);
+}
+
+.saBodyCharts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.saBodyCharts article {
+  justify-items: center;
+  text-align: center;
+}
+
+.saRingChart {
+  --value: 0deg;
+  width: 92px;
+  height: 92px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--sa-red) var(--value), #ece9f1 0);
+  position: relative;
+}
+
+.saRingChart::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: inherit;
+  background: var(--sa-white);
+}
+
+.saRingChart strong {
+  position: relative;
+  z-index: 2;
+  font-size: .92rem;
+}
+
+.saRingChart.mint {
+  background: conic-gradient(#32a77c var(--value), #ece9f1 0);
+}
+
+.saRingChart.dark {
+  background: conic-gradient(var(--sa-black) var(--value), #ece9f1 0);
+}
+
+.saBodyCharts span {
+  color: var(--sa-muted);
+  font-size: .78rem;
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.saAssessmentCard small {
+  color: var(--sa-red);
+  font-weight: 950;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.saAssessmentCard h2 {
+  margin: 0;
+  font-size: 1.65rem;
+  line-height: 1.05;
+}
+
+.saAssessmentCard > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.saAssessmentCard span {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  color: var(--sa-muted);
+  background: #f7f4ef;
+  font-size: .74rem;
+}
+
+.saAssessmentCard strong {
+  color: var(--sa-ink);
+  font-size: 1rem;
+}
+
+.saAssessmentCard p {
+  margin: 0;
+  color: var(--sa-muted);
+  line-height: 1.5;
+}
+
+.saPageHeader h1 {
+  margin-top: 14px;
+}
+
+.saScheduleList {
+  display: grid;
+  gap: 12px;
+}
+
+.saAgendaNotice {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid rgba(15, 122, 66, .28);
+  color: #0f5130;
+  background: #edf7f1;
+}
+
+.saAgendaNotice svg {
+  color: #0f7a42;
+}
+
+.saAgendaNotice strong,
+.saAgendaNotice em {
+  display: block;
+}
+
+.saAgendaNotice em {
+  margin-top: 3px;
+  color: #3d6b50;
+  font-size: .9rem;
+  font-style: normal;
+  line-height: 1.35;
+}
+
+.saScheduleList article {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 14px;
+  overflow: hidden;
+}
+
+.saScheduleList article.isBooked {
+  border-color: rgba(201, 0, 22, .55);
+  box-shadow: inset 4px 0 0 var(--sa-red);
+}
+
+.saScheduleList article.isConfirmed {
+  border-color: rgba(15, 122, 66, .38);
+  box-shadow: inset 4px 0 0 #0f7a42;
+}
+
+.saScheduleList article.isPending {
+  border-color: rgba(179, 107, 0, .36);
+  box-shadow: inset 4px 0 0 #b36b00;
+}
+
+.saScheduleList img {
+  width: 112px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.saScheduleList article > div {
+  padding: 14px 14px 0 0;
+}
+
+.saScheduleList small {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .78rem;
+  font-weight: 900;
+}
+
+.saScheduleList h2 {
+  margin: 8px 0 5px;
+  font-size: 1.2rem;
+}
+
+.saScheduleList p {
+  margin: 0;
+  color: var(--sa-muted);
+  line-height: 1.4;
+}
+
+.saScheduleList article span {
+  display: inline-block;
+  margin-top: 8px;
+  color: var(--sa-red);
+  font-weight: 900;
+}
+
+.saBookingConfirmation {
+  display: block;
+  margin-top: 9px;
+  color: #0f5130;
+  font-size: .83rem;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.saScheduleList button {
+  grid-column: 1 / -1;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  color: var(--sa-white);
+  background: var(--sa-black);
+  font: inherit;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.saScheduleList .isBooked button {
+  background: var(--sa-red);
+}
+
+.saScheduleList .isPending button {
+  background: #b36b00;
+}
+
+.saScheduleList .isConfirmed button {
+  background: #0f7a42;
+}
+
+.saWaterHero {
+  position: relative;
+  min-height: 430px;
+  display: grid;
+  align-content: end;
+  overflow: hidden;
+  color: var(--sa-white);
+  background: var(--sa-black);
+}
+
+.saWaterHero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .78;
+}
+
+.saWaterHero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, .12), rgba(0, 0, 0, .88));
+}
+
+.saWaterHero > div {
+  position: relative;
+  z-index: 2;
+  padding: 22px;
+}
+
+.saWaterHero h1 {
+  margin-top: 12px;
+}
+
+.saWaterGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.saWaterGrid article {
+  min-height: 104px;
+  display: grid;
+  align-content: center;
+  padding: 12px;
+}
+
+.saWaterGrid strong,
+.saWaterGrid span {
+  display: block;
+}
+
+.saWaterGrid strong {
+  font-size: 1rem;
+}
+
+.saWaterGrid span {
+  margin-top: 6px;
+  font-size: .75rem;
+  line-height: 1.35;
+}
+
+.saProfileHeader {
+  display: grid;
+  justify-items: center;
+  padding: 36px 18px 18px;
+  text-align: center;
+}
+
+.saProfileHeader > div {
+  width: 86px;
+  height: 86px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 16px;
+  color: var(--sa-white);
+  background: var(--sa-red);
+  font-size: 1.6rem;
+  font-weight: 950;
+}
+
+.saProfileHeader p {
+  margin: 10px 0 0;
+  color: var(--sa-muted);
+}
+
+.saQrPanel {
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 22px;
+}
+
+.saQrPanel canvas {
+  max-width: 100%;
+}
+
+.saQrPanel span {
+  font-weight: 900;
+}
+
+.saFamilyList {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+}
+
+.saFamilyList h2 {
+  margin: 0 0 4px;
+  font-size: 1.3rem;
+}
+
+.saFamilyList article,
+.saPrivacy {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.saFamilyList article {
+  padding: 12px;
+  background: #f7f4ef;
+}
+
+.saFamilyList strong,
+.saFamilyList span,
+.saPrivacy strong,
+.saPrivacy span {
+  display: block;
+}
+
+.saFamilyList svg,
+.saPrivacy svg {
+  color: var(--sa-red);
+  flex: 0 0 auto;
+}
+
+.saFamilyTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.saFamilyTags em {
+  display: inline-flex;
+  padding: 5px 8px;
+  border-radius: 999px;
+  color: var(--sa-ink);
+  background: var(--sa-cream);
+  font-size: .72rem;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.saChildSchedule {
+  display: grid;
+  gap: 5px;
+  margin-top: 9px;
+}
+
+.saChildSchedule small {
+  display: block;
+  color: var(--sa-muted);
+  font-size: .78rem;
+  line-height: 1.35;
+}
+
+.saPrivacy {
+  padding: 16px;
+}
+
+.saInstallPanel {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+  padding: 16px;
+}
+
+.saInstallPanel svg {
+  color: var(--sa-red);
+}
+
+.saInstallPanel strong,
+.saInstallPanel span,
+.saInstallPanel small,
+.saInstallPanel p {
+  display: block;
+}
+
+.saInstallPanel span,
+.saInstallPanel small,
+.saInstallPanel p {
+  color: var(--sa-muted);
+  line-height: 1.4;
+}
+
+.saInstallPanel button {
+  grid-column: 1 / -1;
+  min-height: 66px;
+  border: 0;
+  color: var(--sa-white);
+  background: var(--sa-red);
+  padding: 0 18px;
+  font: inherit;
+  font-size: 1.02rem;
+  font-weight: 950;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.saInstallPanelHome {
+  border: 0;
+  color: var(--sa-white);
+  background: var(--sa-black);
+}
+
+.saInstallPanelHome svg {
+  color: var(--sa-red);
+}
+
+.saInstallPanelHome span,
+.saInstallPanelHome small,
+.saInstallPanelHome p {
+  color: rgba(255, 255, 255, .72);
+}
+
+.saInstallPanelHome button {
+  min-height: 74px;
+  box-shadow: 0 18px 42px rgba(201, 0, 22, .28);
+}
+
+.saInstallPanel small {
+  grid-column: 1 / -1;
+  font-weight: 800;
+}
+
+.saInstallPanel p {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: .86rem;
+}
+
+.saPrivacy span {
+  margin-top: 4px;
+  line-height: 1.45;
+}
+
+.saBottomNav {
+  position: fixed;
+  left: 50%;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(528px, calc(100% - 28px));
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  padding: 7px;
+  z-index: 60;
+  background: rgba(8, 8, 8, .94);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .35);
+  border-radius: 8px;
+}
+
+.saBottomNav button {
+  min-height: 58px;
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  border: 0;
+  color: rgba(255, 255, 255, .58);
+  background: transparent;
+  font: inherit;
+  font-size: .64rem;
+  cursor: pointer;
+}
+
+.saBottomNav svg {
+  width: 21px;
+  height: 21px;
+}
+
+.saBottomNav button.active {
+  color: var(--sa-white);
+  background: var(--sa-red);
+  font-weight: 950;
+  border-radius: 8px;
+}
+
+@media (max-width: 960px) {
+  .sotaliaApp {
+    display: block;
+    padding: 0;
+    background: var(--sa-paper);
+  }
+
+  .saDesktopRail {
+    display: none;
+  }
+
+  .saPhoneSurface {
+    min-height: 100vh;
+    max-width: none;
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 961px) {
+  .saBottomNav {
+    left: calc(50% + 225px);
+  }
+}
+
+@media (max-width: 480px) {
+  .saHero {
+    min-height: 560px;
+  }
+
+  .saHeroCopy h1,
+  .saPageHeader h1,
+  .saWaterHero h1,
+  .saProfileHeader h1 {
+    font-size: clamp(3rem, 16vw, 4.2rem);
+  }
+
+  .saNextClass,
+  .saHighlights article,
+  .saScheduleList article {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .saNextClass img,
+  .saHighlights img,
+  .saScheduleList img {
+    width: 100px;
+  }
+
+  .saQuickGrid,
+  .saWaterGrid,
+  .saWorkoutSummary,
+  .saAssessmentCard > div {
+    grid-template-columns: 1fr;
+  }
+
+  .saMetricGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .saGameStats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .saBodyCharts {
+    grid-template-columns: 1fr;
+  }
+}

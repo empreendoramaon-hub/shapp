@@ -45,3 +45,125 @@ export function normalizeStudent(student) {
     notes: sentenceCase(student.notes || '')
   }
 }
+
+function toBase64Url(value) {
+  return btoa(unescape(encodeURIComponent(JSON.stringify(value))))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/g, '')
+}
+
+function fromBase64Url(value) {
+  const normalized = `${value}`.replace(/-/g, '+').replace(/_/g, '/')
+  const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=')
+  return JSON.parse(decodeURIComponent(escape(atob(padded))))
+}
+
+function compactWorkout(workout = {}) {
+  return {
+    i: workout.id,
+    q: workout.sequence,
+    n: workout.name,
+    f: workout.focus,
+    e: (workout.exercises || []).map((exercise) => ({
+      n: exercise.name,
+      s: exercise.sets,
+      r: exercise.reps,
+      l: exercise.load,
+      d: exercise.rest,
+      t: exercise.tip,
+      v: exercise.videoOptional === true
+    }))
+  }
+}
+
+function expandWorkout(workout = {}) {
+  return {
+    id: workout.i,
+    sequence: workout.q,
+    name: workout.n,
+    focus: workout.f,
+    exercises: (workout.e || []).map((exercise) => ({
+      name: exercise.n,
+      sets: exercise.s,
+      reps: exercise.r,
+      load: exercise.l,
+      rest: exercise.d,
+      tip: exercise.t,
+      videoOptional: exercise.v === true
+    }))
+  }
+}
+
+function compactStudent(student = {}) {
+  return {
+    i: student.id,
+    t: student.token,
+    n: student.name,
+    p: student.phone,
+    m: student.email,
+    bd: student.birthDate,
+    s: student.status,
+    g: student.goal,
+    tr: student.trainerId,
+    mg: student.monthlyGoal,
+    cm: student.completedThisMonth,
+    x: student.xp,
+    l: student.level,
+    st: student.streak,
+    w: Array.isArray(student.workouts) ? student.workouts.map(compactWorkout) : [],
+    b: student.bookings || [],
+    f: student.family || [],
+    a: student.assessments || [],
+    nu: student.nutrition || { enabled: false }
+  }
+}
+
+function expandStudent(student = {}) {
+  return {
+    id: student.i,
+    token: student.t,
+    name: student.n,
+    phone: student.p,
+    email: student.m,
+    birthDate: student.bd,
+    status: student.s || 'active',
+    goal: student.g,
+    trainerId: student.tr,
+    monthlyGoal: student.mg || 20,
+    completedThisMonth: student.cm || 0,
+    xp: student.x || 0,
+    level: student.l || 1,
+    streak: student.st || 0,
+    workouts: Array.isArray(student.w) ? student.w.map(expandWorkout) : [],
+    bookings: student.b || [],
+    family: student.f || [],
+    assessments: student.a || [],
+    nutrition: student.nu || { enabled: false }
+  }
+}
+
+export function buildStudentInviteUrl(origin, student, state) {
+  const trainer = (state.trainers || []).find((item) => item.id === student.trainerId)
+  const payload = {
+    v: 1,
+    academy: state.academy,
+    trainers: trainer ? [trainer] : (state.trainers || []).slice(0, 1),
+    schedule: state.schedule || [],
+    student: compactStudent(student)
+  }
+  return `${origin}/aluno/${student.token}?i=${toBase64Url(payload)}`
+}
+
+export function readStudentInvite(search = '') {
+  const invite = new URLSearchParams(search).get('i')
+  if (!invite) return null
+  const payload = fromBase64Url(invite)
+  if (!payload?.student?.t) return null
+  return {
+    academy: payload.academy,
+    trainers: payload.trainers || [],
+    schedule: payload.schedule || [],
+    student: expandStudent(payload.student)
+  }
+}

@@ -1,0 +1,887 @@
+:root {
+  --sot-red: #c90016;
+  --sot-black: #080808;
+  --sot-paper: #f4f2ec;
+  --sot-ink: #171717;
+  --sot-muted: #6a6660;
+  --sot-line: rgba(8, 8, 8, .14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.sotaliaAdmin {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 292px 1fr;
+  color: var(--sot-ink);
+  background: var(--sot-paper);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.sotaliaAdmin a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sotAdminSecurityStatus {
+  color: #ffcf70;
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.sotAdminSignOut {
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 10px;
+}
+
+.sotAdminSignOut svg {
+  height: 17px;
+  width: 17px;
+}
+
+.sotAuthGate {
+  align-items: center;
+  background: #07100d;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.sotAuthGate > form {
+  background: #fff;
+  border-radius: 20px;
+  color: #101713;
+  display: grid;
+  gap: 14px;
+  max-width: 420px;
+  padding: 32px;
+  width: 100%;
+}
+
+.sotAuthGate h1,
+.sotAuthGate p {
+  margin: 0;
+}
+
+.sotAuthGate label {
+  display: grid;
+  font-weight: 700;
+  gap: 6px;
+}
+
+.sotAuthGate input {
+  border: 1px solid #cad4cd;
+  border-radius: 10px;
+  font: inherit;
+  padding: 12px;
+}
+
+.sotAuthGate button {
+  align-items: center;
+  background: #103d2c;
+  border: 0;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-weight: 800;
+  gap: 8px;
+  justify-content: center;
+  padding: 12px;
+}
+
+.sotAuthGate .sotAuthSecondary {
+  background: transparent;
+  color: #103d2c;
+}
+
+.sotAuthError {
+  background: #fff0f0;
+  border-radius: 8px;
+  color: #9e2424;
+  font-size: 0.85rem;
+  padding: 10px;
+}
+
+.sotAdminSidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 28px;
+  color: #fff;
+  background: var(--sot-black);
+}
+
+.sotAdminSidebar img {
+  width: 164px;
+}
+
+.sotAdminSidebar nav {
+  display: grid;
+  gap: 12px;
+}
+
+.sotAdminSidebar nav a,
+.sotAdminStudentLink {
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, .13);
+  background: rgba(255, 255, 255, .05);
+  color: rgba(255, 255, 255, .78);
+  font-weight: 900;
+}
+
+.sotAdminStudentLink {
+  margin-top: auto;
+  justify-content: center;
+  background: var(--sot-red);
+  border-color: var(--sot-red);
+  color: #fff;
+}
+
+.sotAdminMain {
+  width: min(1240px, calc(100% - 36px));
+  margin: 0 auto;
+  padding: 28px 0 90px;
+}
+
+.sotAdminMain > .sotBookingAlerts:first-child {
+  margin-top: 0;
+}
+
+.sotAdminHero {
+  min-height: 470px;
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  overflow: hidden;
+  color: #fff;
+  background: var(--sot-black);
+}
+
+.sotAdminHero > div {
+  align-self: center;
+  padding: clamp(30px, 5vw, 60px);
+}
+
+.sotAdminHero p,
+.sotCardTitle span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--sot-red);
+  font-size: .74rem;
+  font-weight: 950;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.sotAdminHero h1 {
+  max-width: 760px;
+  margin: 16px 0;
+  font-size: clamp(3rem, 6vw, 6.4rem);
+  line-height: .88;
+  letter-spacing: -.07em;
+  text-transform: uppercase;
+}
+
+.sotAdminHero span {
+  display: block;
+  max-width: 610px;
+  color: rgba(255, 255, 255, .7);
+  line-height: 1.6;
+}
+
+.sotAdminHero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .78;
+}
+
+.sotAdminMetrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 18px 0;
+  border-left: 1px solid var(--sot-line);
+}
+
+.sotAdminMetrics article {
+  min-height: 145px;
+  padding: 22px;
+  background: #fff;
+  border: 1px solid var(--sot-line);
+  border-left: 0;
+}
+
+.sotAdminMetrics svg {
+  color: var(--sot-red);
+}
+
+.sotAdminMetrics strong,
+.sotAdminMetrics span {
+  display: block;
+}
+
+.sotAdminMetrics strong {
+  margin-top: 22px;
+  font-size: 2rem;
+}
+
+.sotAdminMetrics span {
+  color: var(--sot-muted);
+}
+
+.sotAdminGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.sotAdminGrid.wide {
+  grid-template-columns: 1.15fr .85fr;
+}
+
+.sotAdminCard {
+  display: grid;
+  gap: 12px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid var(--sot-line);
+}
+
+.sotCardTitle h2 {
+  margin: 8px 0 8px;
+  font-size: clamp(1.8rem, 3vw, 2.55rem);
+  line-height: .95;
+  letter-spacing: -.055em;
+}
+
+.sotAccessNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 14px;
+  color: #fff;
+  background: var(--sot-black);
+  line-height: 1.5;
+}
+
+.sotAccessNote svg {
+  flex: 0 0 auto;
+  color: var(--sot-red);
+}
+
+.sotAdminCard label {
+  display: grid;
+  gap: 7px;
+  color: #38332f;
+  font-weight: 850;
+}
+
+.sotAdminCard input,
+.sotAdminCard select,
+.sotAdminCard textarea {
+  width: 100%;
+  border: 1px solid var(--sot-line);
+  background: #f7f4ef;
+  padding: 13px 14px;
+  color: #111;
+  font: inherit;
+  outline: none;
+}
+
+.sotAdminCard textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.sotAdminCard button,
+.sotInlineActions a {
+  min-height: 50px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 0;
+  padding: 0 16px;
+  color: #fff;
+  background: var(--sot-red);
+  font: inherit;
+  font-weight: 950;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.sotQrBox {
+  display: grid;
+  place-items: center;
+  min-height: 230px;
+  background: #f7f4ef;
+  border: 1px solid var(--sot-line);
+}
+
+.sotAdminCard code {
+  max-width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 12px;
+  background: #f7f4ef;
+}
+
+.sotEmptyState {
+  margin: 0;
+  color: var(--sot-muted);
+  line-height: 1.5;
+}
+
+.sotInlineActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.sotInlineActions button {
+  background: var(--sot-black);
+}
+
+.sotStudentList {
+  align-content: start;
+}
+
+.sotStudentRows {
+  display: grid;
+  gap: 10px;
+  max-height: 520px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.sotStudentRows article {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: stretch;
+  padding: 10px;
+  border: 1px solid var(--sot-line);
+  background: #f7f4ef;
+}
+
+.sotStudentRows article.isSelected {
+  border-color: rgba(201, 0, 22, .46);
+  box-shadow: inset 4px 0 0 var(--sot-red);
+}
+
+.sotStudentRows article > button:first-child {
+  min-height: 58px;
+  justify-content: flex-start;
+  display: grid;
+  gap: 4px;
+  color: var(--sot-ink);
+  background: #fff;
+  text-align: left;
+  text-transform: none;
+}
+
+.sotStudentRows strong,
+.sotStudentRows span {
+  display: block;
+}
+
+.sotStudentRows span {
+  color: var(--sot-muted);
+  font-size: .86rem;
+}
+
+.sotStudentRows article > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.sotStudentRows article > div button,
+.sotStudentRows article > .sotNeutralButton {
+  min-height: 58px;
+}
+
+.sotStudentDashboard {
+  scroll-margin-top: 24px;
+}
+
+.sotStudentDashboardHead {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  background: var(--sot-black);
+  color: #fff;
+}
+
+.sotStudentDashboardHead p {
+  margin: 0;
+  color: rgba(255, 255, 255, .68);
+  line-height: 1.5;
+}
+
+.sotProfileEditor,
+.sotExerciseForm {
+  grid-template-columns: 1fr 1fr;
+}
+
+.sotProfileEditor .sotCardTitle,
+.sotProfileEditor button,
+.sotExerciseForm button,
+.full {
+  grid-column: 1 / -1;
+}
+
+.sotFamilyEditor {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--sot-line);
+  background: #f7f4ef;
+}
+
+.sotFamilyEditorHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sotFamilyEditorHead strong {
+  font-size: 1.05rem;
+}
+
+.sotFamilyEditorHead button {
+  grid-column: auto;
+  min-height: 40px;
+  background: var(--sot-black);
+}
+
+.sotFamilyEditor article {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1.4fr auto;
+  gap: 10px;
+  align-items: end;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--sot-line);
+}
+
+.sotFamilyEditor article button {
+  grid-column: auto;
+  min-height: 46px;
+}
+
+.sotDeleteBox {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(135, 0, 4, .22);
+  background: rgba(201, 0, 22, .06);
+}
+
+.sotDeleteBox strong,
+.sotDeleteBox span {
+  display: block;
+}
+
+.sotDeleteBox span {
+  margin-top: 5px;
+  color: var(--sot-muted);
+  line-height: 1.45;
+}
+
+.sotDeleteActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.sotAdminCard .sotDangerButton {
+  background: #870004;
+}
+
+.sotAdminCard .sotNeutralButton {
+  background: var(--sot-black);
+}
+
+.sotWorkoutBuilder {
+  margin-top: 18px;
+}
+
+.sotBookingAlerts {
+  margin-top: 18px;
+}
+
+.sotBookingAlerts > .sotWorkoutHead button {
+  justify-self: end;
+  width: max-content;
+  min-width: 190px;
+}
+
+.sotBookingList {
+  display: grid;
+  gap: 10px;
+}
+
+.sotBookingList article {
+  display: grid;
+  gap: 5px;
+  padding: 14px;
+  border-left: 4px solid var(--sot-red);
+  background: #f7f4ef;
+}
+
+.sotBookingList article.isConfirmed {
+  border-left-color: #0f7a42;
+  background: #edf7f1;
+}
+
+.sotBookingList strong,
+.sotBookingList span,
+.sotBookingList small {
+  display: block;
+}
+
+.sotBookingList span {
+  color: var(--sot-ink);
+  font-weight: 850;
+}
+
+.sotBookingList small {
+  color: var(--sot-muted);
+}
+
+.sotBookingList button {
+  min-height: 42px;
+  margin-top: 6px;
+  justify-content: center;
+}
+
+.sotBookingList button:disabled {
+  color: var(--sot-ink);
+  background: #d8eadf;
+  cursor: default;
+}
+
+.sotActivityManager {
+  margin-top: 18px;
+}
+
+.sotActivityManager > .sotWorkoutHead button {
+  justify-self: end;
+  width: max-content;
+  min-width: 190px;
+}
+
+.sotActivityForm {
+  display: grid;
+  grid-template-columns: .7fr .55fr 1.3fr .8fr 1fr 1fr .8fr;
+  gap: 12px;
+  align-items: end;
+}
+
+.sotActivityForm button {
+  grid-column: span 4;
+}
+
+.sotActivityForm button + button {
+  grid-column: span 3;
+}
+
+.sotFormError {
+  margin: 10px 0 0;
+  color: #a60014;
+  font-weight: 900;
+}
+
+.sotActivityList {
+  display: grid;
+  gap: 10px;
+}
+
+.sotActivityList article {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 14px;
+  border: 1px solid var(--sot-line);
+  background: #f7f4ef;
+}
+
+.sotActivityList strong,
+.sotActivityList span {
+  display: block;
+}
+
+.sotActivityList span {
+  margin-top: 4px;
+  color: var(--sot-muted);
+}
+
+.sotActivityList button {
+  min-height: 42px;
+  background: var(--sot-black);
+}
+
+.sotActivityActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.sotWorkoutHead {
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 300px) minmax(260px, 360px);
+  gap: 18px;
+  align-items: end;
+}
+
+.sotWorkoutBlockShortcuts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sotWorkoutBlockShortcuts button {
+  min-height: 44px;
+  color: var(--sot-ink);
+  background: #f7f4ef;
+  border: 1px solid var(--sot-line);
+}
+
+.sotTemplateCreator {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+  padding: 16px;
+  border: 1px solid var(--sot-line);
+  background: #f7f4ef;
+}
+
+.sotTemplateCreator button {
+  min-width: 230px;
+}
+
+.sotExerciseForm {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1.05fr 1.05fr 1.4fr .55fr .55fr .8fr .7fr 1fr;
+}
+
+.sotWorkoutPreview {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.sotWorkoutPreview article {
+  min-height: 190px;
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  color: #fff;
+  background: var(--sot-black);
+}
+
+.sotWorkoutPreview article.isActiveWorkout {
+  outline: 3px solid var(--sot-red);
+  background:
+    linear-gradient(135deg, rgba(201, 0, 22, .24), transparent 50%),
+    var(--sot-black);
+}
+
+.sotWorkoutPreview small {
+  color: #fff;
+  opacity: .64;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.sotWorkoutPreview label {
+  color: rgba(255, 255, 255, .82);
+}
+
+.sotWorkoutPreview input {
+  color: #111;
+  background: #fff;
+}
+
+.sotWorkoutBlockHead {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.sotWorkoutBlockMeta {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+}
+
+.sotWorkoutExerciseEditor {
+  display: grid;
+  gap: 10px;
+}
+
+.sotExerciseHeader,
+.sotExerciseRow {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.45fr) 70px 70px minmax(92px, .75fr) 86px minmax(150px, 1.1fr) 44px;
+  gap: 10px;
+  align-items: center;
+}
+
+.sotExerciseHeader {
+  padding: 0 12px;
+  color: rgba(255, 255, 255, .58);
+  font-size: .72rem;
+  font-weight: 950;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.sotExerciseRow {
+  align-items: end;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(255, 255, 255, .06);
+}
+
+.sotExerciseRow label {
+  gap: 5px;
+  font-size: .76rem;
+}
+
+.sotExerciseRow input {
+  padding: 10px;
+}
+
+.sotExerciseRow button {
+  min-height: 42px;
+  padding: 0;
+}
+
+.sotWorkoutActions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.sotWorkoutActions button {
+  width: 100%;
+  min-height: 42px;
+  background: var(--sot-red);
+}
+
+.sotSaveWorkout {
+  justify-self: end;
+}
+
+@media (max-width: 1080px) {
+  .sotaliaAdmin {
+    grid-template-columns: 1fr;
+  }
+
+  .sotAdminSidebar {
+    position: relative;
+    height: auto;
+  }
+
+  .sotAdminSidebar nav,
+  .sotAdminMetrics,
+  .sotAdminGrid,
+  .sotAdminGrid.wide,
+  .sotAdminHero,
+  .sotWorkoutHead,
+  .sotTemplateCreator,
+  .sotActivityForm {
+    grid-template-columns: 1fr;
+  }
+
+  .sotBookingAlerts > .sotWorkoutHead button,
+  .sotActivityManager > .sotWorkoutHead button,
+  .sotTemplateCreator button {
+    width: 100%;
+  }
+
+  .sotAdminHero img {
+    min-height: 260px;
+  }
+
+  .sotExerciseForm,
+  .sotExerciseHeader,
+  .sotExerciseRow,
+  .sotWorkoutPreview {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .sotAdminMain {
+    width: calc(100% - 28px);
+  }
+
+  .sotAdminHero h1 {
+    font-size: clamp(3rem, 15vw, 4.4rem);
+  }
+
+  .sotAdminCard,
+  .sotAdminHero > div {
+    padding: 20px;
+  }
+
+  .sotProfileEditor,
+  .sotFamilyEditor article,
+  .sotActivityList article,
+  .sotStudentRows article,
+  .sotStudentDashboardHead,
+  .sotWorkoutBlockHead,
+  .sotWorkoutBlockMeta,
+  .sotExerciseForm,
+  .sotExerciseHeader,
+  .sotExerciseRow,
+  .sotWorkoutPreview,
+  .sotWorkoutPreview article,
+  .sotWorkoutActions,
+  .sotWorkoutBlockShortcuts,
+  .sotInlineActions {
+    grid-template-columns: 1fr;
+  }
+
+  .sotExerciseHeader {
+    display: none;
+  }
+}

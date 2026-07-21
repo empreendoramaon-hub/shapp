@@ -69,35 +69,35 @@ const defaultState = {
       workouts: [
         {
           id: 'workout-a',
-          day: 'Segunda',
+          sequence: 1,
           name: 'Treino A',
           focus: 'Pernas e glúteos',
           exercises: [
-            { name: 'Agachamento livre', sets: '4', reps: '10', load: 'Progressiva', rest: '90s', videoOptional: true },
-            { name: 'Leg press', sets: '4', reps: '12', load: 'Moderada', rest: '75s', videoOptional: true },
-            { name: 'Cadeira extensora', sets: '3', reps: '15', load: 'Controle total', rest: '60s', videoOptional: false }
+            { name: 'Agachamento livre', sets: '4', reps: '10', load: 'Progressiva', rest: '90s', tip: 'Manter tronco firme e joelhos alinhados.', videoOptional: true },
+            { name: 'Leg press', sets: '4', reps: '12', load: 'Moderada', rest: '75s', tip: 'Controlar a descida sem tirar o quadril do banco.', videoOptional: true },
+            { name: 'Cadeira extensora', sets: '3', reps: '15', load: 'Controle total', rest: '60s', tip: 'Segurar um segundo no topo.', videoOptional: false }
           ]
         },
         {
           id: 'workout-b',
-          day: 'Quarta',
+          sequence: 2,
           name: 'Treino B',
           focus: 'Costas e bíceps',
           exercises: [
-            { name: 'Puxada frontal', sets: '4', reps: '12', load: 'Moderada', rest: '75s', videoOptional: true },
-            { name: 'Remada baixa', sets: '4', reps: '10', load: 'Progressiva', rest: '90s', videoOptional: false },
-            { name: 'Rosca direta', sets: '3', reps: '12', load: 'Técnica limpa', rest: '60s', videoOptional: false }
+            { name: 'Puxada frontal', sets: '4', reps: '12', load: 'Moderada', rest: '75s', tip: 'Levar a barra até a linha do peito.', videoOptional: true },
+            { name: 'Remada baixa', sets: '4', reps: '10', load: 'Progressiva', rest: '90s', tip: 'Puxar com os cotovelos e manter peito aberto.', videoOptional: false },
+            { name: 'Rosca direta', sets: '3', reps: '12', load: 'Técnica limpa', rest: '60s', tip: 'Subir sem projetar os ombros.', videoOptional: false }
           ]
         },
         {
           id: 'workout-c',
-          day: 'Sexta',
+          sequence: 3,
           name: 'Treino C',
           focus: 'Peito, ombro e tríceps',
           exercises: [
-            { name: 'Supino reto', sets: '4', reps: '10', load: 'Progressiva', rest: '90s', videoOptional: true },
-            { name: 'Desenvolvimento', sets: '3', reps: '12', load: 'Moderada', rest: '75s', videoOptional: false },
-            { name: 'Tríceps corda', sets: '3', reps: '15', load: 'Controle', rest: '60s', videoOptional: false }
+            { name: 'Supino reto', sets: '4', reps: '10', load: 'Progressiva', rest: '90s', tip: 'Escápulas encaixadas durante toda a série.', videoOptional: true },
+            { name: 'Desenvolvimento', sets: '3', reps: '12', load: 'Moderada', rest: '75s', tip: 'Não arquear a lombar.', videoOptional: false },
+            { name: 'Tríceps corda', sets: '3', reps: '15', load: 'Controle', rest: '60s', tip: 'Abrir a corda ao final do movimento.', videoOptional: false }
           ]
         }
       ],
@@ -122,9 +122,9 @@ function makeToken(name) {
 }
 
 function todayWorkout(student) {
-  const dayIndex = new Date().getDay()
-  const map = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']
-  return student.workouts.find((workout) => workout.day === map[dayIndex]) || student.workouts[0]
+  const workouts = student.workouts?.length ? student.workouts : defaultState.students[0].workouts
+  const ordered = [...workouts].sort((a, b) => (a.sequence || workouts.indexOf(a) + 1) - (b.sequence || workouts.indexOf(b) + 1))
+  return ordered[(student.completedThisMonth || 0) % ordered.length] || ordered[0]
 }
 
 function getInitialState() {
@@ -474,14 +474,14 @@ function StudentApp({ state, setState, token }) {
 
       <section className="studentGrid">
         <article className="studentCard workoutToday">
-          <p className="fitKicker"><Dumbbell size={16} /> Treino de hoje</p>
+          <p className="fitKicker"><Dumbbell size={16} /> Próximo treino</p>
           <h2>{workout.name}: {workout.focus}</h2>
           <span>Professor: {trainer?.name || 'Não definido'}</span>
           <div className="exerciseList">
             {workout.exercises.map((exercise) => (
               <div key={exercise.name}>
                 <strong>{exercise.name}</strong>
-                <small>{exercise.sets} séries · {exercise.reps} reps · descanso {exercise.rest}</small>
+                <small>{exercise.sets} séries · {exercise.reps} reps · descanso {exercise.rest}{exercise.tip ? ` · ${exercise.tip}` : ''}</small>
                 {state.academy.modules.exerciseVideos && exercise.videoOptional && <em>Vídeo opcional disponível</em>}
               </div>
             ))}
