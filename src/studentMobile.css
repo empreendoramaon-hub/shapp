@@ -272,6 +272,17 @@
 
 /* Agenda */
 .agendaPage .pageTitle h1, .studentFamilyBlock .pageTitle h1 { font-size: 2.5rem; }
+.bookingSyncMessage {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(230, 138, 106, .12);
+  border: 1px solid rgba(230, 138, 106, .25);
+  color: var(--coral-2);
+  font-size: .82rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
 .studentAgendaList { display: grid; gap: 12px; }
 .studentAgendaList article { display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: center; padding: 18px; }
 .studentAgendaList article.isConfirmed { border-color: rgba(230, 138, 106, .4); background: linear-gradient(150deg, rgba(230, 138, 106, .12), var(--surface)); }

@@ -541,6 +541,36 @@
 }
 .bookingAlertRow button:hover { background: var(--coral-2); }
 .bookingAlertRow button svg { width: 17px; }
+.bookingAlertActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.bookingAlertRow .bookingRejectButton {
+  background: transparent;
+  color: #ff9b86;
+  border: 1px solid rgba(255, 155, 134, .35);
+}
+.bookingAlertRow .bookingRejectButton:hover { background: rgba(255, 155, 134, .12); }
+.bookingCloudLogin {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: var(--r-md);
+  background: rgba(230, 138, 106, .09);
+  border: 1px solid rgba(230, 138, 106, .25);
+}
+.bookingCloudLogin p { margin: 0; color: var(--muted); line-height: 1.5; }
+.bookingCloudLogin button,
+.bookingCloudLogout {
+  width: fit-content;
+  min-height: 42px;
+  border: 0;
+  border-radius: var(--r-pill);
+  padding: 0 16px;
+  background: var(--coral);
+  color: var(--coral-ink);
+  font-weight: 800;
+  cursor: pointer;
+}
+.bookingCloudLogout { margin-top: 12px; background: var(--coal-2); color: var(--muted); border: 1px solid var(--line); }
 
 .panelEmpty {
   margin: 0;
@@ -563,6 +593,12 @@
   .routineBuilder { grid-template-columns: repeat(2, 1fr); }
   .routineTemplateBar { grid-template-columns: 1fr; }
   .routinePreview { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .bookingAlertRow { grid-template-columns: 1fr; }
+  .bookingAlertActions { justify-content: stretch; }
+  .bookingAlertActions button { flex: 1; }
 }
 
 @media (max-width: 640px) {
