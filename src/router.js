@@ -5,7 +5,12 @@ function loadPublishedPanel(moduleName, stylesheet) {
   link.rel = 'stylesheet'
   link.href = `/shapp-panel-v2/${stylesheet}`
   document.head.appendChild(link)
-  import(/* @vite-ignore */ `/shapp-panel-v2/${moduleName}`)
+  return import(/* @vite-ignore */ `/shapp-panel-v2/${moduleName}`)
+}
+
+async function loadProtectedPanel(loader) {
+  const { requireShappAdmin } = await import('./panelAccess.js')
+  requireShappAdmin(loader)
 }
 
 function addPanelShortcuts() {
@@ -47,16 +52,18 @@ if (path.startsWith('/sotalia-admin')) {
 } else if (path.startsWith('/academia')) {
   import('./ShappAcademy.jsx')
 } else if (path.startsWith('/painel/gestao')) {
-  import('./panelManagement.jsx')
+  loadProtectedPanel(() => import('./panelManagement.jsx'))
 } else if (path.startsWith('/painel/integracoes')) {
-  import('./panelIntegrations.jsx')
+  loadProtectedPanel(() => import('./panelIntegrations.jsx'))
 } else if (path.startsWith('/painel/aluno/')) {
-  loadPublishedPanel('panelStudentDetail-DTaaWf6z.js', 'panelStudentDetail-Dp-FK_uQ.css')
+  loadProtectedPanel(() => loadPublishedPanel('panelStudentDetail-DTaaWf6z.js', 'panelStudentDetail-Dp-FK_uQ.css'))
 } else if (path.startsWith('/painel/alunos')) {
-  import('./panelStudents.jsx')
+  loadProtectedPanel(() => import('./panelStudents.jsx'))
 } else if (path.startsWith('/painel')) {
-  addPanelShortcuts()
-  loadPublishedPanel('panelDashboard-CfPbic-D.js', 'panelDashboard-DUZUK0EB.css')
+  loadProtectedPanel(() => {
+    addPanelShortcuts()
+    return loadPublishedPanel('panelDashboard-CfPbic-D.js', 'panelDashboard-DUZUK0EB.css')
+  })
 } else {
   import('./main.jsx')
 }

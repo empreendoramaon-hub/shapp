@@ -114,7 +114,9 @@ const fallbackState = {
 function loadState() {
   try {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')
-    const invite = readStudentInvite(window.location.search)
+    // Fragmentos protegem o convite contra logs de servidor e cabecalhos Referer.
+    // A query antiga continua aceita para links ja enviados.
+    const invite = readStudentInvite(window.location.hash || window.location.search)
     const baseState = stored?.academy && Array.isArray(stored?.students) ? stored : fallbackState
     const state = invite ? {
       ...baseState,

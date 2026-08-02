@@ -1,4 +1,5 @@
 import { initializeApp, getApp, getApps } from 'firebase/app'
+import { initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check'
 import {
   GoogleAuthProvider,
   getAuth,
@@ -36,6 +37,14 @@ const app = getApps().some((item) => item.name === APP_NAME)
 const auth = getAuth(app)
 const db = getFirestore(app)
 const reservations = collection(db, 'academies', 'shapp', 'reservations')
+
+const appCheckSiteKey = import.meta.env.VITE_SHAPP_RECAPTCHA_ENTERPRISE_SITE_KEY
+if (appCheckSiteKey) {
+  initializeAppCheck(app, {
+    provider: new ReCaptchaEnterpriseProvider(appCheckSiteKey),
+    isTokenAutoRefreshEnabled: true
+  })
+}
 
 function cleanId(value = '') {
   return `${value}`.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9_-]/g, '-').slice(0, 100)

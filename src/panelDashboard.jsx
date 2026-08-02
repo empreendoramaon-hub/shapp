@@ -22,7 +22,7 @@ import {
   Users,
   XCircle
 } from 'lucide-react'
-import { buildStudentInviteUrl, formatDateInput, formatPhone, isValidBrazilianDate, normalizeStudent, sentenceCase, titleCase } from './dataFormat.js'
+import { buildStudentInviteUrl, buildStudentPath, formatDateInput, formatPhone, isValidBrazilianDate, normalizeStudent, sentenceCase, titleCase } from './dataFormat.js'
 import {
   isShappAdmin,
   signInShappAdmin,
@@ -750,7 +750,7 @@ function Dashboard() {
                   <div><small>Objetivo</small><strong>{sentenceCase(student.goal)}</strong></div>
                   <div><small>Rotinas</small><strong>{student.workouts?.length || 0} fichas</strong></div>
                   <div><small>Meta mensal</small><strong>{student.completedThisMonth || 0}/{student.monthlyGoal || 0} treinos</strong><div className="dashboardProgress"><span style={{ width: `${progress}%` }} /></div></div>
-                  <a href={`/aluno/${student.token}`} target="_blank" rel="noreferrer">Abrir app <ExternalLink /></a>
+                  <a href={buildStudentPath(student.token)} target="_blank" rel="noopener noreferrer">Abrir app <ExternalLink /></a>
                 </article>
               )
             })}

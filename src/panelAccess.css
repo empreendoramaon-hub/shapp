@@ -1,0 +1,25 @@
+.panelAccessPage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: radial-gradient(circle at 80% 10%, rgba(230, 138, 106, .22), transparent 34%), #17130f;
+  color: #f8f2ed;
+  font-family: "Roboto", sans-serif;
+}
+
+.panelAccessCard {
+  width: min(100%, 460px);
+  padding: clamp(30px, 6vw, 54px);
+  border: 1px solid rgba(255, 255, 255, .12);
+  border-radius: 28px;
+  background: rgba(40, 31, 26, .94);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, .38);
+}
+
+.panelAccessKicker { color: #e68a6a; font-size: .75rem; font-weight: 800; letter-spacing: .16em; }
+.panelAccessCard h1 { margin: 18px 0 12px; font-size: clamp(2rem, 7vw, 3.25rem); line-height: .98; }
+.panelAccessCard p { margin: 0 0 28px; color: rgba(248, 242, 237, .7); line-height: 1.6; }
+.panelAccessCard button { width: 100%; border: 0; border-radius: 999px; padding: 15px 20px; background: #e68a6a; color: #20120d; font: inherit; font-weight: 800; cursor: pointer; }
+.panelAccessCard button:disabled { cursor: wait; opacity: .7; }
+.panelAccessError { margin: 0 0 18px; padding: 12px 14px; border-radius: 12px; background: rgba(212, 67, 67, .16); color: #ffc9c9; font-size: .9rem; }

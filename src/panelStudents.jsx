@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ArrowLeft, Copy, Dumbbell, Filter, MessageCircle, MoreHorizontal, QrCode, Salad, Search, UserPlus } from 'lucide-react'
-import { buildStudentInviteUrl, formatPhone, sentenceCase, titleCase } from './dataFormat.js'
+import { buildStudentInviteUrl, buildStudentPath, formatPhone, sentenceCase, titleCase } from './dataFormat.js'
 import './panelStudents.css'
 
 const STORAGE_KEY = 'shappFitMvpState'
@@ -91,7 +91,7 @@ function StudentsPage() {
                 <div><small>Frequência</small><strong>{student.completedThisMonth || 0}/{student.monthlyGoal || 0} treinos</strong><div className="tinyProgress"><span style={{ width: `${progress}%` }} /></div></div>
               </div>
               <div className="studentActions">
-                <a href={`/aluno/${student.token}`} target="_blank" rel="noreferrer"><QrCode size={18} /> Abrir app</a>
+                <a href={buildStudentPath(student.token)} target="_blank" rel="noopener noreferrer"><QrCode size={18} /> Abrir app</a>
                 <a href={whatsapp} target="_blank" rel="noreferrer"><MessageCircle size={18} /> WhatsApp</a>
                 <button onClick={() => copyLink(student)}><Copy size={18} /> {copied === student.id ? 'Copiado' : 'Copiar link'}</button>
                 <button className="statusButton" onClick={() => toggleStatus(student)}><MoreHorizontal size={18} /> {student.status === 'active' ? 'Inativar' : 'Reativar'}</button>

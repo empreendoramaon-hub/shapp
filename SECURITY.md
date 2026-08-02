@@ -9,13 +9,25 @@ acesso e nao devem armazenar dados reais de alunos.
 - Firestore nega colecoes desconhecidas e restringe membros por UID/claim.
 - O painel conectado ao Firebase exige login e as claims `admin: true` e
   `academyId: "sotalia"` (ou `superAdmin: true`).
+- As rotas administrativas da Shapp exigem login Google com a conta autorizada;
+  as regras do Firestore repetem essa verificacao no servidor e exigem e-mail
+  confirmado.
 - O proprio usuario nunca pode gravar campos administrativos.
 - Check-ins, XP, nivel e eventos de auditoria ficam reservados ao administrador;
   essas operacoes devem migrar para uma API autenticada antes da producao.
 - Storage fica totalmente fechado enquanto uploads nao forem implementados e
   testados com limites de caminho, tamanho e tipo.
 - App Check e inicializado quando `VITE_RECAPTCHA_ENTERPRISE_SITE_KEY` existe.
+- O projeto Shapp usa uma chave separada em
+  `VITE_SHAPP_RECAPTCHA_ENTERPRISE_SITE_KEY` para evitar cruzar ambientes.
 - A Vercel envia cabecalhos de seguranca; a CSP inicia em Report-Only.
+- Uma politica CSP minima ja e aplicada para bloquear objetos, embeds, framing e
+  formularios inesperados; a politica completa permanece em Report-Only ate a
+  validacao de todos os fluxos de login e integracoes.
+- Convites legados ainda podem ser lidos por compatibilidade, mas novos convites
+  usam fragmento de URL para que o conteudo nao seja enviado em logs de servidor
+  nem em cabecalhos Referer. Eles continuam sendo dados codificados, nao
+  criptografados, e nao devem transportar dados reais em producao.
 - O CI testa as regras no Emulator, executa `npm audit` e valida o build.
 
 ## Antes de usar dados reais

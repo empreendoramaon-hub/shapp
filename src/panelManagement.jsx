@@ -42,6 +42,12 @@ function percent(value, total) {
   return total > 0 ? Math.round((value / total) * 100) : 0
 }
 
+function safeCsvCell(value) {
+  let text = String(value ?? '')
+  if (/^[=+@\-\t\r]/.test(text)) text = `'${text}`
+  return `"${text.replaceAll('"', '""')}"`
+}
+
 function DashboardMetric({ icon: Icon, label, value, detail, tone = '' }) {
   return <article className={`pmMetric ${tone}`}><Icon /><span>{label}</span><strong>{value}</strong><small>{detail}</small></article>
 }
@@ -126,7 +132,7 @@ function PanelManagement() {
       ['Professor', 'Função', 'Alunos', 'Fichas', 'Treinos no mês', 'Progresso das metas'],
       ...report.teacherRows.map(row => [row.name, row.role, row.students, row.workouts, row.trainingVolume, `${row.progress}%`])
     ]
-    const csv = lines.map(line => line.map(value => `"${String(value ?? '').replaceAll('"', '""')}"`).join(';')).join('\n')
+    const csv = lines.map(line => line.map(safeCsvCell).join(';')).join('\n')
     const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
