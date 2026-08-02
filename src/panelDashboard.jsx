@@ -266,7 +266,8 @@ function loadState() {
 
 function createToken(name) {
   const slug = name.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
-  return `${slug || 'aluno'}-${Math.random().toString(36).slice(2, 8)}`
+  const randomPart = crypto.getRandomValues(new Uint32Array(1))[0].toString(36).padStart(6, '0').slice(0, 6)
+  return `${slug || 'aluno'}-${randomPart}`
 }
 
 function initials(name = '') {
