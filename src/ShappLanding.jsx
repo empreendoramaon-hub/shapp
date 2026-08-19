@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import {
   ArrowRight,
+  AlertTriangle,
   BarChart3,
   Building2,
   CalendarDays,
   Check,
   ChevronDown,
   Cloud,
+  CircleDollarSign,
   Dumbbell,
   ExternalLink,
   Gauge,
   Globe2,
   Headphones,
+  HeartPulse,
   LineChart,
   Menu,
   Megaphone,
@@ -21,11 +24,13 @@ import {
   ShieldCheck,
   Smartphone,
   Sparkles,
+  Store,
   TrendingUp,
   Users,
   X
 } from 'lucide-react'
 import './shappLanding.css'
+import { managementPremiumOffer, shappCommercialPlans } from './shappCommercialPlans.js'
 
 const heroBenefits = [
   [Dumbbell, 'TREINO', 'Rotina personalizada pelo seu professor'],
@@ -65,37 +70,12 @@ const flow = [
   ['04', 'Treino no celular', 'O aluno acompanha exercícios, metas, evolução e gamificação.']
 ]
 
-const plans = [
-  {
-    name: 'Starter',
-    description: 'Ideal para academias de pequeno porte.',
-    price: <>R$ 250<small>/mês</small></>,
-    setup: 'Implantação: R$ 1.000 · parcelamento disponível',
-    features: ['Até 100 alunos', 'Aplicativo personalizado', 'Área do aluno', 'Painel administrativo', 'Site institucional disponível por R$ 1.000', 'Hospedagem e atualizações', 'Suporte técnico']
-  },
-  {
-    name: 'Growth',
-    description: 'Para academias em crescimento.',
-    price: <>R$ 390<small>/mês</small></>,
-    setup: 'Implantação: R$ 1.000 · parcelamento disponível',
-    badge: 'MAIS POPULAR',
-    features: ['Tudo do plano Starter', 'Até 300 alunos', 'Site institucional disponível por R$ 1.000', 'Mais capacidade', 'Melhor desempenho', 'Recursos exclusivos conforme a evolução da plataforma']
-  },
-  {
-    name: 'Performance',
-    description: 'Para academias com grande número de alunos.',
-    price: <>R$ 590<small>/mês</small></>,
-    setup: 'Implantação: R$ 1.000 · parcelamento disponível',
-    features: ['Tudo do plano Growth', 'Até 700 alunos', 'Site institucional disponível por R$ 1.000', 'Maior capacidade de armazenamento', 'Prioridade em suporte', 'Recursos avançados']
-  }
-]
-
 const includedFeatures = [
   [Smartphone, 'Aplicativo personalizado', 'Nome, logotipo, cores e identidade visual exclusiva da academia.'],
   [Users, 'Área do aluno', 'Treinos, avaliações, comunicados, agenda e informações em um só lugar.'],
   [Gauge, 'Painel administrativo', 'Atualize a operação e o conteúdo sem depender de um desenvolvedor.'],
   [Cloud, 'Hospedagem incluída', 'Infraestrutura pronta, sem contratação separada de servidores.'],
-  [RefreshCw, 'Atualizações contínuas', 'Melhorias e novos recursos adicionados durante a assinatura.'],
+  [RefreshCw, 'Atualizações contínuas', 'Correções, segurança e compatibilidade tecnológica conforme o plano contratado.'],
   [Headphones, 'Segurança e suporte', 'Backup, monitoramento, manutenção e suporte técnico especializado.']
 ]
 
@@ -104,6 +84,15 @@ const managementMetrics = [
   [LineChart, 'Uso da plataforma'],
   [CalendarDays, 'Atividades e eventos'],
   [Megaphone, 'Comunicados e campanhas']
+]
+
+const premiumHighlights = [
+  [Building2, 'Multiunidade', 'Visão consolidada da rede e permissões específicas por unidade.'],
+  [BarChart3, 'Painel executivo', 'Receita, alunos, satisfação, metas e comparativos em uma única leitura.'],
+  [AlertTriangle, 'Retenção e churn', 'Frequência, financeiro e experiência combinados em alertas acionáveis.'],
+  [CalendarDays, 'Agenda inteligente', 'Reservas, disponibilidade e regras automáticas de cada plano.'],
+  [HeartPulse, 'Avaliações', 'Histórico, medidas, evolução e acesso controlado por profissional.'],
+  [CircleDollarSign, 'Gestão financeira', 'Receita recorrente, inadimplência e indicadores operacionais.']
 ]
 
 const faqs = [
@@ -115,7 +104,9 @@ const faqs = [
   ['O sistema é compatível com a LGPD?', 'Sim. O primeiro acesso registra o aceite dos termos, da política de privacidade e do tratamento de dados.'],
   ['Preciso contratar hospedagem ou servidores?', 'Não. A infraestrutura, o monitoramento, os backups e a manutenção técnica já fazem parte da assinatura.'],
   ['O painel pode integrar com o sistema que a academia já utiliza?', 'Sim, quando o fornecedor disponibiliza API, webhook ou arquivos compatíveis. A análise, configuração e desenvolvimento do conector são serviços opcionais, orçados separadamente conforme o sistema e a complexidade da integração.'],
-  ['A Shapp também desenvolve o site da academia?', 'Sim. Todos os planos podem contratar um site institucional padrão por R$ 1.000. Para academias que desejam direção visual própria, layout exclusivo, animações e maior personalização, os projetos profissionais começam em R$ 5.000.']
+  ['O que é o plano Gestão Premium?', 'É a camada de gestão personalizada da Shapp para redes e operações mais complexas. Inclui quatro ambientes de acesso, multiunidade, indicadores executivos, agenda, avaliações, satisfação, financeiro e sinais de risco de churn.'],
+  ['O aplicativo pode ser publicado na Play Store e na App Store?', 'Sim. A publicação para Android e iOS é um adicional de R$ 14.800. As taxas oficiais e contas das lojas pertencem à academia e são pagas separadamente.'],
+  ['A Shapp também desenvolve o site da academia?', 'Sim. Todos os planos podem contratar um site institucional padrão por R$ 2.000. Para academias que desejam direção visual própria, layout exclusivo, animações e maior personalização, os projetos profissionais começam em R$ 10.000.']
 ]
 
 function Brand() {
@@ -184,6 +175,7 @@ function ShappLanding() {
         <nav className={`slNav ${menuOpen ? 'isOpen' : ''}`} aria-label="Navegação principal">
           <a href="/academia" onClick={() => setMenuOpen(false)}>Academias</a>
           <a href="#planos" onClick={() => setMenuOpen(false)}>Planos</a>
+          <a href="#gestao-premium" onClick={() => setMenuOpen(false)}>Gestão Premium</a>
           <a href="#app" onClick={() => setMenuOpen(false)}>App</a>
           <a href="/painel" onClick={() => setMenuOpen(false)}>Para academias</a>
         </nav>
@@ -209,7 +201,7 @@ function ShappLanding() {
             <h1 id="hero-title">Transforme<br />a experiência</h1>
             <div className="slHeroActions">
               <CutButton href="/painel">Começar agora</CutButton>
-              <a className="slVideoButton" href="#app"><Play size={17} /> Ver vídeo de apresentação</a>
+              <a className="slVideoButton" href="https://shappfit.vercel.app/painel"><Play size={17} /> Veja o painel</a>
             </div>
             <div className="slHeroBenefits">
               {heroBenefits.map(([Icon, title, text]) => (
@@ -335,23 +327,55 @@ function ShappLanding() {
           </div>
         </section>
 
+        <section className="slPremiumManagement" id="gestao-premium">
+          <div className="slPremiumIntro">
+            <p className="slSectionTag"><Sparkles size={15} /> SHAPP GESTÃO PREMIUM</p>
+            <h2>Uma operação própria.<br /><span>Não apenas mais um sistema.</span></h2>
+            <p>Para academias que precisam adaptar a tecnologia ao seu modelo de gestão, conectar unidades e transformar indicadores em próximas ações.</p>
+            <div className="slPremiumNumbers">
+              <span><strong>{managementPremiumOffer.activeStudents.toLocaleString('pt-BR')}</strong> alunos ativos</span>
+              <span className="isNetwork"><strong>Multiunidade</strong> Para academias com mais de uma unidade</span>
+              <span><strong>{managementPremiumOffer.technicalHoursPerMonth}h</strong> técnicas mensais</span>
+            </div>
+            <CutButton href="/gestao-premium">Explorar demonstração <ArrowRight size={16} /></CutButton>
+          </div>
+          <div className="slPremiumFeatureGrid">
+            {premiumHighlights.map(([Icon, title, text]) => (
+              <article key={title}>
+                <Icon size={20} />
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+          <aside className="slPremiumCommercial">
+            <span>INVESTIMENTO DE REFERÊNCIA</span>
+            <strong>R$ 39.800</strong>
+            <p>implantação personalizada</p>
+            <hr />
+            <strong>R$ 3.980<small>/mês</small></strong>
+            <p>sustentação gerenciada</p>
+            <div><Store size={17} /><span><b>Aplicativo nas lojas</b>Adicional opcional de R$ 14.800</span></div>
+          </aside>
+        </section>
+
         <section className="slSection slPlans" id="planos">
           <div className="slPlansHeading">
             <p className="slSectionTag">PLANOS</p>
             <h2>Escolha o plano<br /><span>ideal para sua academia.</span></h2>
           </div>
           <div className="slPlansGrid">
-            {plans.map((plan) => (
-              <article className={`slPlanCard slCorner ${plan.badge ? 'isFeatured' : ''}`} key={plan.name}>
+            {shappCommercialPlans.map((plan) => (
+              <article className={`slPlanCard slCorner ${plan.badge ? 'isFeatured' : ''} ${plan.id === 'management-premium' ? 'isPremiumPlan' : ''}`} key={plan.name}>
                 {plan.badge && <span className="slPlanBadge">{plan.badge}</span>}
                 <h3>{plan.name}</h3>
                 <p>{plan.description}</p>
-                <h4>{plan.price}</h4>
-                <small className="slSetupPrice">{plan.setup}</small>
+                <h4>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(plan.monthlyPrice)}<small>/mês</small></h4>
+                <small className="slSetupPrice">{plan.setupLabel}</small>
                 <ul>
                   {plan.features.map((feature) => <li key={feature}><Check size={15} /> {feature}</li>)}
                 </ul>
-                <CutButton href="/painel">Liberar acesso</CutButton>
+                <CutButton href={plan.href}>{plan.cta}</CutButton>
               </article>
             ))}
           </div>
@@ -372,12 +396,12 @@ function ShappLanding() {
             <div className="slWebsiteOptions">
               <article>
                 <small>SITE INSTITUCIONAL</small>
-                <strong>R$ 1.000</strong>
+                <strong>R$ 2.000</strong>
                 <span>Disponível em todos os planos, com identidade da academia e estrutura essencial.</span>
               </article>
               <article className="isPremium">
                 <small>PROJETO PERSONALIZADO</small>
-                <strong>A partir de R$ 5.000</strong>
+                <strong>A partir de R$ 10.000</strong>
                 <span>Layout exclusivo, direção visual, animações e experiência sob medida — como este site demonstrativo.</span>
               </article>
             </div>
@@ -394,7 +418,7 @@ function ShappLanding() {
               <li><strong>Treinos diários</strong><span>— Atualizados em tempo real</span></li>
               <li><strong>XP e conquistas</strong><span>— Gamificação que motiva</span></li>
               <li><strong>Frequência</strong><span>— Acompanhe sua evolução</span></li>
-              <li><strong>PWA nativo</strong><span>— Sem loja, sem instalação</span></li>
+              <li><strong>PWA instalável</strong><span>— Uso imediato, com publicação nas lojas como adicional</span></li>
             </ul>
             <CutButton href="/aluno/demo-ana-cassoni">Ver app do aluno</CutButton>
           </div>

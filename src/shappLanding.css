@@ -777,6 +777,165 @@
   padding-top: 100px;
 }
 
+.slPremiumManagement {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr .72fr;
+  gap: 42px;
+  align-items: stretch;
+  padding: 96px 32px;
+  color: #f5f0ec;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(122, 71, 42, .44), transparent 34%),
+    linear-gradient(135deg, #090a0b 0%, #151116 58%, #24161b 100%);
+}
+
+.slPremiumIntro {
+  align-self: center;
+}
+
+.slPremiumIntro .slSectionTag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--sl-light-terra);
+}
+
+.slPremiumIntro h2 {
+  margin: 18px 0 22px;
+  font-size: clamp(2.6rem, 4.2vw, 5.3rem);
+  line-height: .96;
+  letter-spacing: -.055em;
+}
+
+.slPremiumIntro h2 span {
+  color: #968e89;
+}
+
+.slPremiumIntro > p:not(.slSectionTag) {
+  max-width: 570px;
+  color: #aaa29d;
+  line-height: 1.7;
+}
+
+.slPremiumNumbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 30px 0;
+}
+
+.slPremiumNumbers span {
+  min-width: 118px;
+  padding: 12px;
+  color: #9a928d;
+  background: rgba(255, 255, 255, .05);
+  border: 1px solid rgba(255, 255, 255, .09);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.slPremiumNumbers strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.slPremiumNumbers .isNetwork {
+  min-width: 210px;
+}
+
+.slPremiumFeatureGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.slPremiumFeatureGrid article {
+  min-height: 155px;
+  padding: 24px;
+  background: rgba(255, 255, 255, .055);
+  border: 1px solid rgba(255, 255, 255, .08);
+}
+
+.slPremiumFeatureGrid svg {
+  color: var(--sl-light-terra);
+}
+
+.slPremiumFeatureGrid h3 {
+  margin: 22px 0 8px;
+  font-size: 16px;
+}
+
+.slPremiumFeatureGrid p {
+  margin: 0;
+  color: #8f8985;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.slPremiumCommercial {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 28px;
+  color: var(--sl-ink);
+  background: var(--sl-light-terra);
+}
+
+.slPremiumCommercial > span {
+  margin-bottom: 28px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: .15em;
+}
+
+.slPremiumCommercial > strong {
+  font-size: 27px;
+}
+
+.slPremiumCommercial > strong small {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.slPremiumCommercial > p {
+  margin: 5px 0;
+  font-size: 11px;
+}
+
+.slPremiumCommercial hr {
+  width: 100%;
+  margin: 26px 0;
+  border: 0;
+  border-top: 1px solid rgba(26, 23, 20, .22);
+}
+
+.slPremiumCommercial > div {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(26, 23, 20, .22);
+}
+
+.slPremiumCommercial > div span,
+.slPremiumCommercial > div b {
+  display: block;
+}
+
+.slPremiumCommercial > div span {
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.slPremiumCommercial > div b {
+  font-size: 11px;
+}
+
 .slPlansHeading {
   text-align: center;
 }
@@ -788,7 +947,7 @@
 
 .slPlansGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 22px;
   margin-top: 72px;
 }
@@ -806,6 +965,18 @@
 
 .slPlanCard.isFeatured {
   outline: 1px solid var(--sl-accent);
+}
+
+.slPlanCard.isPremiumPlan {
+  background:
+    linear-gradient(160deg, rgba(122, 71, 42, .3), transparent 42%),
+    var(--sl-deep);
+  outline-color: var(--sl-light-terra);
+}
+
+.slPlanCard.isPremiumPlan .slPlanBadge {
+  color: var(--sl-ink);
+  background: var(--sl-light-terra);
 }
 
 .slPlanBadge {
@@ -1277,6 +1448,15 @@
     grid-template-columns: 1fr;
   }
 
+  .slPremiumManagement {
+    grid-template-columns: 1fr 1fr;
+    padding: 76px 28px;
+  }
+
+  .slPremiumIntro {
+    grid-column: 1 / -1;
+  }
+
   .slProductGrid,
   .slPlansGrid {
     grid-template-columns: 1fr;
@@ -1356,6 +1536,15 @@
   }
 
   .slSection {
+    padding: 76px 20px;
+  }
+
+  .slPremiumManagement,
+  .slPremiumFeatureGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .slPremiumManagement {
     padding: 76px 20px;
   }
 

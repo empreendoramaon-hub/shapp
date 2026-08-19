@@ -1,0 +1,134 @@
+.esaPage.isEleve {
+  --eleve-bg: #090f0b;
+  --eleve-card: #141d16;
+  --eleve-card-2: #1b261d;
+  --eleve-accent: #97e31b;
+  --eleve-soft: #d8e6c7;
+  --eleve-muted: #a7b2aa;
+  --eleve-line: rgba(255,255,255,.09);
+  min-height: 100vh;
+  color: #f7faf5;
+  background: #060a07;
+  font-family: Poppins, Manrope, Arial, sans-serif;
+}
+
+.esaPage.isEleve .esaTop {
+  width: min(560px, 100%);
+  height: 70px;
+  margin: 0 auto;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--eleve-line);
+  background: rgba(9,15,11,.94);
+  backdrop-filter: blur(18px);
+}
+
+.esaPage.isEleve .esaTop a b { color: #a8b79a; font-size: 1.8rem; font-weight: 500; }
+.esaPage.isEleve .esaTop a small { color: var(--eleve-accent); }
+.esaPage.isEleve main { width: min(560px,100%); min-height: calc(100vh - 70px); padding: 0 14px 118px; background: var(--eleve-bg); }
+
+.esaPage.isEleve .esaHero {
+  min-height: 500px;
+  margin: 0 -14px 14px;
+  padding: 250px 22px 28px;
+  border-radius: 0 0 34px 34px;
+  background: #111a13;
+  box-shadow: 0 24px 60px rgba(0,0,0,.35);
+}
+
+.esaPage.isEleve .esaHeroMedia { position: absolute; inset: 0; }
+.esaPage.isEleve .esaHeroMedia img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; opacity: .78; }
+.esaPage.isEleve .esaHeroMedia::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(5,10,7,.08),rgba(5,10,7,.38) 38%,#090f0bf5 90%),linear-gradient(125deg,rgba(21,56,28,.3),rgba(98,141,28,.2) 54%,rgba(151,227,27,.2)); }
+.esaPage.isEleve .esaHero::after { content:"eleve."; right:-12px; bottom:8px; z-index:1; color:rgba(255,255,255,.035); font-size:6.5rem; }
+.esaPage.isEleve .esaHero > p,.esaPage.isEleve .esaHero > h1,.esaPage.isEleve .esaHero > span,.esaPage.isEleve .esaLevel { position:relative; z-index:2; }
+.esaPage.isEleve .esaHero > p { color:var(--eleve-accent); font-size:.72rem; letter-spacing:.13em; }
+.esaPage.isEleve .esaHero h1 { margin: 8px 0 10px; color:#fff; font-family:Archivo,Poppins,sans-serif; font-size:clamp(3rem,14vw,4.6rem); line-height:.86; text-transform:uppercase; letter-spacing:-.055em; }
+.esaPage.isEleve .esaHero > span { color:rgba(255,255,255,.74); font-size:.84rem; }
+.esaPage.isEleve .esaLevel { margin-top:22px; padding:15px; border:1px solid rgba(255,255,255,.15); border-radius:18px; background:rgba(0,0,0,.33); backdrop-filter:blur(12px); }
+.esaPage.isEleve .esaLevel > svg { color:var(--eleve-accent); }
+.esaPage.isEleve .esaLevel small { color:var(--eleve-accent); }
+.esaPage.isEleve .esaLevel i { height:9px; background:rgba(255,255,255,.14); }
+.esaPage.isEleve .esaLevel i span { background:linear-gradient(90deg,var(--eleve-accent),#d4ff85); }
+
+.esaPage.isEleve .esaQuickStats { gap:10px; margin:14px 0; }
+.esaPage.isEleve .esaQuickStats article,.esaPage.isEleve .esaMetricGrid article { border-color:var(--eleve-line); border-radius:20px; color:#fff; background:var(--eleve-card); box-shadow:0 14px 34px rgba(0,0,0,.22); }
+.esaPage.isEleve .esaQuickStats svg,.esaPage.isEleve .esaQuickStats article:first-child svg { color:var(--eleve-accent); }
+.esaPage.isEleve .esaQuickStats span { color:var(--eleve-muted); }
+
+.esaPage.isEleve .esaCard { border-color:var(--eleve-line); border-radius:24px; color:#fff; background:var(--eleve-card); box-shadow:0 16px 38px rgba(0,0,0,.28); }
+.esaPage.isEleve .esaToday { position:relative; min-height:330px; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding:22px; isolation:isolate; }
+.esaPage.isEleve .esaTodayImage { position:absolute; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; opacity:.72; }
+.esaPage.isEleve .esaToday::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(5,10,7,.12),#080e0bcf 66%,#080e0bf5),linear-gradient(120deg,rgba(53,112,40,.22),rgba(151,227,27,.12)); }
+.esaPage.isEleve .esaToday small { color:var(--eleve-accent); }
+.esaPage.isEleve .esaToday h2 { max-width:350px; color:#fff; font-family:Archivo,Poppins,sans-serif; font-size:2rem; line-height:.98; text-transform:uppercase; }
+.esaPage.isEleve .esaToday > p { color:rgba(255,255,255,.72); }
+.esaPage.isEleve .esaToday > div span { color:var(--eleve-soft); background:rgba(151,227,27,.14); }
+.esaPage.isEleve .esaToday > button,.esaPage.isEleve .esaMainButton,.esaPage.isEleve .esaFinish { min-height:48px; border-radius:15px; color:#14200e; background:var(--eleve-accent); }
+.esaPage.isEleve .esaToday button svg,.esaPage.isEleve .esaMainButton svg { color:#14200e; }
+.esaPage.isEleve .esaPlan,.esaPage.isEleve .esaCoach { border-color:var(--eleve-line); }
+.esaPage.isEleve .esaPlan p,.esaPage.isEleve .esaCoach span { color:var(--eleve-muted); }
+.esaPage.isEleve .esaCoach > i { color:#13200d; background:var(--eleve-accent); border-radius:50%; }
+.esaPage.isEleve .esaNotices article { border-color:var(--eleve-line); }
+.esaPage.isEleve .esaNotices article span { color:var(--eleve-muted); }
+
+.esaPage.isEleve .esaVisualTitle { position:relative; min-height:310px; margin:0 -14px 18px; padding:190px 22px 28px; overflow:hidden; border-radius:0 0 30px 30px; isolation:isolate; }
+.esaPage.isEleve .esaVisualTitle > img { position:absolute; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; opacity:.76; }
+.esaPage.isEleve .esaVisualTitle::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(5,10,7,.06),#080e0be8 92%),linear-gradient(125deg,rgba(35,99,45,.3),rgba(151,227,27,.16)); }
+.esaPage.isEleve .esaVisualTitle p { color:var(--eleve-accent); }
+.esaPage.isEleve .esaVisualTitle h1 { color:#fff; font-family:Archivo,Poppins,sans-serif; font-size:clamp(2.5rem,11vw,3.5rem); text-transform:uppercase; }
+.esaPage.isEleve .esaVisualTitle > span { color:rgba(255,255,255,.72); }
+.esaPage.isEleve .esaAgendaVisual > img { object-position:center 44%; }
+.esaPage.isEleve .esaProgressVisual > img { object-position:center 35%; }
+
+.esaPage.isEleve .esaWorkoutProgress { border:1px solid var(--eleve-line); border-radius:20px; background:var(--eleve-card-2); }
+.esaPage.isEleve .esaWorkoutProgress b { color:var(--eleve-accent); }
+.esaPage.isEleve .esaWorkoutProgress i { background:rgba(255,255,255,.12); }
+.esaPage.isEleve .esaWorkoutProgress i span { background:var(--eleve-accent); }
+.esaPage.isEleve .esaExerciseList > button { border-color:var(--eleve-line); border-radius:20px; color:#fff; background:var(--eleve-card); box-shadow:0 12px 30px rgba(0,0,0,.2); }
+.esaPage.isEleve .esaExerciseList > button > span { color:#14200e; background:var(--eleve-accent); border-radius:12px; }
+.esaPage.isEleve .esaExerciseList small { color:var(--eleve-muted); }
+.esaPage.isEleve .esaExerciseList strong { color:var(--eleve-accent); }
+.esaPage.isEleve .esaExerciseList > button.done { border-color:rgba(151,227,27,.38); background:#17251a; }
+
+.esaPage.isEleve .esaCalendarStrip div { border-color:var(--eleve-line); color:#fff; background:var(--eleve-card); }
+.esaPage.isEleve .esaCalendarStrip small { color:var(--eleve-muted); }
+.esaPage.isEleve .esaCalendarStrip .active { color:#14200e; background:var(--eleve-accent); }
+.esaPage.isEleve .esaCalendarStrip .active small { color:#34500e; }
+.esaPage.isEleve .esaAppointment { border-color:var(--eleve-line); }
+.esaPage.isEleve .esaAppointment time span,.esaPage.isEleve .esaAppointment > div span { color:var(--eleve-muted); }
+.esaPage.isEleve .esaAppointment > i { color:var(--eleve-accent); background:rgba(151,227,27,.12); }
+.esaPage.isEleve .esaAppointment nav button { color:var(--eleve-accent); background:rgba(151,227,27,.12); }
+
+.esaPage.isEleve .esaMetricGrid small,.esaPage.isEleve .esaTests span,.esaPage.isEleve .esaHealth p,.esaPage.isEleve .esaAssessmentTimeline span,.esaPage.isEleve .esaAssessmentTimeline small { color:var(--eleve-muted); }
+.esaPage.isEleve .esaGoal > svg,.esaPage.isEleve .esaHealth > svg { color:var(--eleve-accent); }
+.esaPage.isEleve .esaTests > div,.esaPage.isEleve .esaAssessmentTimeline article { border-color:var(--eleve-line); }
+
+.esaPage.isEleve .esaProfileHead { position:relative; min-height:300px; margin:0 -14px 16px; padding:165px 20px 25px; overflow:hidden; border-radius:0 0 30px 30px; isolation:isolate; }
+.esaPage.isEleve .esaProfileCover { position:absolute; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; object-position:center 38%; opacity:.74; }
+.esaPage.isEleve .esaProfileHead::after { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(5,10,7,.08),#090f0bf0 92%),linear-gradient(120deg,rgba(41,100,42,.26),rgba(151,227,27,.12)); }
+.esaPage.isEleve .esaProfileHead i { border:5px solid var(--eleve-bg); color:#14200e; background:var(--eleve-accent); }
+.esaPage.isEleve .esaProfileHead h1 { color:#fff; font-family:Archivo,Poppins,sans-serif; text-transform:uppercase; }
+.esaPage.isEleve .esaProfileHead span,.esaPage.isEleve .esaProfileDetails small { color:var(--eleve-muted); }
+.esaPage.isEleve .esaProfileDetails div { border-color:var(--eleve-line); }
+.esaPage.isEleve .esaRating { background:linear-gradient(145deg,#17231a,#101812); }
+.esaPage.isEleve .esaRating > svg,.esaPage.isEleve .esaRating button.active { color:var(--eleve-accent); }
+.esaPage.isEleve .esaRating textarea { border-color:var(--eleve-line); }
+.esaPage.isEleve .esaRating .esaFeedbackButton { color:#14200e; background:var(--eleve-accent); }
+.esaPage.isEleve .esaBadges span { border-color:var(--eleve-line); color:#fff; background:var(--eleve-card); }
+.esaPage.isEleve .esaBadges svg { color:var(--eleve-accent); }
+
+.esaPage.isEleve > nav { bottom:max(10px,env(safe-area-inset-bottom)); width:min(540px,calc(100% - 20px)); padding:7px; border:1px solid var(--eleve-line); border-radius:24px; background:rgba(15,23,17,.94); box-shadow:0 24px 60px rgba(0,0,0,.55); backdrop-filter:blur(18px); }
+.esaPage.isEleve > nav button { min-height:57px; border-radius:17px; color:var(--eleve-muted); }
+.esaPage.isEleve > nav button.active { color:#14200e; background:var(--eleve-accent); font-weight:900; }
+
+@media (min-width:700px) {
+  .esaPage.isEleve { background:#050806; }
+  .esaPage.isEleve main { box-shadow:0 0 80px rgba(0,0,0,.7); }
+}
+
+@media (max-width:520px) {
+  .esaPage.isEleve main { padding-inline:12px; }
+  .esaPage.isEleve .esaHero,.esaPage.isEleve .esaVisualTitle,.esaPage.isEleve .esaProfileHead { margin-inline:-12px; }
+  .esaPage.isEleve .esaHero { min-height:470px; padding-top:230px; }
+  .esaPage.isEleve .esaQuickStats article { padding:13px 9px; }
+  .esaPage.isEleve .esaToday { min-height:310px; }
+}

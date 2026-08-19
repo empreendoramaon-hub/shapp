@@ -1,0 +1,32 @@
+/* A demonstração é pública e preserva os dados canônicos dos alunos. */
+.adminV2ListLogin,
+.adminV2Delete {
+  display: none !important;
+}
+
+.pmPage .pmMetrics {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.pmPage .pmTeacherHead,
+.pmPage .pmTeacherTable article {
+  min-width: 900px;
+  grid-template-columns: 1.6fr .5fr .5fr .65fr 1fr .85fr;
+}
+
+.pmPerformance {
+  display: grid;
+  gap: 2px;
+  width: max-content;
+  min-width: 82px;
+  padding: 7px 10px;
+  color: #fff;
+  background: #78472a;
+}
+
+.pmPerformance b { font-size: 13px; }
+.pmPerformance small { font-size: 9px; text-transform: uppercase; letter-spacing: .08em; }
+.pmPerformance.isExcelente { background: #276749; }
+.pmPerformance.isBom { background: #526b2f; }
+.pmPerformance.isAtencao { background: #9a5d18; }
+.pmPerformance.isCritico { background: #923a32; }
