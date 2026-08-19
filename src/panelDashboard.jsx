@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { QRCodeCanvas } from 'qrcode.react'
 import {
@@ -19,9 +19,18 @@ import {
   ShieldCheck,
   Sparkles,
   UserPlus,
-  Users
+  Users,
+  XCircle
 } from 'lucide-react'
-import { buildStudentInviteUrl, formatDateInput, formatPhone, isValidBrazilianDate, normalizeStudent, sentenceCase, titleCase } from './dataFormat.js'
+import { buildStudentInviteUrl, buildStudentPath, formatDateInput, formatPhone, isValidBrazilianDate, normalizeStudent, sentenceCase, titleCase } from './dataFormat.js'
+import {
+  isShappAdmin,
+  signInShappAdmin,
+  signOutShappAdmin,
+  subscribeAdminReservations,
+  subscribeShappAuth,
+  updateShappReservation
+} from './shappFirebase.js'
 import './panelDashboard.css'
 import './panelDashboardStudents.css'
 
@@ -257,15 +266,72 @@ function loadState() {
 
 function createToken(name) {
   const slug = name.toLocaleLowerCase('pt-BR').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
-  return `${slug || 'aluno'}-${Math.random().toString(36).slice(2, 8)}`
+  const randomPart = crypto.getRandomValues(new Uint32Array(1))[0].toString(36).padStart(6, '0').slice(0, 6)
+  return `${slug || 'aluno'}-${randomPart}`
 }
 
 function initials(name = '') {
   return titleCase(name).split(' ').map((part) => part[0]).slice(0, 2).join('')
 }
 
+class QrBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { error: null }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { error }
+  }
+
+  componentDidCatch(error) {
+    console.error('Falha ao gerar QR Code:', error)
+  }
+
+  render() {
+    if (this.state.error) {
+      return <p className="panelEmpty">Nao foi possivel gerar o QR Code (link muito longo). Use "Copiar link" ou "WhatsApp" abaixo.</p>
+    }
+    return this.props.children
+  }
+}
+
+class PanelBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { error: null }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { error }
+  }
+
+  componentDidCatch(error, info) {
+    console.error('Painel travou:', error, info)
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 24, textAlign: 'center', fontFamily: 'Poppins, sans-serif', background: '#17130f', color: '#faf6f2' }}>
+          <div>
+            <h1 style={{ margin: '0 0 12px', fontSize: '1.6rem' }}>Algo deu errado ao carregar o painel</h1>
+            <p style={{ margin: '0 0 18px', opacity: .7, maxWidth: 420 }}>Tente recarregar a pagina. Se o problema continuar, avise o suporte.</p>
+            <button type="button" onClick={() => window.location.reload()} style={{ border: 0, borderRadius: 999, padding: '12px 22px', background: '#e68a6a', color: '#2a140c', fontWeight: 800, cursor: 'pointer' }}>Recarregar</button>
+          </div>
+        </main>
+      )
+    }
+    return this.props.children
+  }
+}
+
 function Dashboard() {
   const [state, setState] = useState(loadState)
+  const [firebaseUser, setFirebaseUser] = useState(null)
+  const [authLoading, setAuthLoading] = useState(true)
+  const [cloudReservations, setCloudReservations] = useState([])
+  const [reservationSyncError, setReservationSyncError] = useState('')
   const [selectedToken, setSelectedToken] = useState(state.students[0]?.token || '')
   const [form, setForm] = useState({ name: '', phone: '', email: '', birthDate: '', goal: '', trainerId: state.trainers[0]?.id || '', monthlyGoal: 20, notes: '', family: '' })
   const [exerciseForm, setExerciseForm] = useState(initialExercise)
@@ -281,11 +347,54 @@ function Dashboard() {
   const activeStudents = state.students.filter((student) => student.status === 'active')
   const recentStudents = state.students.slice(0, 6)
   const schedule = state.schedule || fallbackSchedule
-  const pendingBookings = state.students.flatMap((student) => (student.bookings || [])
+  const localPendingBookings = state.students.flatMap((student) => (student.bookings || [])
     .filter((booking) => booking.status === 'pending')
     .map((booking) => ({ ...booking, student, activity: schedule.find((item) => item.id === booking.activityId) })))
+  const cloudPendingBookings = cloudReservations
+    .filter((booking) => booking.status === 'pending')
+    .map((booking) => ({
+      ...booking,
+      cloud: true,
+      student: state.students.find((student) => student.token === booking.studentToken) || {
+        id: booking.studentId,
+        token: booking.studentToken,
+        name: booking.studentName
+      },
+      activity: schedule.find((item) => item.id === booking.activityId) || {
+        id: booking.activityId,
+        title: booking.activityTitle,
+        date: booking.activityDate,
+        time: booking.activityTime,
+        place: booking.activityPlace
+      }
+    }))
+  const cloudKeys = new Set(cloudPendingBookings.map((booking) => `${booking.student.token}-${booking.activityId}`))
+  const pendingBookings = [
+    ...cloudPendingBookings,
+    ...localPendingBookings.filter((booking) => !cloudKeys.has(`${booking.student.token}-${booking.activityId}`))
+  ]
   const inviteLink = selectedStudent ? buildStudentInviteUrl(window.location.origin, selectedStudent, state) : ''
   const whatsappLink = selectedStudent ? `https://wa.me/55${selectedStudent.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Ola, ${titleCase(selectedStudent.name)}! Seu acesso ao app da ${state.academy.name} esta pronto: ${inviteLink}`)}` : '#'
+
+  useEffect(() => subscribeShappAuth((user) => {
+    setFirebaseUser(user)
+    setAuthLoading(false)
+  }), [])
+
+  useEffect(() => {
+    if (!isShappAdmin(firebaseUser)) {
+      setCloudReservations([])
+      return undefined
+    }
+    setReservationSyncError('')
+    return subscribeAdminReservations(
+      setCloudReservations,
+      (error) => {
+        console.error('Não foi possível carregar as reservas:', error)
+        setReservationSyncError('Não foi possível carregar as reservas online.')
+      }
+    )
+  }, [firebaseUser])
 
   const metrics = useMemo(() => [
     { label: 'Alunos ativos', value: activeStudents.length, icon: Users },
@@ -339,17 +448,37 @@ function Dashboard() {
     setActivityForm({ date: todayISO(), time: '18:00', title: '', place: '', coach: '', type: 'Aula', capacity: 'Turma aberta' })
   }
 
-  function confirmBooking(studentId, activityId) {
+  async function changeBookingStatus(booking, status) {
+    if (booking.cloud && booking.id) {
+      try {
+        await updateShappReservation(booking.id, status)
+      } catch (error) {
+        console.error('Não foi possível atualizar a reserva:', error)
+        setReservationSyncError('Não foi possível atualizar esta reserva. Tente novamente.')
+        return
+      }
+    }
+    const studentId = booking.student.id
+    const activityId = booking.activityId
     const updated = {
       ...state,
       students: state.students.map((student) => {
         if (student.id !== studentId) return student
         return {
           ...student,
-          bookings: (student.bookings || []).map((booking) => booking.activityId === activityId ? { ...booking, status: 'confirmed', confirmedAt: new Date().toISOString() } : booking)
+          bookings: (student.bookings || []).map((item) => item.activityId === activityId ? {
+            ...item,
+            status,
+            confirmedAt: status === 'confirmed' ? new Date().toISOString() : ''
+          } : item)
         }
       }),
-      auditLog: [{ id: `${studentId}-${activityId}-${Date.now()}`, action: 'Reserva confirmada e aluno notificado no app', actor: 'Painel', date: new Date().toISOString() }, ...(state.auditLog || [])]
+      auditLog: [{
+        id: `${studentId}-${activityId}-${Date.now()}`,
+        action: status === 'confirmed' ? 'Reserva confirmada e aluno notificado no app' : 'Reserva recusada e aluno notificado no app',
+        actor: 'Painel',
+        date: new Date().toISOString()
+      }, ...(state.auditLog || [])]
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
     setState(updated)
@@ -483,7 +612,7 @@ function Dashboard() {
               <a href="/aluno/demo-ana-cassoni" target="_blank" rel="noreferrer">Ver app do aluno <ExternalLink /></a>
             </div>
           </div>
-          <img src="/fitness-athlete.svg" alt="Atleta treinando" />
+          <img src="/deadlift.jpg" alt="Atleta treinando" />
         </header>
 
         <section className="academyMetrics">
@@ -494,12 +623,24 @@ function Dashboard() {
           <article className="academyCard bookingAlerts">
             <div className="cardTitle"><div><span>Lista de avisos</span><h2>Reservas e agendamentos</h2></div><CalendarDays /></div>
             {pendingBookings.map((booking) => (
-              <div className="bookingAlertRow" key={`${booking.student.id}-${booking.activityId}`}>
+              <div className="bookingAlertRow" key={booking.id || `${booking.student.id}-${booking.activityId}`}>
                 <div><strong>{titleCase(booking.student.name)}</strong><span>{booking.activity?.title || 'Atividade'} - {booking.activity?.time || '--:--'}</span></div>
-                <button type="button" onClick={() => confirmBooking(booking.student.id, booking.activityId)}><CheckCircle2 /> Confirmar e notificar aluno</button>
+                <div className="bookingAlertActions">
+                  <button type="button" onClick={() => changeBookingStatus(booking, 'confirmed')}><CheckCircle2 /> Confirmar</button>
+                  <button type="button" className="bookingRejectButton" onClick={() => changeBookingStatus(booking, 'cancelled')}><XCircle /> Recusar</button>
+                </div>
               </div>
             ))}
-            {!pendingBookings.length && <p className="panelEmpty">Nenhuma reserva pendente no momento.</p>}
+            {!authLoading && !isShappAdmin(firebaseUser) && (
+              <div className="bookingCloudLogin">
+                <p>Entre com a conta administrativa para receber reservas feitas em outros celulares.</p>
+                <button type="button" onClick={() => signInShappAdmin().catch((error) => setReservationSyncError(error.message))}>Entrar com Google</button>
+              </div>
+            )}
+            {isShappAdmin(firebaseUser) && <button className="bookingCloudLogout" type="button" onClick={() => signOutShappAdmin()}>Desconectar sincronização</button>}
+            {reservationSyncError && <p className="formError">{reservationSyncError}</p>}
+            {!pendingBookings.length && isShappAdmin(firebaseUser) && <p className="panelEmpty">Nenhuma reserva pendente no momento.</p>}
+            {!pendingBookings.length && authLoading && <p className="panelEmpty">Conectando às reservas...</p>}
           </article>
 
           <form className="academyCard activityManager" id="agenda" onSubmit={saveActivity}>
@@ -538,7 +679,11 @@ function Dashboard() {
             <div className="cardTitle"><div><span>Acesso do aluno</span><h2>QR Code real</h2></div><QrCode /></div>
             {selectedStudent ? <>
               <label>Aluno selecionado<select value={selectedStudent.token} onChange={(e) => setSelectedToken(e.target.value)}>{state.students.map((student) => <option key={student.id} value={student.token}>{titleCase(student.name)}</option>)}</select></label>
-              <div className="realQr" ref={qrRef}><QRCodeCanvas value={inviteLink} size={220} level="H" includeMargin bgColor="#ffffff" fgColor="#080808" /></div>
+              <div className="realQr" ref={qrRef}>
+                <QrBoundary>
+                  <QRCodeCanvas value={inviteLink} size={220} level="L" includeMargin bgColor="#ffffff" fgColor="#080808" />
+                </QrBoundary>
+              </div>
               <div className="studentAccessData"><strong>{titleCase(selectedStudent.name)}</strong><span>{formatPhone(selectedStudent.phone)} Â· {selectedStudent.birthDate || 'Data nÃ£o informada'}</span><code>{inviteLink}</code></div>
               <div className="accessActions">
                 <button type="button" onClick={copyLink}><Copy /> Copiar link</button>
@@ -605,7 +750,7 @@ function Dashboard() {
                   <div><small>Objetivo</small><strong>{sentenceCase(student.goal)}</strong></div>
                   <div><small>Rotinas</small><strong>{student.workouts?.length || 0} fichas</strong></div>
                   <div><small>Meta mensal</small><strong>{student.completedThisMonth || 0}/{student.monthlyGoal || 0} treinos</strong><div className="dashboardProgress"><span style={{ width: `${progress}%` }} /></div></div>
-                  <a href={`/aluno/${student.token}`} target="_blank" rel="noreferrer">Abrir app <ExternalLink /></a>
+                  <a href={buildStudentPath(student.token)} target="_blank" rel="noopener noreferrer">Abrir app <ExternalLink /></a>
                 </article>
               )
             })}
@@ -618,4 +763,4 @@ function Dashboard() {
   )
 }
 
-createRoot(document.getElementById('root')).render(<Dashboard />)
+createRoot(document.getElementById('root')).render(<PanelBoundary><Dashboard /></PanelBoundary>)

@@ -1,0 +1,29 @@
+.esaHero::after {
+  content: 'SH▲PP';
+}
+
+.eleveStudentHero::after {
+  content: 'SH▲PP';
+}
+
+.esaPage.isEleve .esaHero::after,
+.elevePlatform.isEleve .eleveStudentHero::after {
+  content: 'eleve.';
+}
+
+.esaNotices header { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+.esaNotices header svg { color:#638f19; }
+.esaNotices header small { color:#638f19; font-size:.56rem; font-weight:800; }
+.esaNotices header h2 { margin:3px 0 0; font-size:1rem; }
+.esaNotices article { display:grid; gap:3px; padding:11px 0; border-top:1px solid #e8ece6; }
+.esaNotices article b { font-size:.7rem; }
+.esaNotices article span { color:#77827a; font-size:.62rem; line-height:1.45; }
+.esaAppointment nav { display:flex; gap:8px; margin-top:8px; }
+.esaAppointment nav button { border:0; border-radius:99px; padding:5px 8px; color:#4d7413; background:#edf4e6; font-size:.52rem; font-weight:800; }
+.esaAppointment.cancelled { opacity:.62; }
+.esaAssessmentTimeline article { display:grid; grid-template-columns:90px 65px 1fr; gap:8px; padding:10px 0; border-top:1px solid #e8ece6; font-size:.62rem; }
+.esaAssessmentTimeline article span,.esaAssessmentTimeline article small { color:#77827a; }
+.esaRating textarea { width:100%; min-height:70px; margin-top:10px; border:1px solid #435047; border-radius:9px; padding:9px; color:#fff; background:#ffffff0d; resize:vertical; font:inherit; font-size:.62rem; }
+.esaRating .esaFeedbackButton { margin-top:7px; border:0; border-radius:8px; padding:8px 11px; color:#172019; background:#97e31b; font-size:.6rem; font-weight:800; }
+.esaRating p { margin:7px 0 0; color:#b9c4bc; font-size:.57rem; }
+.elevePlatform.isEleve .eleveBrand b { color:#a8b79a; font-weight:500; letter-spacing:-2px; }

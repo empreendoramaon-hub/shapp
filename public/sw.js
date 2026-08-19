@@ -1,8 +1,10 @@
-const CACHE_NAME = 'shapp-apps-v4';
+const CACHE_NAME = 'shapp-apps-v6';
 const CORE_ASSETS = [
   '/',
   '/sotalia-app',
   '/manifest.webmanifest',
+  '/icon-192.png',
+  '/icon-512.png',
   '/sotalia-manifest.webmanifest',
   '/icon.svg',
   '/sotalia-icon.svg',

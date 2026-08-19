@@ -20,6 +20,7 @@ import {
   Users
 } from 'lucide-react'
 import { readStudentInvite } from './dataFormat.js'
+import { saveShappReservation, subscribeStudentReservations } from './shappFirebase.js'
 import './studentMobile.css'
 
 const STORAGE_KEY = 'shappFitMvpState'
@@ -113,7 +114,9 @@ const fallbackState = {
 function loadState() {
   try {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')
-    const invite = readStudentInvite(window.location.search)
+    // Fragmentos protegem o convite contra logs de servidor e cabecalhos Referer.
+    // A query antiga continua aceita para links ja enviados.
+    const invite = readStudentInvite(window.location.hash || window.location.search)
     const baseState = stored?.academy && Array.isArray(stored?.students) ? stored : fallbackState
     const state = invite ? {
       ...baseState,
@@ -230,7 +233,7 @@ function Consent({ academy, student, onAccept }) {
   return (
     <main className="mobileLegal" style={{ '--brand': academy.primaryColor }}>
       <div className="legalVisual">
-        <img src="/fitness-athlete.svg" alt="Atleta em movimento" />
+        <img src="/highfive.webp" alt="Atleta em movimento" />
         <div className="legalLogo">{academy.logo}</div>
       </div>
       <p className="mobileEyebrow"><ShieldCheck size={15} /> Primeiro acesso</p>
@@ -258,7 +261,7 @@ function HomeTab({ student, academy, trainer, workout, goalProgress, remaining, 
     <>
       <header className="mobileHero">
         <div className="heroImageWrap">
-          <img src="/fitness-athlete.svg" alt="Atleta treinando" />
+          <img src="/athlete.jpg" alt="Atleta treinando" />
         </div>
         <div className="mobileTopline">
           <div className="mobileAcademy"><span>{academy.logo}</span><small>{academy.name}</small></div>
@@ -304,7 +307,7 @@ function HomeTab({ student, academy, trainer, workout, goalProgress, remaining, 
         </section>
 
         <article className="visualWorkoutCard" onClick={() => setTab('workout')}>
-          <img src="/workout-legs.svg" alt="Ilustracao do treino" />
+          <img src="/workout.jpg" alt="Ilustracao do treino" />
           <div className="visualWorkoutShade" />
           <div className="visualWorkoutCopy">
             <small>Proximo treino</small>
@@ -378,11 +381,13 @@ function HomeTab({ student, academy, trainer, workout, goalProgress, remaining, 
   )
 }
 function AgendaTab({ student, setStudentState, schedule }) {
+  const [syncMessage, setSyncMessage] = useState('')
+
   function statusFor(item) {
     return (student.bookings || []).find((booking) => booking.activityId === item.id)?.status || ''
   }
 
-  function toggleBooking(item) {
+  async function toggleBooking(item) {
     const currentStatus = statusFor(item)
     const nextStatus = currentStatus === 'confirmed' ? 'cancelled' : 'pending'
     setStudentState((current) => {
@@ -398,11 +403,20 @@ function AgendaTab({ student, setStudentState, schedule }) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
       return updated
     })
+    setSyncMessage('Sincronizando reserva...')
+    try {
+      await saveShappReservation({ student, activity: item, status: nextStatus })
+      setSyncMessage(nextStatus === 'pending' ? 'Reserva enviada para confirmação da academia.' : 'Reserva cancelada.')
+    } catch (error) {
+      console.error('Não foi possível sincronizar a reserva:', error)
+      setSyncMessage('A reserva ficou salva neste aparelho, mas a sincronização está indisponível.')
+    }
   }
 
   return (
     <section className="mobilePage agendaPage">
       <div className="pageTitle"><p className="mobileEyebrow"><CalendarDays size={15} /> Agenda</p><h1>Aulas de hoje</h1><span>Reservas e avisos confirmados pela academia.</span></div>
+      {syncMessage && <p className="bookingSyncMessage" role="status">{syncMessage}</p>}
       <div className="studentAgendaList">
         {schedule.map((item) => {
           const status = statusFor(item)
@@ -420,6 +434,48 @@ function AgendaTab({ student, setStudentState, schedule }) {
     </section>
   )
 }
+
+function useStudentBookingSync(student, setState) {
+  useEffect(() => {
+    if (!student?.token) return undefined
+    let unsubscribe = () => {}
+    let active = true
+
+    subscribeStudentReservations(student.token, (cloudBookings) => {
+      if (!active) return
+      setState((current) => {
+        const updated = {
+          ...current,
+          students: current.students.map((entry) => entry.id === student.id
+            ? {
+                ...entry,
+                bookings: cloudBookings.map((booking) => ({
+                  activityId: booking.activityId,
+                  status: booking.status,
+                  requestedAt: booking.requestedAt,
+                  confirmedAt: booking.confirmedAt,
+                  reservationId: booking.id
+                }))
+              }
+            : entry)
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+        return updated
+      })
+    }, (error) => console.error('Não foi possível acompanhar as reservas:', error))
+      .then((stop) => {
+        if (active) unsubscribe = stop
+        else stop()
+      })
+      .catch((error) => console.error('Não foi possível iniciar a sincronização:', error))
+
+    return () => {
+      active = false
+      unsubscribe()
+    }
+  }, [student?.id, student?.token, setState])
+}
+
 function WorkoutTab({ student, academy, workout, onFinish }) {
   const [done, setDone] = useState([])
 
@@ -439,7 +495,7 @@ function WorkoutTab({ student, academy, workout, onFinish }) {
   return (
     <section className="mobilePage workoutPage">
       <div className="workoutVisualHeader">
-        <img src="/workout-legs.svg" alt="Treino de pernas" />
+        <img src="/pullup.jpg" alt="Treino de pernas" />
         <div className="workoutVisualShade" />
         <div className="pageTitle">
           <p className="mobileEyebrow"><Dumbbell size={15} /> SequÃªncia {workout.sequence || 1}</p>
@@ -472,7 +528,7 @@ function ProgressTab({ student }) {
   return (
     <section className="mobilePage progressPage">
       <div className="progressVisual">
-        <img src="/fitness-athlete.svg" alt="Atleta representando evolucao" />
+        <img src="/stretch.jpg" alt="Atleta representando evolucao" />
         <div className="progressVisualShade" />
         <div className="pageTitle"><p className="mobileEyebrow"><BarChart3 size={15} /> Evolucao</p><h1>Metricas e resultados.</h1><span>Graficos para acompanhar treino, corpo e constancia.</span></div>
       </div>
@@ -496,7 +552,7 @@ function NutritionTab({ student }) {
   return (
     <section className="mobilePage nutritionPage">
       <div className="nutritionVisual">
-        <img src="/fitness-athlete.svg" alt="Plano alimentar integrado ao treino" />
+        <img src="/yoga.jpg" alt="Plano alimentar integrado ao treino" />
         <div className="nutritionVisualShade" />
         <div className="pageTitle">
           <p className="mobileEyebrow"><Salad size={15} /> Nutricionista</p>
@@ -525,7 +581,7 @@ function childMatchesActivity(item, child) {
 function ProfileTab({ student, academy, trainer, consent, installApp, installMessage, canInstall, schedule }) {
   return (
     <section className="mobilePage profilePage">
-      <div className="profileVisual"><img src="/fitness-athlete.svg" alt="Perfil fitness" /><div className="profileShade" /></div>
+      <div className="profileVisual"><img src="/meditation.jpg" alt="Perfil fitness" /><div className="profileShade" /></div>
       <div className="profileHeader"><div>{student.name.split(' ').map((name) => name[0]).slice(0, 2).join('')}</div><h1>{student.name}</h1><p>{student.email}</p><span className="activeBadge">Matricula ativa</span></div>
       <button className="installBigButton" type="button" onClick={installApp}><Download /> {canInstall ? 'Baixar app no celular' : 'Adicionar na tela inicial'}<small>{installMessage}</small></button>
       <div className="profileList">
@@ -561,6 +617,7 @@ function StudentMobileApp() {
   const [tab, setTab] = useState('home')
   const install = useInstallPrompt()
   const student = state?.students?.find((item) => item.token === token)
+  useStudentBookingSync(student, setState)
   const academy = state?.academy
   const trainer = state?.trainers?.find((item) => item.id === student?.trainerId)
   const schedule = filterFutureStudentActivities(state?.schedule || fallbackSchedule)
@@ -611,4 +668,34 @@ function StudentMobileApp() {
   )
 }
 
-createRoot(document.getElementById('root')).render(<StudentMobileApp />)
+class StudentBoundary extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = { error: null }
+  }
+
+  static getDerivedStateFromError(error) {
+    return { error }
+  }
+
+  componentDidCatch(error, info) {
+    console.error('App do aluno travou:', error, info)
+  }
+
+  render() {
+    if (this.state.error) {
+      return (
+        <main style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: 24, textAlign: 'center', fontFamily: 'Poppins, sans-serif', background: '#0f0c09', color: '#faf6f2' }}>
+          <div>
+            <h1 style={{ margin: '0 0 12px', fontSize: '1.5rem' }}>Algo deu errado ao carregar o app</h1>
+            <p style={{ margin: '0 0 18px', opacity: .7, maxWidth: 340 }}>Tente recarregar a pagina. Se o problema continuar, avise a academia.</p>
+            <button type="button" onClick={() => window.location.reload()} style={{ border: 0, borderRadius: 999, padding: '12px 22px', background: '#e68a6a', color: '#2a140c', fontWeight: 800, cursor: 'pointer' }}>Recarregar</button>
+          </div>
+        </main>
+      )
+    }
+    return this.props.children
+  }
+}
+
+createRoot(document.getElementById('root')).render(<StudentBoundary><StudentMobileApp /></StudentBoundary>)

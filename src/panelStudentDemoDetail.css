@@ -1,0 +1,36 @@
+.demoProtectedPill {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 15px;
+  border: 1px solid #b7ff2a66;
+  border-radius: 999px;
+  background: #b7ff2a18;
+  color: #d9ff91;
+  font-size: .82rem;
+  font-weight: 850;
+}
+
+.demoProtectedPill svg,
+.demoWorkoutLock { width: 17px; }
+.demoWorkoutLock { color: var(--detail-coral-2); }
+.detailExercise.demoExerciseReadOnly { grid-template-columns: 1fr; }
+.demoActivityReadOnly { cursor: default !important; opacity: .9; }
+.demoActivityReadOnly input { cursor: not-allowed; }
+
+.demoReadOnlyField {
+  border: 1px solid var(--detail-line);
+  background: #ffffff0d;
+  border-radius: 11px;
+  padding: 12px;
+}
+
+.demoReadOnlyField small,
+.demoReadOnlyField strong { display: block; }
+.demoReadOnlyField small { color: var(--detail-muted); margin-bottom: 4px; }
+.demoAccessMessage { color: var(--detail-coral-2); line-height: 1.45; }
+
+@media (max-width: 680px) {
+  .demoProtectedPill { justify-content: center; }
+}

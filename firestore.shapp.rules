@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isShappAdmin() {
+      return signedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.token.email == 'empreendoramaon@gmail.com';
+    }
+
+    function isValidStudentReservation() {
+      return request.resource.data.keys().hasOnly([
+          'academyId', 'createdBy', 'studentId', 'studentToken', 'studentName',
+          'activityId', 'activityTitle', 'activityDate', 'activityTime',
+          'activityPlace', 'status', 'requestedAt', 'updatedAt'
+        ])
+        && request.resource.data.academyId == 'shapp'
+        && request.resource.data.createdBy == request.auth.uid
+        && request.resource.data.studentId is string
+        && request.resource.data.studentId.size() >= 1
+        && request.resource.data.studentId.size() <= 100
+        && request.resource.data.studentToken is string
+        && request.resource.data.studentToken.size() >= 1
+        && request.resource.data.studentToken.size() <= 100
+        && request.resource.data.studentName is string
+        && request.resource.data.studentName.size() >= 1
+        && request.resource.data.studentName.size() <= 90
+        && request.resource.data.activityId is string
+        && request.resource.data.activityId.size() >= 1
+        && request.resource.data.activityId.size() <= 100
+        && request.resource.data.activityTitle is string
+        && request.resource.data.activityTitle.size() >= 1
+        && request.resource.data.activityTitle.size() <= 90
+        && request.resource.data.activityDate is string
+        && request.resource.data.activityDate.size() <= 10
+        && request.resource.data.activityTime is string
+        && request.resource.data.activityTime.size() <= 5
+        && request.resource.data.activityPlace is string
+        && request.resource.data.activityPlace.size() <= 90
+        && request.resource.data.status in ['pending', 'cancelled']
+        && request.resource.data.requestedAt is timestamp
+        && request.resource.data.updatedAt is timestamp;
+    }
+
+    match /academies/shapp/reservations/{reservationId} {
+      // Alunos gravam somente pela Function protegida por App Check e limite.
+      allow create: if false;
+
+      allow read: if isShappAdmin()
+        || (signedIn() && resource.data.createdBy == request.auth.uid);
+
+      allow update: if isShappAdmin();
+
+      allow delete: if isShappAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

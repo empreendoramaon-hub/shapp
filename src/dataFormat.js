@@ -46,6 +46,23 @@ export function normalizeStudent(student) {
   }
 }
 
+const MAX_INVITE_LENGTH = 100000
+
+export function normalizeStudentToken(value = '') {
+  return `${value}`
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-zA-Z0-9_-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/(^-|-$)/g, '')
+    .slice(0, 100)
+}
+
+export function buildStudentPath(token = '') {
+  const safeToken = normalizeStudentToken(token)
+  return safeToken ? `/aluno/${encodeURIComponent(safeToken)}` : '/aluno/entrar'
+}
+
 function toBase64Url(value) {
   return btoa(unescape(encodeURIComponent(JSON.stringify(value))))
     .replace(/\+/g, '-')
@@ -54,6 +71,7 @@ function toBase64Url(value) {
 }
 
 function fromBase64Url(value) {
+  if (typeof value !== 'string' || value.length > MAX_INVITE_LENGTH) return null
   const normalized = `${value}`.replace(/-/g, '+').replace(/_/g, '/')
   const padded = normalized.padEnd(Math.ceil(normalized.length / 4) * 4, '=')
   return JSON.parse(decodeURIComponent(escape(atob(padded))))
@@ -152,18 +170,21 @@ export function buildStudentInviteUrl(origin, student, state) {
     schedule: state.schedule || [],
     student: compactStudent(student)
   }
-  return `${origin}/aluno/${student.token}?i=${toBase64Url(payload)}`
+  // O fragmento nao e enviado ao servidor nem incluido no cabecalho Referer.
+  return `${origin}${buildStudentPath(student.token)}#i=${toBase64Url(payload)}`
 }
 
-export function readStudentInvite(search = '') {
-  const invite = new URLSearchParams(search).get('i')
+export function readStudentInvite(source = '') {
+  const params = `${source}`.replace(/^[?#]/, '')
+  const invite = new URLSearchParams(params).get('i')
   if (!invite) return null
   const payload = fromBase64Url(invite)
-  if (!payload?.student?.t) return null
+  const token = normalizeStudentToken(payload?.student?.t)
+  if (!payload || payload.v !== 1 || !token || token !== payload.student.t) return null
   return {
-    academy: payload.academy,
-    trainers: payload.trainers || [],
-    schedule: payload.schedule || [],
-    student: expandStudent(payload.student)
+    academy: payload.academy && typeof payload.academy === 'object' ? payload.academy : {},
+    trainers: Array.isArray(payload.trainers) ? payload.trainers.slice(0, 10) : [],
+    schedule: Array.isArray(payload.schedule) ? payload.schedule.slice(0, 200) : [],
+    student: expandStudent({ ...payload.student, t: token })
   }
 }

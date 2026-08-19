@@ -41,11 +41,11 @@ after(async () => {
   await testEnv?.cleanup()
 })
 
-test('lead valido pode ser criado, mas nao pode ser lido', async () => {
+test('lead anonimo nao pode ser gravado diretamente', async () => {
   const db = testEnv.unauthenticatedContext().firestore()
   const lead = doc(db, 'landingLeads/lead-1')
 
-  await assertSucceeds(setDoc(lead, {
+  await assertFails(setDoc(lead, {
     name: 'Ana',
     email: 'ana@example.com',
     profile: 'aluno',
