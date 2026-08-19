@@ -19,6 +19,17 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if (location.pathname.startsWith('/eleve') || location.pathname.startsWith('/gestao-premium')) {
+        window.addEventListener('load', async () => {
+          if (!('serviceWorker' in navigator)) return
+          const registration = await navigator.serviceWorker.getRegistration('/')
+          if (!registration) return
+          navigator.serviceWorker.addEventListener('controllerchange', () => location.reload(), { once: true })
+          await registration.update()
+        })
+      }
+    </script>
     <script type="module" src="/src/router.js"></script>
   </body>
 </html>

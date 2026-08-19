@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shapp-apps-v6';
+const CACHE_NAME = 'shapp-apps-v7';
 const CORE_ASSETS = [
   '/',
   '/sotalia-app',
@@ -14,6 +14,7 @@ const CORE_ASSETS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(CORE_ASSETS)));
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
@@ -27,11 +28,15 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
   const fallback = url.pathname.startsWith('/sotalia-app') ? '/sotalia-app' : '/';
+  const isNavigation = event.request.mode === 'navigate';
+  const isBundle = url.pathname.startsWith('/assets/');
   event.respondWith(
-    fetch(event.request)
+    fetch(event.request, isNavigation || isBundle ? { cache: 'no-store' } : undefined)
       .then((response) => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        if (!isNavigation && !isBundle) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        }
         return response;
       })
       .catch(() => caches.match(event.request).then((res) => res || caches.match(fallback) || caches.match('/')))
