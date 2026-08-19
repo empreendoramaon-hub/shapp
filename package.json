@@ -7,20 +7,22 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test:rules": "firebase emulators:exec --project demo-shapp-security --only firestore,storage \"node --test tests/firebase.rules.test.mjs\"",
-    "security:check": "npm audit --audit-level=high && npm run test:rules && npm run build"
+    "test:rules": "npx --yes firebase-tools@15.25.1 emulators:exec --project demo-shapp-security --only firestore,storage \"node --test tests/firebase.rules.test.mjs tests/firebase.shapp.rules.test.mjs\"",
+    "test:invites": "node --test tests/invite-security.test.mjs",
+    "test:client-security": "node --test tests/input-validation.test.mjs tests/security-logging.test.mjs tests/eleve-platform.test.mjs tests/premium-report-pdf.test.mjs tests/shapp-commercial-plans.test.mjs",
+    "audit:production": "npm audit --omit=dev --audit-level=moderate",
+    "security:check": "npm run audit:production && npm run test:client-security && npm run test:rules && npm run build"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "firebase": "latest",
-    "lucide-react": "latest",
-    "qrcode.react": "latest"
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "firebase": "12.16.0",
+    "lucide-react": "1.24.0",
+    "qrcode.react": "4.2.0"
   },
   "devDependencies": {
-    "@firebase/rules-unit-testing": "latest",
-    "firebase-tools": "latest"
+    "@firebase/rules-unit-testing": "5.0.1",
+    "@vitejs/plugin-react": "6.0.3",
+    "vite": "8.1.4"
   }
 }
