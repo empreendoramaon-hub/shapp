@@ -174,6 +174,27 @@ export function hydrateEleveState(saved, variant = 'generic') {
   return { ...base, ...saved, students: [...students, ...extraStudents].map((student) => ({ ...student, appToken: student.appToken || `demo-${student.id}` })), workouts: saved.workouts?.length ? saved.workouts : base.workouts, invites: saved.invites || [] }
 }
 
+export function createEleveSafeStorageState(state) {
+  const students = (state.students || []).map((student) => {
+    const { assessment, assessments, auth, consent, cpf, email, phone, ...safeStudent } = student
+    return safeStudent
+  })
+  const invites = (state.invites || []).map((invite) => {
+    const { email, phone, ...safeInvite } = invite
+    return safeInvite
+  })
+  return {
+    academy: state.academy,
+    units: state.units,
+    plans: state.plans,
+    trainers: state.trainers,
+    goals: state.goals,
+    notifications: state.notifications,
+    students,
+    invites
+  }
+}
+
 export function buildEleveInvitePath(token = '', basePath = '/gestao-premium') {
   if (!/^[A-Za-z0-9_-]{12,100}$/.test(token)) throw new Error('Convite inválido.')
   return `${basePath}/convite/${token}`
@@ -202,14 +223,15 @@ export function activateEleveInvite(state, token, consent) {
   const existing = state.students.find((student) => student.inviteToken === token)
   if (existing) return { state, student: existing }
   if (!consent?.terms || !consent?.privacy || !consent?.data) throw new Error('É necessário aceitar os termos e a política de privacidade.')
+  const email = invite.email || validateEmail(consent.email, { required: true })
   const student = {
-    id: `student-${token.slice(0, 12)}`, inviteToken: token, appToken: token, name: invite.name, phone: invite.phone, email: invite.email,
+    id: `student-${token.slice(0, 12)}`, inviteToken: token, appToken: token, name: invite.name, phone: invite.phone || '', email,
     unitId: invite.unitId, planId: invite.planId, trainerId: null, status: 'new', joinedAt: new Date().toISOString().slice(0, 10),
     lastVisit: null, frequency30d: 0, satisfaction: 0, financialStatus: 'pending', contractEndsAt: null, risk: 'low',
     sessionsUsed: 0, sessionsLimit: state.plans.find((plan) => plan.id === invite.planId)?.personalSessions || 0,
     assessmentDue: null, assessment: null, gamification: { xp: 0, level: 1, streak: 0, weeklyGoal: 3, weeklyDone: 0, badges: ['Primeiro acesso'] },
     consent: { termsVersion: state.academy.termsVersion, privacyVersion: state.academy.privacyVersion, acceptedAt: new Date().toISOString() },
-    auth: { email: invite.email, passwordHash: consent.passwordHash || '' }
+    auth: { email, passwordHash: consent.passwordHash || '' }
   }
   return {
     student,

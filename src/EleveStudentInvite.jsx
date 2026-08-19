@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { CheckCircle2, Download, LockKeyhole, ShieldCheck } from 'lucide-react'
-import { activateEleveInvite, buildEleveStudentAppPath, hashElevePassword, hydrateEleveState } from './elevePlatformData.js'
+import { activateEleveInvite, buildEleveStudentAppPath, createEleveSafeStorageState, hashElevePassword, hydrateEleveState } from './elevePlatformData.js'
 import './eleveStudentInvite.css'
 
 const IS_ELEVE = window.location.pathname.startsWith('/eleve')
@@ -29,13 +29,12 @@ function EleveStudentInvite() {
   const unit = state.units.find((item) => item.id === invite.unitId)
   const plan = state.plans.find((item) => item.id === invite.planId)
   async function register() {
-    if (email.toLowerCase() !== invite.email.toLowerCase()) return setError('Utilize o mesmo e-mail informado na matrícula.')
+    if (invite.email && email.toLowerCase() !== invite.email.toLowerCase()) return setError('Utilize o mesmo e-mail informado na matrícula.')
     if (password.length < 8) return setError('Crie uma senha com pelo menos 8 caracteres.')
     try {
       const passwordHash = await hashElevePassword(password)
-      const result = activateEleveInvite(state, token, { ...checks, passwordHash })
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(result.state))
-      sessionStorage.setItem('shappPremiumStudentSession', result.student.appToken)
+      const result = activateEleveInvite(state, token, { ...checks, email, passwordHash })
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(createEleveSafeStorageState(result.state)))
       setState(result.state); setComplete(true); setError('')
       setTimeout(() => { window.location.href = buildEleveStudentAppPath(result.student, BASE_PATH) }, 900)
     } catch (registrationError) { setError(registrationError.message) }

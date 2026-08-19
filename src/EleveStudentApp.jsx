@@ -4,7 +4,7 @@ import {
   Activity, Award, Bell, CalendarDays, Check, ChevronRight, Dumbbell, Flame, HeartPulse,
   Home, LockKeyhole, MapPin, Play, ShieldCheck, Star, Target, Trophy, UserRound, WalletCards
 } from 'lucide-react'
-import { hashElevePassword, hydrateEleveState, upsertEleveSatisfaction } from './elevePlatformData.js'
+import { createEleveSafeStorageState, hashElevePassword, hydrateEleveState, upsertEleveSatisfaction } from './elevePlatformData.js'
 import './eleveStudentApp.css'
 import './eleveStudentLogin.css'
 import './shappPremiumOverrides.css'
@@ -100,13 +100,13 @@ function EleveStudentApp() {
   const [completed, setCompleted] = useState({})
   const accessToken = decodeURIComponent(window.location.pathname.replace(`${BASE_PATH}/aluno/`, '').split('/')[0] || '')
   const student = state.students.find((item) => item.id === accessToken || item.appToken === accessToken || item.inviteToken === accessToken) || state.students.find((item) => item.id === 'aluno-ana')
-  const [authenticated, setAuthenticated] = useState(() => !student.auth?.passwordHash || sessionStorage.getItem('shappPremiumStudentSession') === student.appToken)
+  const [authenticated, setAuthenticated] = useState(() => !student.auth?.passwordHash)
   const [login, setLogin] = useState({ email: student.email || '', password: '' })
   const [loginError, setLoginError] = useState('')
   const plan = state.plans.find((item) => item.id === student.planId)
   const trainer = state.trainers.find((item) => item.id === student.trainerId)
   const workout = useMemo(() => (state.workouts || []).find((item) => item.studentId === student.id), [state, student.id])
-  function setState(next) { setStateRaw(next); localStorage.setItem(STORAGE_KEY, JSON.stringify(next)) }
+  function setState(next) { setStateRaw(next); localStorage.setItem(STORAGE_KEY, JSON.stringify(createEleveSafeStorageState(next))) }
   function toggleExercise(id) { setCompleted((current) => ({ ...current, [id]: !current[id] })) }
   function finishWorkout() {
     const next = { ...state, students: state.students.map((item) => item.id === student.id ? { ...item, frequency30d: item.frequency30d + 1, gamification: { ...item.gamification, xp: item.gamification.xp + 120, weeklyDone: Math.min(item.gamification.weeklyGoal, item.gamification.weeklyDone + 1) } } : item) }
@@ -116,7 +116,7 @@ function EleveStudentApp() {
     try {
       const passwordHash = await hashElevePassword(login.password)
       if (login.email.toLowerCase() !== student.auth.email.toLowerCase() || passwordHash !== student.auth.passwordHash) throw new Error('E-mail ou senha inválidos.')
-      sessionStorage.setItem('shappPremiumStudentSession', student.appToken); setAuthenticated(true); setLoginError('')
+      setAuthenticated(true); setLoginError('')
     } catch (error) { setLoginError(error.message) }
   }
   if (!authenticated) return <div className="esaLogin"><main><div className="esaLoginBrand"><b>{state.academy.brandMark || 'SH▲PP'}</b><small>APP DO ALUNO</small></div><p>ACESSO INDIVIDUAL</p><h1>Entre para continuar.</h1><span>Use o e-mail e a senha definidos na ativação do aplicativo.</span><label>E-mail<input type="email" value={login.email} onChange={(event) => setLogin({ ...login, email: event.target.value })} /></label><label>Senha<div><LockKeyhole /><input type="password" value={login.password} onChange={(event) => setLogin({ ...login, password: event.target.value })} /></div></label>{loginError && <em>{loginError}</em>}<button onClick={authenticate}>Entrar no aplicativo</button></main></div>

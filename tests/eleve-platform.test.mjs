@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { activateEleveInvite, buildEleveInvitePath, calculateEleveMetrics, createEleveBrandedSeed, createEleveInvite, eleveAdminRoles, eleveRoles, eleveSeed, hashElevePassword, hydrateEleveState, planAllowsAppointment, scopeEleveStudents, upsertEleveAssessment, upsertEleveSatisfaction, upsertEleveWorkout } from '../src/elevePlatformData.js'
+import { activateEleveInvite, buildEleveInvitePath, calculateEleveMetrics, createEleveBrandedSeed, createEleveInvite, createEleveSafeStorageState, eleveAdminRoles, eleveRoles, eleveSeed, hashElevePassword, hydrateEleveState, planAllowsAppointment, scopeEleveStudents, upsertEleveAssessment, upsertEleveSatisfaction, upsertEleveWorkout } from '../src/elevePlatformData.js'
 
 test('gerente visualiza somente alunos da unidade atribuída', () => {
   const manager = eleveRoles.find((role) => role.id === 'manager')
@@ -92,4 +92,14 @@ test('aceite do convite ativa aluno novo na unidade correta', async () => {
   assert.equal(activated.student.unitId, 'caxias')
   assert.equal(activated.student.auth.passwordHash, passwordHash)
   assert.equal(activated.state.invites[0].status, 'registered')
+})
+
+test('armazenamento do protótipo exclui dados pessoais, clínicos e agenda', () => {
+  const safe = createEleveSafeStorageState(eleveSeed)
+  assert.equal('appointments' in safe, false)
+  assert.equal('finance' in safe, false)
+  assert.equal('workouts' in safe, false)
+  assert.equal('assessment' in safe.students[0], false)
+  assert.equal('email' in safe.students[0], false)
+  assert.equal('phone' in safe.students[0], false)
 })
