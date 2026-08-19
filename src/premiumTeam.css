@@ -1,0 +1,116 @@
+.sprTeamTools {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  padding: 4px 7px 14px;
+  border-bottom: 1px solid #e7ebe5;
+}
+
+.sprTeamTools label {
+  display: grid;
+  gap: 5px;
+  color: #69746c;
+  font-size: .59rem;
+  font-weight: 800;
+}
+
+.sprTeamTools select,
+.sprTeamTools input {
+  height: 38px;
+  border: 1px solid #d9dfd6;
+  border-radius: 9px;
+  background: #f8faf7;
+  padding: 0 30px 0 10px;
+  color: #172019;
+  font: inherit;
+}
+
+.sprTeamTools > span {
+  margin-left: auto;
+  padding-bottom: 10px;
+  color: #758078;
+  font-size: .65rem;
+  font-weight: 800;
+}
+
+.sprTeamSearch { position: relative; flex: 1; max-width: 300px; }
+.sprTeamSearch svg { position: absolute; left: 11px; bottom: 10px; width: 17px; color: #7a857d; }
+.sprTeamSearch input { width: 100%; padding-left: 36px; }
+.sprTeamClickable { cursor: pointer; transition: background .18s, transform .18s; }
+.sprTeamClickable:hover,
+.sprTeamClickable:focus { background: #f5faef; outline: 0; transform: translateX(2px); }
+.sprTeamEmpty { display: grid; place-items: center; gap: 5px; padding: 48px; color: #7a857d; text-align: center; }
+.sprTeamEmpty svg { width: 30px; color: #84bb2c; }
+.sprTeamEmpty span { font-size: .68rem; }
+
+.sprPerformanceModal {
+  position: relative;
+  width: min(920px, calc(100vw - 36px));
+  max-height: 92vh;
+  overflow: auto;
+  border-radius: 22px;
+  background: #f4f7f1;
+  padding: 24px;
+  box-shadow: 0 25px 80px #07100955;
+}
+
+.sprPerformanceClose { position: absolute; right: 17px; top: 17px; z-index: 2; width: 34px; height: 34px; border: 0; border-radius: 50%; background: #fff; display: grid; place-items: center; cursor: pointer; }
+.sprPerformanceClose svg { width: 17px; }
+.sprPerformanceModal > header { display: flex; align-items: center; gap: 15px; padding: 5px 45px 20px 3px; }
+.sprPerformanceModal > header > i { width: 58px; height: 58px; display: grid; place-items: center; border-radius: 16px; background: #172019; color: #97e31b; font-style: normal; font-weight: 900; }
+.sprPerformanceModal > header > div { flex: 1; }
+.sprPerformanceModal > header p { margin: 0 0 4px; color: #6e9e20; font-size: .58rem; font-weight: 900; letter-spacing: .08em; }
+.sprPerformanceModal > header h2 { margin: 0; font-size: 1.45rem; }
+.sprPerformanceModal > header span { color: #6c776f; font-size: .7rem; }
+.sprPerformanceModal > header > strong { display: grid; grid-template-columns: auto auto; align-items: end; min-width: 112px; padding: 12px 15px; border-radius: 14px; background: #e6f5e4; color: #28733d; font-size: 1.7rem; }
+.sprPerformanceModal > header > strong.attention { background: #fff3d9; color: #956619; }
+.sprPerformanceModal > header > strong.critical { background: #ffe9e5; color: #ad4938; }
+.sprPerformanceModal > header > strong small { grid-column: 1 / 3; font-size: .55rem; }
+.sprPerformanceModal > header > strong em { margin: 0 0 4px 2px; font-size: .62rem; font-style: normal; }
+
+.sprPerformanceKpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.sprPerformanceKpis article { display: grid; gap: 4px; padding: 16px; border: 1px solid #dde4da; border-radius: 14px; background: #fff; }
+.sprPerformanceKpis svg { width: 19px; color: #74a923; }
+.sprPerformanceKpis small { color: #78837b; font-size: .58rem; font-weight: 800; }
+.sprPerformanceKpis b { font-size: 1.2rem; }
+.sprPerformanceKpis span { color: #8a948d; font-size: .56rem; }
+.sprPerformanceDetails { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+.sprPerformanceDetails article { padding: 16px; border: 1px solid #dde4da; border-radius: 14px; background: #fff; }
+.sprPerformanceDetails article > div { display: flex; justify-content: space-between; gap: 10px; font-size: .7rem; }
+.sprPerformanceDetails b { display: flex; align-items: center; gap: 7px; }
+.sprPerformanceDetails svg { width: 16px; color: #72a524; }
+.sprPerformanceDetails article > i { display: block; height: 8px; margin: 12px 0 7px; border-radius: 99px; background: #edf1ea; overflow: hidden; }
+.sprPerformanceDetails article > i span { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #608d18, #98e31d); }
+.sprPerformanceDetails small { color: #849087; font-size: .58rem; }
+.sprPerformancePortfolio { margin-top: 10px; padding: 16px; border: 1px solid #dde4da; border-radius: 14px; background: #fff; }
+.sprPerformancePortfolio > div { display: flex; justify-content: space-between; margin-bottom: 9px; font-size: .7rem; }
+.sprPerformancePortfolio > div span { display: flex; align-items: center; gap: 7px; font-weight: 800; }
+.sprPerformancePortfolio > div svg { width: 17px; color: #74a923; }
+.sprPerformancePortfolio article { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid #edf0eb; }
+.sprPerformancePortfolio article > i { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 9px; background: #edf3e8; font-style: normal; font-size: .58rem; font-weight: 900; }
+.sprPerformancePortfolio article span { display: grid; font-size: .66rem; }
+.sprPerformancePortfolio article small { color: #879188; font-size: .57rem; }
+.sprPerformancePortfolio article em { display: flex; align-items: center; gap: 4px; color: #b04b3b; font-size: .57rem; font-style: normal; font-weight: 800; }
+.sprPerformancePortfolio article em.ok { color: #3b804c; }
+.sprPerformancePortfolio article em svg { width: 13px; }
+.sprPerformancePortfolio > p { color: #748078; font-size: .65rem; }
+.sprPerformanceModal > footer { padding: 12px 3px 0; color: #7d8880; font-size: .56rem; }
+
+@media (max-width: 900px) {
+  .sprTeamTools { align-items: stretch; flex-wrap: wrap; }
+  .sprTeamSearch { max-width: none; flex-basis: 100%; }
+  .sprTeamTools > span { margin-left: 0; }
+  .sprPerformanceKpis { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 560px) {
+  .sprTeamTools label { width: 100%; }
+  .sprTeamTools > span { padding: 0; }
+  .sprPerformanceModal { width: calc(100vw - 18px); padding: 15px; border-radius: 16px; }
+  .sprPerformanceModal > header { align-items: flex-start; flex-wrap: wrap; }
+  .sprPerformanceModal > header > strong { width: 100%; }
+  .sprPerformanceKpis,
+  .sprPerformanceDetails { grid-template-columns: 1fr; }
+  .sprPerformancePortfolio article { grid-template-columns: 34px 1fr; }
+  .sprPerformancePortfolio article em { grid-column: 2; }
+}
